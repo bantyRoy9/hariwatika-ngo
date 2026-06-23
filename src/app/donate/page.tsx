@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import Card3D from "@/components/Card3D";
+import Reveal from "@/components/Reveal";
 import { Heart, CheckCircle, Printer, Copy, Building2, Smartphone } from "lucide-react";
 
 const PRESET_AMOUNTS = [500, 1000, 2000, 5000, 10000];
@@ -138,36 +141,21 @@ export default function DonatePage() {
     <>
       <Navbar />
       <main>
-        {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Heart className="w-12 h-12 text-[#F4A433] fill-[#F4A433] mx-auto mb-4" />
-            <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
-            >
-              दान करें
-            </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Your donation directly supports marriages, tree plantation, poverty relief, and community health in Bihar.
-            </p>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
-        </section>
+        <PageHero
+          tag="Support Our Mission"
+          title="दान करें"
+          subtitle="Your donation directly supports marriages, tree plantation, poverty relief, and community health in Bihar."
+          icon={<Heart className="w-8 h-8 text-[#F4A433] fill-[#F4A433]" />}
+        />
 
-        <section className="py-16 bg-[#fbf9f4]">
+        <section className="py-16 bg-[#fbf9f4] dot-grid relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#855300]/5 blur-3xl pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-5 gap-8">
               {/* Form */}
               <div className="lg:col-span-3">
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] p-6 sm:p-8">
+                <Reveal animation="slide-right">
+                  <Card3D intensity={4} className="bg-white rounded-2xl border border-[#e4e2dd] p-6 sm:p-8">
                   <h2
                     className="text-xl font-bold text-[#1b1c19] mb-6"
                     style={{ fontFamily: "'Literata', serif" }}
@@ -291,7 +279,8 @@ export default function DonatePage() {
                       )}
                     </button>
                   </form>
-                </div>
+                  </Card3D>
+                </Reveal>
               </div>
 
               {/* Sidebar */}

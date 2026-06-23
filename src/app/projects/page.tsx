@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import Card3D from "@/components/Card3D";
+import Reveal from "@/components/Reveal";
 import { Heart, TreePine, Users, Stethoscope, BookOpen, CalendarDays, MapPin } from "lucide-react";
 
 const categories = ["All", "Vivah Seva", "Vrikshaaropan", "Garib Sahayata", "Swasthya Seva", "Education"];
@@ -118,31 +121,11 @@ export default function ProjectsPage() {
     <>
       <Navbar />
       <main>
-        {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-block bg-white/10 text-[#F4A433] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-4">
-              Our Work
-            </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
-            >
-              हमारे प्रोजेक्ट्स
-            </h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Ongoing and completed projects making a real difference in West Champaran communities.
-            </p>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
-        </section>
+        <PageHero
+          tag="Our Work"
+          title="हमारे प्रोजेक्ट्स"
+          subtitle="Ongoing and completed projects making a real difference in West Champaran communities."
+        />
 
         {/* Filter Tabs */}
         <section className="py-8 bg-[#fbf9f4] border-b border-[#e4e2dd]">
@@ -166,86 +149,51 @@ export default function ProjectsPage() {
         </section>
 
         {/* Projects Grid */}
-        <section className="py-16 bg-[#fbf9f4]">
+        <section className="py-16 bg-[#fbf9f4] dot-grid relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-80 rounded-full bg-[#855300]/5 blur-3xl hero-blob-2 pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((project) => {
+              {filtered.map((project, i) => {
                 const pct = Math.round((project.raised / project.goal) * 100);
                 return (
-                  <div
-                    key={project.id}
-                    className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden hover:shadow-md transition-shadow flex flex-col"
-                  >
-                    {/* Card Header */}
-                    <div
-                      className="h-24 flex items-center justify-center relative"
-                      style={{ background: project.bg }}
-                    >
-                      <project.icon className="w-12 h-12 opacity-30" style={{ color: project.color }} />
-                      <div className="absolute top-3 right-3 flex gap-2">
-                        <span
-                          className={`text-[10px] font-bold rounded-full px-2.5 py-0.5 ${
-                            project.status === "completed"
-                              ? "bg-green-100 text-[#006d3e]"
-                              : "bg-orange-100 text-[#855300]"
-                          }`}
-                        >
-                          {project.status === "completed" ? "✓ Completed" : "● Ongoing"}
+                  <Reveal key={project.id} delay={i * 70} animation="slide-up">
+                    <Card3D className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden flex flex-col h-full">
+                      <div className="h-24 flex items-center justify-center relative" style={{ background: project.bg }}>
+                        <project.icon className="w-12 h-12 opacity-30" style={{ color: project.color }} />
+                        <div className="absolute top-3 right-3 flex gap-2">
+                          <span className={`text-[10px] font-bold rounded-full px-2.5 py-0.5 ${
+                            project.status === "completed" ? "bg-green-100 text-[#006d3e]" : "bg-orange-100 text-[#855300]"
+                          }`}>
+                            {project.status === "completed" ? "✓ Completed" : "● Ongoing"}
+                          </span>
+                        </div>
+                        <span className="absolute bottom-3 left-3 text-[10px] font-semibold rounded-full px-2.5 py-0.5 bg-white/80 backdrop-blur-sm" style={{ color: project.color }}>
+                          {project.category}
                         </span>
                       </div>
-                      <span
-                        className="absolute bottom-3 left-3 text-[10px] font-semibold rounded-full px-2.5 py-0.5 bg-white/80 backdrop-blur-sm"
-                        style={{ color: project.color }}
-                      >
-                        {project.category}
-                      </span>
-                    </div>
-
-                    <div className="p-5 flex flex-col flex-1">
-                      <h3
-                        className="font-semibold text-[#1b1c19] text-base leading-snug mb-2"
-                        style={{ fontFamily: "'Literata', serif" }}
-                      >
-                        {project.title}
-                      </h3>
-                      <p className="text-[#524435] text-xs leading-relaxed mb-4 flex-1">{project.desc}</p>
-
-                      {/* Meta */}
-                      <div className="grid grid-cols-2 gap-2 mb-4 text-xs text-[#524435]">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-[#855300]" />
-                          <span className="truncate">{project.location}</span>
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="font-semibold text-[#1b1c19] text-base leading-snug mb-2" style={{ fontFamily: "'Literata', serif" }}>
+                          {project.title}
+                        </h3>
+                        <p className="text-[#524435] text-xs leading-relaxed mb-4 flex-1">{project.desc}</p>
+                        <div className="grid grid-cols-2 gap-2 mb-4 text-xs text-[#524435]">
+                          <div className="flex items-center gap-1"><MapPin className="w-3 h-3 text-[#855300]" /><span className="truncate">{project.location}</span></div>
+                          <div className="flex items-center gap-1"><CalendarDays className="w-3 h-3 text-[#855300]" /><span>{project.date}</span></div>
+                          <div className="flex items-center gap-1"><Users className="w-3 h-3 text-[#855300]" /><span>{project.beneficiaries}</span></div>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <CalendarDays className="w-3 h-3 text-[#855300]" />
-                          <span>{project.date}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Users className="w-3 h-3 text-[#855300]" />
-                          <span>{project.beneficiaries}</span>
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-[#524435]">₹{project.raised.toLocaleString("en-IN")} raised</span>
+                            <span className="font-semibold text-[#855300]">{pct}%</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1">
+                            <div className="h-full rounded-full progress-glow" style={{ width: `${pct}%`, background: "linear-gradient(90deg,#6b3500,#F4A433)" }} />
+                          </div>
+                          <div className="text-xs text-[#524435]">Goal: ₹{project.goal.toLocaleString("en-IN")}</div>
                         </div>
                       </div>
-
-                      {/* Progress */}
-                      <div>
-                        <div className="flex justify-between text-xs mb-1">
-                          <span className="text-[#524435]">
-                            ₹{project.raised.toLocaleString("en-IN")} raised
-                          </span>
-                          <span className="font-semibold text-[#855300]">{pct}%</span>
-                        </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-1">
-                          <div
-                            className="h-full bg-[#855300] rounded-full transition-all"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                        <div className="text-xs text-[#524435]">
-                          Goal: ₹{project.goal.toLocaleString("en-IN")}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </Card3D>
+                  </Reveal>
                 );
               })}
             </div>
@@ -253,38 +201,27 @@ export default function ProjectsPage() {
         </section>
 
         {/* Future Plans */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white line-grid relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 w-96 h-96 rounded-full bg-[#F4A433]/5 blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <span className="inline-block bg-orange-100 text-[#855300] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-3">
-                Future Plans
-              </span>
-              <h2
-                className="text-3xl font-bold text-[#1b1c19]"
-                style={{ fontFamily: "'Literata', serif" }}
-              >
-                भविष्य की योजनाएं
-              </h2>
-            </div>
+            <Reveal className="text-center mb-12">
+              <span className="section-tag mb-3 block w-fit mx-auto">Future Plans</span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1b1c19]" style={{ fontFamily: "'Literata', serif" }}>भविष्य की योजनाएं</h2>
+              <div className="section-divider" />
+            </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {futurePlans.map((plan) => (
-                <div
-                  key={plan.title}
-                  className="bg-[#fbf9f4] rounded-2xl border border-[#e4e2dd] p-6 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold bg-[#855300] text-white rounded-full px-3 py-1">
-                      {plan.year}
-                    </span>
-                  </div>
-                  <h3
-                    className="font-semibold text-[#1b1c19] mb-2"
-                    style={{ fontFamily: "'Literata', serif" }}
-                  >
-                    {plan.title}
-                  </h3>
-                  <p className="text-[#524435] text-sm">{plan.desc}</p>
-                </div>
+              {futurePlans.map((plan, i) => (
+                <Reveal key={plan.title} delay={i * 80} animation="slide-up">
+                  <Card3D className="bg-[#fbf9f4] rounded-2xl border border-[#e4e2dd] p-6 h-full shine-sweep">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-bold text-white rounded-full px-3 py-1 shine-sweep" style={{ background: "linear-gradient(135deg,#855300,#F4A433)" }}>
+                        {plan.year}
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-[#1b1c19] mb-2" style={{ fontFamily: "'Literata', serif" }}>{plan.title}</h3>
+                    <p className="text-[#524435] text-sm">{plan.desc}</p>
+                  </Card3D>
+                </Reveal>
               ))}
             </div>
           </div>

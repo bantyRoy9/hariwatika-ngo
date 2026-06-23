@@ -1,41 +1,32 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import ParallaxProvider from "@/components/ParallaxProvider";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Hariwatika Shiv Mandir Vivah Sewa Samiti | हरिवाटिका शिव मंदिर विवाह सेवा समिति",
   description:
     "हरिवाटिका शिव मंदिर विवाह सेवा समिति - Serving the community since 2000 through Vivah Seva, Vrikshaaropan, Garib Sahayata and more. Located at Sukanya Utsav Bhawan, Hariwatika Chowk, Bettiah, West Champaran, Bihar.",
   keywords: [
-    "Hariwatika Shiv Mandir",
-    "NGO Bihar",
-    "Vivah Sewa Samiti",
-    "Bettiah NGO",
-    "West Champaran",
-    "विवाह सेवा",
-    "वृक्षारोपण",
-    "गरीब सहायता",
-    "Charitable Trust Bihar",
+    "Hariwatika Shiv Mandir", "NGO Bihar", "Vivah Sewa Samiti",
+    "Bettiah NGO", "West Champaran", "विवाह सेवा", "वृक्षारोपण",
+    "गरीब सहायता", "Charitable Trust Bihar",
   ],
   authors: [{ name: "Hariwatika Shiv Mandir Vivah Sewa Samiti" }],
   openGraph: {
     title: "Hariwatika Shiv Mandir Vivah Sewa Samiti",
-    description:
-      "Serving communities through marriage assistance, tree plantation, and poverty relief since 2000.",
-    type: "website",
-    locale: "hi_IN",
+    description: "Serving communities through marriage assistance, tree plantation, and poverty relief since 2000.",
+    type: "website", locale: "hi_IN",
   },
   twitter: {
     card: "summary_large_image",
     title: "Hariwatika Shiv Mandir Vivah Sewa Samiti",
-    description:
-      "Serving communities through marriage assistance, tree plantation, and poverty relief since 2000.",
+    description: "Serving communities through marriage assistance, tree plantation, and poverty relief since 2000.",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="hi" className="h-full scroll-smooth">
       <head>
@@ -47,10 +38,17 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full flex flex-col"
+        className="min-h-full flex flex-col noise-texture"
         style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          {/* Thin gradient progress bar at the very top */}
+          <ScrollProgress />
+          {/* Global ambient canvas + mouse/scroll CSS vars */}
+          <ParallaxProvider>
+            {children}
+          </ParallaxProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

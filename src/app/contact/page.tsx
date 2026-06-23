@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import Card3D from "@/components/Card3D";
+import Reveal from "@/components/Reveal";
 import { Phone, Mail, MapPin, MessageCircle, Clock, Send, CheckCircle } from "lucide-react";
 
 interface ContactForm {
@@ -36,39 +39,19 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main>
-        {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-block bg-white/10 text-[#F4A433] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-4">
-              Get in Touch
-            </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
-            >
-              संपर्क करें
-            </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Reach out to us for any queries, volunteering, or assistance.
-            </p>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
-        </section>
-
-        <section className="py-16 bg-[#fbf9f4]">
+        <PageHero
+          tag="Get in Touch"
+          title="संपर्क करें"
+          subtitle="Reach out to us for any queries, volunteering, or assistance. We respond within 24 hours."
+        />
+        <section className="py-16 bg-[#fbf9f4] dot-grid relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#855300]/5 blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-5 gap-10">
               {/* Left: Info */}
               <div className="lg:col-span-2 space-y-6">
-                {/* Office Details */}
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] p-6">
+                <Reveal animation="slide-right">
+                  <Card3D intensity={5} className="bg-white rounded-2xl border border-[#e4e2dd] p-6">
                   <h3
                     className="font-semibold text-[#1b1c19] text-lg mb-4"
                     style={{ fontFamily: "'Literata', serif" }}
@@ -142,10 +125,12 @@ export default function ContactPage() {
                     <MessageCircle className="w-4 h-4" />
                     Chat on WhatsApp
                   </a>
-                </div>
+                  </Card3D>
+                </Reveal>
 
                 {/* Map Embed */}
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden">
+                <Reveal animation="slide-right" delay={100}>
+                  <Card3D intensity={3} className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden">
                   <div className="p-4 border-b border-[#e4e2dd]">
                     <h3 className="font-semibold text-[#1b1c19] text-sm">Find Us on Map</h3>
                   </div>
@@ -160,11 +145,13 @@ export default function ContactPage() {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Hariwatika Shiv Mandir Location"
                   />
-                </div>
+                  </Card3D>
+                </Reveal>
               </div>
 
               {/* Right: Form */}
               <div className="lg:col-span-3">
+                <Reveal animation="slide-left">
                 {submitted ? (
                   <div className="bg-white rounded-2xl border border-[#e4e2dd] p-8 text-center shadow-sm">
                     <CheckCircle className="w-16 h-16 text-[#006d3e] mx-auto mb-4" />
@@ -298,6 +285,7 @@ export default function ContactPage() {
                     </form>
                   </div>
                 )}
+                </Reveal>
               </div>
             </div>
           </div>

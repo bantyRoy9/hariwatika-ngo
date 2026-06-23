@@ -69,7 +69,7 @@ export default function AdminPage() {
     setTimeout(() => setGreetingSent(false), 3000);
   };
 
-  const tabs: { id: AdminTab; icon: React.ElementType; label: string }[] = [
+  const tabs: { id: AdminTab; icon: React.FC<{ className?: string }>; label: string }[] = [
     { id: "donations", icon: IndianRupee, label: "Donations" },
     { id: "members", icon: Users, label: "Members" },
     { id: "greetings", icon: Mail, label: "Greetings" },

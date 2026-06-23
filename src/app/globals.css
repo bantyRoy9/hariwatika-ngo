@@ -192,3 +192,330 @@ h1, h2, h3, h4, h5, h6 {
   user-select: none;
 }
 
+/* ── 3D tilt card ── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease;
+  will-change: transform;
+}
+.tilt-card:hover {
+  box-shadow: 0 24px 60px rgba(133, 83, 0, 0.18), 0 0 0 1px rgba(133,83,0,0.08);
+}
+.tilt-card .card-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tilt-card:hover .card-shine { opacity: 1; }
+
+/* ── Typed cursor blink ── */
+.typed-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: #F4A433;
+  margin-left: 3px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+/* ── Hero text glow ── */
+@keyframes text-glow-pulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(244,164,51,0.3), 0 0 60px rgba(244,164,51,0.1); }
+  50%       { text-shadow: 0 0 40px rgba(244,164,51,0.6), 0 0 80px rgba(244,164,51,0.2); }
+}
+.hero-glow-text { animation: text-glow-pulse 3s ease-in-out infinite; }
+
+/* ── Gradient border ring ── */
+@keyframes rotate-gradient {
+  from { --angle: 0deg; }
+  to   { --angle: 360deg; }
+}
+@property --angle {
+  syntax: '<angle>'; initial-value: 0deg; inherits: false;
+}
+.gradient-ring {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.gradient-ring::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--angle), #855300, #F4A433, #48cc84, #F4A433, #855300);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-gradient 4s linear infinite;
+}
+
+/* ── Entrance for hero sections (longer stagger) ── */
+.hero-enter-0 { animation: hero-slide-up 0.8s 0.05s cubic-bezier(.22,1,.36,1) both; }
+.hero-enter-1 { animation: hero-slide-up 0.8s 0.20s cubic-bezier(.22,1,.36,1) both; }
+.hero-enter-2 { animation: hero-slide-up 0.8s 0.35s cubic-bezier(.22,1,.36,1) both; }
+.hero-enter-3 { animation: hero-slide-up 0.8s 0.50s cubic-bezier(.22,1,.36,1) both; }
+.hero-enter-4 { animation: hero-slide-up 0.8s 0.65s cubic-bezier(.22,1,.36,1) both; }
+.hero-enter-5 { animation: hero-scale-in 0.9s 0.80s cubic-bezier(.22,1,.36,1) both; }
+
+/* ── 3D Canvas container ── */
+.canvas-3d-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .canvas-3d-container { display: none; }
+  .hero-blob-1, .hero-blob-2, .hero-blob-3 { animation: none; }
+}
+
+/* ── Hexagon grid bg ── */
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34z' fill='none' stroke='rgba(244,164,51,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+/* ── Scroll line animation ── */
+@keyframes scroll-line {
+  0%   { height: 0; opacity: 1; }
+  80%  { height: 40px; opacity: 1; }
+  100% { height: 40px; opacity: 0; }
+}
+.scroll-line {
+  width: 1.5px;
+  background: #F4A433;
+  animation: scroll-line 2s ease-in-out infinite;
+  border-radius: 2px;
+}
+
+/* ── Glowing dot pulse ── */
+@keyframes glow-dot {
+  0%, 100% { box-shadow: 0 0 4px 2px rgba(244,164,51,0.4); transform: scale(1); }
+  50%       { box-shadow: 0 0 12px 6px rgba(244,164,51,0.7); transform: scale(1.2); }
+}
+.glow-dot { animation: glow-dot 2s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL 3D PARALLAX & DEPTH SYSTEM
+   ══════════════════════════════════════════════════════════════ */
+
+/* CSS vars set by ParallaxProvider */
+:root {
+  --mx: 0.5;
+  --my: 0.5;
+  --scroll-y: 0;
+}
+
+/* ── Mouse-reactive layer depth helpers ── */
+.depth-1 {
+  transform: translate(
+    calc((var(--mx) - 0.5) * 10px),
+    calc((var(--my) - 0.5) *  7px)
+  );
+  transition: transform 0.18s ease-out;
+  will-change: transform;
+}
+.depth-2 {
+  transform: translate(
+    calc((var(--mx) - 0.5) * 22px),
+    calc((var(--my) - 0.5) * 15px)
+  );
+  transition: transform 0.14s ease-out;
+  will-change: transform;
+}
+.depth-3 {
+  transform: translate(
+    calc((var(--mx) - 0.5) * 38px),
+    calc((var(--my) - 0.5) * 26px)
+  );
+  transition: transform 0.10s ease-out;
+  will-change: transform;
+}
+
+/* ── Floating decorative elements (site-wide) ── */
+.float-slow  { animation: float-slow  7s  ease-in-out infinite; }
+.float-med   { animation: float-slow  5s  ease-in-out infinite reverse; }
+.float-fast  { animation: float-slow  3.5s ease-in-out infinite; }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px);    }
+  50%       { transform: translateY(-14px); }
+}
+
+/* ── Section reveal (controlled by SectionWrapper.tsx) ── */
+[data-reveal] {
+  will-change: opacity, transform;
+}
+
+/* ── Magnetic button effect ── */
+.magnetic-btn {
+  transition: transform 0.25s cubic-bezier(.22,1,.36,1);
+  will-change: transform;
+  display: inline-flex;
+}
+.magnetic-btn:hover {
+  transform: scale(1.06);
+}
+.magnetic-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Card 3D global polish ── */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.18s cubic-bezier(.22,1,.36,1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.card-3d:hover {
+  box-shadow:
+    0 20px 60px -10px rgba(133, 83, 0, 0.20),
+    0  4px 20px -4px  rgba(0, 0, 0, 0.10);
+}
+
+/* ── Page hero parallax bg ── */
+.page-hero-bg {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ── Diagonal shine sweep on hover ── */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -75%;
+  width: 50%; height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.shine-sweep:hover::after {
+  opacity: 1;
+  left: 125%;
+  transition: left 0.55s ease, opacity 0.3s;
+}
+
+/* ── Stats counter highlight ── */
+@keyframes counter-pop {
+  0%   { transform: scale(1);    }
+  40%  { transform: scale(1.18); }
+  100% { transform: scale(1);    }
+}
+.counter-pop { animation: counter-pop 0.45s cubic-bezier(.22,1,.36,1); }
+
+/* ── Ambient noise texture (light pages) ── */
+.noise-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ── Gradient text utility ── */
+.gradient-text-gold {
+  background: linear-gradient(135deg, #855300 0%, #F4A433 50%, #b87000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Tag pill ── */
+.section-tag {
+  display: inline-block;
+  background: rgba(133,83,0,0.1);
+  color: #855300;
+  border: 1px solid rgba(133,83,0,0.2);
+  border-radius: 9999px;
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Progress bar with glow ── */
+.progress-glow {
+  box-shadow: 0 0 8px 2px rgba(244,164,51,0.4);
+}
+
+/* ── Dot grid pattern (light) ── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(133,83,0,0.07) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+/* ── Line grid pattern ── */
+.line-grid {
+  background-image:
+    linear-gradient(rgba(133,83,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(133,83,0,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Soft section divider ── */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #855300, #F4A433);
+  margin: 0.75rem auto 0;
+}
+
+/* ── Glassmorphism card ── */
+.glass-card {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.8) inset;
+}
+
+/* ── Pulsing ring ── */
+@keyframes ring-pulse {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  100% { transform: scale(1.9);  opacity: 0;   }
+}
+.ring-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  border: 2px solid rgba(133,83,0,0.4);
+  animation: ring-pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ── Scroll progress bar ── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #855300, #F4A433, #48cc84);
+  z-index: 9999;
+  transform-origin: left;
+  transition: width 0.1s linear;
+}
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .depth-1, .depth-2, .depth-3,
+  .float-slow, .float-med, .float-fast,
+  .hero-blob-1, .hero-blob-2, .hero-blob-3,
+  .shine-sweep::after { animation: none !important; transition: none !important; }
+}
+
