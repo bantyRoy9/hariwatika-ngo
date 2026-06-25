@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Users, Heart, CheckCircle, Printer, Award, Clock, MapPin } from "lucide-react";
 
 interface VolunteerForm {
@@ -65,20 +66,20 @@ export default function VolunteerPage() {
           <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
           <style>
             body { margin: 0; padding: 20px; background: white; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; }
-            .card { width: 3.375in; height: 2.125in; border: 3px solid #855300; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, #fff8f0, #ffffff); display: flex; flex-direction: column; }
-            .header { background: #855300; color: white; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+            .card { width: 3.375in; height: 2.125in; border: 3px solid ${LENITY.accent}; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, ${LENITY.soft}, #ffffff); display: flex; flex-direction: column; }
+            .header { background: ${LENITY.accent}; color: white; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
             .org-name { font-family: 'Literata', serif; font-size: 11px; font-weight: 700; }
             .org-sub { font-size: 8px; opacity: 0.8; }
             .body { display: flex; padding: 10px 12px; flex: 1; gap: 10px; }
-            .avatar { width: 56px; height: 56px; border-radius: 50%; background: #855300; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; border: 2px solid #F4A433; }
+            .avatar { width: 56px; height: 56px; border-radius: 50%; background: ${LENITY.accent}; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; border: 2px solid #ffffff; }
             .info { flex: 1; }
-            .name { font-family: 'Literata', serif; font-size: 14px; font-weight: 700; color: #1b1c19; line-height: 1.2; }
-            .role { font-size: 10px; font-weight: 600; color: #855300; margin: 2px 0; }
-            .meta { font-size: 8px; color: #524435; }
+            .name { font-family: 'Literata', serif; font-size: 14px; font-weight: 700; color: ${LENITY.ink}; line-height: 1.2; }
+            .role { font-size: 10px; font-weight: 600; color: ${LENITY.accent}; margin: 2px 0; }
+            .meta { font-size: 8px; color: ${LENITY.muted}; }
             .meta-item { margin: 1px 0; }
-            .footer { background: #855300/10; padding: 4px 12px; border-top: 1px solid #e4e2dd; display: flex; justify-content: space-between; align-items: center; }
-            .id-num { font-size: 9px; font-weight: 700; color: #855300; font-family: monospace; }
-            .validity { font-size: 8px; color: #524435; }
+            .footer { background: ${LENITY.soft}; padding: 4px 12px; border-top: 1px solid ${LENITY.line}; display: flex; justify-content: space-between; align-items: center; }
+            .id-num { font-size: 9px; font-weight: 700; color: ${LENITY.accent}; font-family: monospace; }
+            .validity { font-size: 8px; color: ${LENITY.muted}; }
           </style>
         </head>
         <body>${content.outerHTML}</body>
@@ -95,56 +96,74 @@ export default function VolunteerPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Users className="w-12 h-12 text-[#F4A433] mx-auto mb-4" />
+        <section className="pt-28 pb-16 relative overflow-hidden" style={{ background: LENITY.soft }}>
+          <img
+            src={IMG.community}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover opacity-10"
+            loading="lazy"
+          />
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span
+              className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mx-auto mb-5"
+              style={{ background: LENITY.accentSoft }}
+            >
+              <Users className="w-7 h-7" style={{ color: LENITY.accent }} />
+            </span>
+            <p
+              className="text-xs font-bold uppercase tracking-[0.18em] mb-4"
+              style={{ color: LENITY.accent }}
+            >
+              Get Involved
+            </p>
             <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
+              className="text-3xl sm:text-5xl font-bold mb-4"
+              style={{ fontFamily: SERIF, color: LENITY.ink }}
             >
               स्वयंसेवक बनें
             </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <p className="text-lg max-w-xl mx-auto" style={{ color: LENITY.muted }}>
               Join our volunteer family and make a meaningful impact in your community.
             </p>
           </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
         </section>
 
-        <section className="py-16 bg-[#fbf9f4]">
+        <section className="py-16" style={{ background: LENITY.bg }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             {submitted ? (
               <div className="max-w-2xl mx-auto">
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden shadow-lg">
-                  <div className="bg-[#006d3e] text-white p-6 text-center">
+                <div
+                  className="bg-white rounded-3xl border overflow-hidden shadow-lg"
+                  style={{ borderColor: LENITY.line }}
+                >
+                  <div className="text-white p-6 text-center" style={{ background: LENITY.accent }}>
                     <CheckCircle className="w-14 h-14 mx-auto mb-2" />
-                    <h2 className="text-xl font-bold" style={{ fontFamily: "'Literata', serif" }}>
+                    <h2 className="text-xl font-bold" style={{ fontFamily: SERIF }}>
                       Welcome to the Team!
                     </h2>
-                    <p className="text-white/80 text-sm mt-1">Your volunteer registration is confirmed.</p>
+                    <p className="text-white/85 text-sm mt-1">Your volunteer registration is confirmed.</p>
                   </div>
 
                   <div className="p-6">
-                    <h3 className="font-semibold text-[#1b1c19] mb-4 text-center">Your Volunteer ID Card</h3>
+                    <h3
+                      className="font-semibold mb-4 text-center"
+                      style={{ color: LENITY.ink, fontFamily: SERIF }}
+                    >
+                      Your Volunteer ID Card
+                    </h3>
 
                     {/* ID Card */}
                     <div
                       id="id-card-print"
-                      className="max-w-xs mx-auto border-[3px] border-[#855300] rounded-2xl overflow-hidden shadow-md"
-                      style={{ background: "linear-gradient(135deg, #fff8f0, #ffffff)" }}
+                      className="max-w-xs mx-auto border-[3px] rounded-2xl overflow-hidden shadow-md"
+                      style={{ borderColor: LENITY.accent, background: `linear-gradient(135deg, ${LENITY.soft}, #ffffff)` }}
                     >
                       {/* Header */}
-                      <div className="bg-[#855300] text-white px-4 py-2 flex items-center gap-2">
+                      <div className="text-white px-4 py-2 flex items-center gap-2" style={{ background: LENITY.accent }}>
                         <Heart className="w-4 h-4 fill-white flex-shrink-0" />
                         <div>
-                          <div className="text-[10px] font-bold" style={{ fontFamily: "'Literata', serif" }}>
+                          <div className="text-[10px] font-bold" style={{ fontFamily: SERIF }}>
                             Hariwatika Shiv Mandir
                           </div>
                           <div className="text-[8px] opacity-80">Vivah Sewa Samiti · Bettiah, Bihar</div>
@@ -155,26 +174,29 @@ export default function VolunteerPage() {
                       {/* Body */}
                       <div className="flex gap-3 p-4">
                         {/* Avatar */}
-                        <div className="w-14 h-14 rounded-full bg-[#855300] flex items-center justify-center text-white font-bold text-lg flex-shrink-0 border-2 border-[#F4A433]">
+                        <div
+                          className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0 border-2 border-white"
+                          style={{ background: LENITY.accent }}
+                        >
                           {initials}
                         </div>
                         <div className="flex-1">
                           <div
-                            className="font-bold text-[#1b1c19] text-sm leading-tight"
-                            style={{ fontFamily: "'Literata', serif" }}
+                            className="font-bold text-sm leading-tight"
+                            style={{ fontFamily: SERIF, color: LENITY.ink }}
                           >
                             {form.name}
                           </div>
-                          <div className="text-[10px] font-semibold text-[#855300] mt-0.5">
+                          <div className="text-[10px] font-semibold mt-0.5" style={{ color: LENITY.accent }}>
                             Community Volunteer
                           </div>
                           <div className="mt-1 space-y-0.5">
-                            <div className="flex items-center gap-1 text-[9px] text-[#524435]">
-                              <Clock className="w-2.5 h-2.5 text-[#855300]" />
+                            <div className="flex items-center gap-1 text-[9px]" style={{ color: LENITY.muted }}>
+                              <Clock className="w-2.5 h-2.5" style={{ color: LENITY.accent }} />
                               Availability: {form.availability}
                             </div>
-                            <div className="flex items-center gap-1 text-[9px] text-[#524435]">
-                              <MapPin className="w-2.5 h-2.5 text-[#855300]" />
+                            <div className="flex items-center gap-1 text-[9px]" style={{ color: LENITY.muted }}>
+                              <MapPin className="w-2.5 h-2.5" style={{ color: LENITY.accent }} />
                               {form.address.split(",")[0] || "West Champaran"}
                             </div>
                           </div>
@@ -182,9 +204,12 @@ export default function VolunteerPage() {
                       </div>
 
                       {/* Footer */}
-                      <div className="bg-orange-50 px-4 py-2 flex items-center justify-between border-t border-[#e4e2dd]">
-                        <span className="font-mono text-xs font-bold text-[#855300]">{volunteerId}</span>
-                        <span className="text-[9px] text-[#524435]">
+                      <div
+                        className="px-4 py-2 flex items-center justify-between border-t"
+                        style={{ background: LENITY.soft, borderColor: LENITY.line }}
+                      >
+                        <span className="font-mono text-xs font-bold" style={{ color: LENITY.accent }}>{volunteerId}</span>
+                        <span className="text-[9px]" style={{ color: LENITY.muted }}>
                           Valid: {joinYear}–{joinYear + 1}
                         </span>
                       </div>
@@ -193,7 +218,8 @@ export default function VolunteerPage() {
                     <div className="flex gap-3 justify-center mt-6">
                       <button
                         onClick={handlePrintCard}
-                        className="flex items-center gap-2 bg-[#855300] text-white hover:bg-[#653e00] rounded-full px-5 py-2.5 text-sm font-semibold transition-colors"
+                        className="flex items-center gap-2 text-white rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105"
+                        style={{ background: LENITY.accent }}
                       >
                         <Printer className="w-4 h-4" />
                         Print ID Card
@@ -215,8 +241,8 @@ export default function VolunteerPage() {
                 {/* Benefits */}
                 <div className="space-y-4">
                   <h2
-                    className="text-xl font-bold text-[#1b1c19]"
-                    style={{ fontFamily: "'Literata', serif" }}
+                    className="text-xl font-bold"
+                    style={{ fontFamily: SERIF, color: LENITY.ink }}
                   >
                     Why Volunteer?
                   </h2>
@@ -226,13 +252,20 @@ export default function VolunteerPage() {
                     { icon: Heart, title: "Volunteer ID Card", desc: "Receive a printed ID card upon registration" },
                     { icon: Clock, title: "Flexible Timing", desc: "Volunteer on weekends or whenever you're free" },
                   ].map((b) => (
-                    <div key={b.title} className="bg-white rounded-xl border border-[#e4e2dd] p-4 flex gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
-                        <b.icon className="w-5 h-5 text-[#855300]" />
+                    <div
+                      key={b.title}
+                      className="bg-white rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
+                      style={{ borderColor: LENITY.line }}
+                    >
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: LENITY.accentSoft }}
+                      >
+                        <b.icon className="w-5 h-5" style={{ color: LENITY.accent }} />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-[#1b1c19] text-sm">{b.title}</h4>
-                        <p className="text-[#524435] text-xs mt-0.5">{b.desc}</p>
+                        <h4 className="font-semibold text-sm" style={{ color: LENITY.ink }}>{b.title}</h4>
+                        <p className="text-xs mt-0.5" style={{ color: LENITY.muted }}>{b.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -240,10 +273,10 @@ export default function VolunteerPage() {
 
                 {/* Form */}
                 <div className="lg:col-span-2">
-                  <div className="bg-white rounded-2xl border border-[#e4e2dd] p-6 sm:p-8">
+                  <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                     <h2
-                      className="text-xl font-bold text-[#1b1c19] mb-6"
-                      style={{ fontFamily: "'Literata', serif" }}
+                      className="text-xl font-bold mb-6"
+                      style={{ fontFamily: SERIF, color: LENITY.ink }}
                     >
                       Volunteer Registration
                     </h2>
@@ -251,17 +284,20 @@ export default function VolunteerPage() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-[#1b1c19] mb-1">Full Name *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Full Name *</label>
                           <input
                             required
                             value={form.name}
                             onChange={(e) => setForm({ ...form, name: e.target.value })}
                             placeholder="Your full name"
-                            className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300]"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                            style={{ borderColor: LENITY.line }}
+                            onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                            onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#1b1c19] mb-1">Age *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Age *</label>
                           <input
                             required
                             type="number"
@@ -270,19 +306,25 @@ export default function VolunteerPage() {
                             value={form.age}
                             onChange={(e) => setForm({ ...form, age: e.target.value })}
                             placeholder="Your age"
-                            className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300]"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                            style={{ borderColor: LENITY.line }}
+                            onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                            onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                           />
                         </div>
                       </div>
 
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-[#1b1c19] mb-1">Gender *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Gender *</label>
                           <select
                             required
                             value={form.gender}
                             onChange={(e) => setForm({ ...form, gender: e.target.value })}
-                            className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300] bg-white"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-white transition-colors"
+                            style={{ borderColor: LENITY.line }}
+                            onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                            onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                           >
                             <option value="">Select Gender</option>
                             <option>Male</option>
@@ -291,7 +333,7 @@ export default function VolunteerPage() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#1b1c19] mb-1">Mobile *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Mobile *</label>
                           <input
                             required
                             type="tel"
@@ -299,62 +341,78 @@ export default function VolunteerPage() {
                             value={form.mobile}
                             onChange={(e) => setForm({ ...form, mobile: e.target.value })}
                             placeholder="10-digit mobile"
-                            className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300]"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                            style={{ borderColor: LENITY.line }}
+                            onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                            onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Email</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Email</label>
                         <input
                           type="email"
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
                           placeholder="Optional"
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300]"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                          style={{ borderColor: LENITY.line }}
+                          onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                          onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Address *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Address *</label>
                         <textarea
                           required
                           value={form.address}
                           onChange={(e) => setForm({ ...form, address: e.target.value })}
                           placeholder="Village/Town, Block, District"
                           rows={2}
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300] resize-none"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none transition-colors"
+                          style={{ borderColor: LENITY.line }}
+                          onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                          onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                         />
                       </div>
 
                       {/* Skills */}
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-2">Skills *</label>
+                        <label className="block text-sm font-medium mb-2" style={{ color: LENITY.ink }}>Skills *</label>
                         <div className="flex flex-wrap gap-2">
-                          {skillOptions.map((skill) => (
-                            <button
-                              key={skill}
-                              type="button"
-                              onClick={() => toggleSkill(skill)}
-                              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                                form.skills.includes(skill)
-                                  ? "bg-[#855300] text-white border-[#855300]"
-                                  : "border-[#e4e2dd] text-[#524435] hover:border-[#855300]"
-                              }`}
-                            >
-                              {skill}
-                            </button>
-                          ))}
+                          {skillOptions.map((skill) => {
+                            const active = form.skills.includes(skill);
+                            return (
+                              <button
+                                key={skill}
+                                type="button"
+                                onClick={() => toggleSkill(skill)}
+                                className="px-3 py-1.5 rounded-full text-xs font-medium border transition-all hover:scale-105"
+                                style={
+                                  active
+                                    ? { background: LENITY.accent, color: "#ffffff", borderColor: LENITY.accent }
+                                    : { background: "transparent", color: LENITY.muted, borderColor: LENITY.line }
+                                }
+                              >
+                                {skill}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Availability *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Availability *</label>
                         <select
                           required
                           value={form.availability}
                           onChange={(e) => setForm({ ...form, availability: e.target.value })}
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300] bg-white"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-white transition-colors"
+                          style={{ borderColor: LENITY.line }}
+                          onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                          onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                         >
                           <option value="">Select availability</option>
                           <option>Weekends only</option>
@@ -366,20 +424,24 @@ export default function VolunteerPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Motivation</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Motivation</label>
                         <textarea
                           value={form.motivation}
                           onChange={(e) => setForm({ ...form, motivation: e.target.value })}
                           placeholder="Why do you want to volunteer with us?"
                           rows={3}
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#855300] resize-none"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none transition-colors"
+                          style={{ borderColor: LENITY.line }}
+                          onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
+                          onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                         />
                       </div>
 
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#855300] hover:bg-[#653e00] disabled:bg-gray-300 text-white rounded-full py-4 font-semibold text-base transition-colors flex items-center justify-center gap-2"
+                        className="w-full text-white rounded-full py-4 font-semibold text-base transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                        style={{ background: LENITY.accent }}
                       >
                         {loading ? (
                           <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />

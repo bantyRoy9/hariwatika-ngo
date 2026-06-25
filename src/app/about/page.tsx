@@ -6,6 +6,7 @@ import PageHero from "@/components/PageHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import { members } from "@/data/members";
+import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Target, Eye, FileText, Award, ShieldCheck, Download, Users } from "lucide-react";
 
 const legalDocs = [
@@ -35,10 +36,19 @@ const sortedMembers = [...members].sort(
   (a, b) => (rankOrder[a.designation] ?? 99) - (rankOrder[b.designation] ?? 99)
 );
 
-const avatarColors = [
-  "var(--color-primary)","var(--color-accent-green)","var(--color-primary-dark)","var(--color-accent-green-light)",
-  "var(--color-accent)","var(--color-primary-light)","#6B3D00","#003D20","#C47A00","#005C38",
-];
+/* eyebrow tag — orange uppercase tracking-wide */
+function eyebrowStyle() {
+  return {
+    background: LENITY.accentSoft,
+    color: LENITY.accent,
+    fontSize: "0.7rem",
+    fontWeight: 700,
+    padding: "0.375rem 1rem",
+    borderRadius: "9999px",
+    letterSpacing: "0.18em",
+    textTransform: "uppercase" as const,
+  };
+}
 
 export default function AboutPage() {
   return (
@@ -49,92 +59,42 @@ export default function AboutPage() {
           tag="Established 2000"
           title="हमारे बारे में"
           subtitle="A community-driven charitable organization serving underprivileged families in West Champaran, Bihar for over 25 years."
-          icon={<Users className="w-7 h-7" style={{ color: 'var(--color-accent)' }} />}
+          icon={<Users className="w-7 h-7" style={{ color: LENITY.accent }} />}
+          image={IMG.community}
         />
 
         {/* ── History ── */}
-        <section 
-          className="dot-grid relative overflow-hidden" 
-          style={{ 
-            paddingTop: 'var(--section-padding-md)', 
-            paddingBottom: 'var(--section-padding-md)',
-            background: 'var(--color-surface)'
-          }}
+        <section
+          className="relative overflow-hidden"
+          style={{ paddingTop: "6rem", paddingBottom: "6rem", background: LENITY.bg }}
         >
-          <div 
-            className="absolute top-0 left-0 w-80 h-80 rounded-full blur-3xl hero-blob-1 pointer-events-none" 
-            style={{ background: 'var(--color-primary)', opacity: 0.05 }}
-          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <Reveal animation="slide-right">
-                <span 
-                  className="mb-4 block w-fit"
-                  style={{
-                    background: 'var(--color-primary)',
-                    color: 'var(--color-surface)',
-                    opacity: 0.9,
-                    fontSize: 'var(--font-size-xs)',
-                    fontWeight: 'var(--font-weight-bold)',
-                    padding: '0.375rem 1rem',
-                    borderRadius: 'var(--radius-full)',
-                    letterSpacing: 'var(--letter-spacing-widest)',
-                    textTransform: 'uppercase'
-                  }}
-                >
+                <span className="mb-4 inline-block w-fit" style={eyebrowStyle()}>
                   Our History
                 </span>
-                <h2 
-                  className="gradient-text-premium font-display font-semibold mb-4" 
-                  style={{ 
-                    fontSize: 'var(--font-size-3xl)',
-                    lineHeight: 'var(--line-height-tight)',
-                    letterSpacing: 'var(--letter-spacing-tight)'
-                  }}
+                <h2
+                  className="font-semibold mb-4"
+                  style={{ fontFamily: SERIF, color: LENITY.ink, fontSize: "2rem", lineHeight: 1.15, letterSpacing: "-0.01em" }}
                 >
                   हमारी यात्रा
                 </h2>
-                <p 
-                  className="mb-4" 
-                  style={{ 
-                    color: 'var(--color-secondary-text)',
-                    fontSize: 'var(--font-size-base)',
-                    lineHeight: 'var(--line-height-relaxed)'
-                  }}
-                >
+                <p className="mb-4" style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
                   Founded in the year 2000 at the sacred Hariwatika Shiv Mandir in Bettiah, West Champaran,
                   our samiti began with a simple vision — to assist poor families in conducting dignified
                   marriages for their daughters and sons.
                 </p>
-                <p 
-                  className="mb-4" 
-                  style={{ 
-                    color: 'var(--color-secondary-text)',
-                    fontSize: 'var(--font-size-base)',
-                    lineHeight: 'var(--line-height-relaxed)'
-                  }}
-                >
+                <p className="mb-4" style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
                   Over the years, the scope expanded to include tree plantation, poverty relief, health
                   camps, and educational support. Today we proudly serve thousands of families.
                 </p>
-                <p 
-                  style={{ 
-                    color: 'var(--color-secondary-text)',
-                    fontSize: 'var(--font-size-base)',
-                    lineHeight: 'var(--line-height-relaxed)'
-                  }}
-                >
-                  Our work is guided by{' '}
-                  <strong 
-                    className="font-display" 
-                    style={{ 
-                      color: 'var(--color-primary)',
-                      fontWeight: 'var(--font-weight-semibold)'
-                    }}
-                  >
+                <p style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
+                  Our work is guided by{" "}
+                  <strong style={{ fontFamily: SERIF, color: LENITY.accent, fontWeight: 600 }}>
                     सेवा ही धर्म है
                   </strong>
-                  {' '}— Service is the highest duty. Every activity is transparent, inclusive, and respectful.
+                  {" "}— Service is the highest duty. Every activity is transparent, inclusive, and respectful.
                 </p>
               </Reveal>
 
@@ -144,40 +104,23 @@ export default function AboutPage() {
                     <div className="flex gap-4 items-start">
                       <div className="flex flex-col items-center shrink-0">
                         <div
-                          className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold shine-sweep"
-                          style={{ 
-                            background: i % 2 === 0 ? 'var(--color-primary)' : 'var(--color-accent-green)',
-                            fontSize: 'var(--font-size-xs)',
-                            fontWeight: 'var(--font-weight-bold)'
-                          }}
+                          className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold"
+                          style={{ background: LENITY.accent, fontSize: "0.7rem", fontWeight: 700 }}
                         >
                           {item.year.slice(2)}
                         </div>
                         {i < timeline.length - 1 && (
-                          <div 
-                            className="w-0.5 h-4 mt-1" 
-                            style={{ background: 'var(--color-outline-variant)' }}
-                          />
+                          <div className="w-0.5 h-4 mt-1" style={{ background: LENITY.line }} />
                         )}
                       </div>
                       <div className="pb-2">
-                        <span 
-                          className="font-bold block mb-0.5" 
-                          style={{ 
-                            color: 'var(--color-primary)',
-                            fontSize: 'var(--font-size-xs)',
-                            fontWeight: 'var(--font-weight-bold)'
-                          }}
+                        <span
+                          className="font-bold block mb-0.5"
+                          style={{ color: LENITY.accent, fontSize: "0.7rem", fontWeight: 700 }}
                         >
                           {item.year}
                         </span>
-                        <p 
-                          style={{ 
-                            color: 'var(--color-on-surface)',
-                            fontSize: 'var(--font-size-sm)',
-                            lineHeight: 'var(--line-height-snug)'
-                          }}
-                        >
+                        <p style={{ color: LENITY.ink, fontSize: "0.875rem", lineHeight: 1.35 }}>
                           {item.event}
                         </p>
                       </div>
@@ -190,66 +133,39 @@ export default function AboutPage() {
         </section>
 
         {/* ── Mission & Vision ── */}
-        <section 
-          className="line-grid relative overflow-hidden" 
-          style={{ 
-            paddingTop: 'var(--section-padding-md)', 
-            paddingBottom: 'var(--section-padding-md)',
-            background: 'var(--color-surface-elevated)'
-          }}
+        <section
+          className="relative overflow-hidden"
+          style={{ paddingTop: "6rem", paddingBottom: "6rem", background: LENITY.soft }}
         >
-          <div 
-            className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl hero-blob-2 pointer-events-none" 
-            style={{ background: 'var(--color-accent)', opacity: 0.06 }}
-          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <h2 
-                className="font-display font-semibold" 
-                style={{ 
-                  fontSize: 'var(--font-size-3xl)',
-                  color: 'var(--color-on-surface)',
-                  letterSpacing: 'var(--letter-spacing-tight)',
-                  marginBottom: '0.75rem'
-                }}
+              <h2
+                className="font-semibold"
+                style={{ fontFamily: SERIF, fontSize: "2rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.75rem" }}
               >
                 हमारा उद्देश्य
               </h2>
-              <div className="section-divider" />
+              <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
             </Reveal>
             <div className="grid md:grid-cols-2 gap-6">
               <Reveal animation="slide-right">
-                <Card3D 
-                  className="rounded-2xl p-6 h-full border" 
-                  style={{ 
-                    background: 'var(--color-surface)',
-                    borderColor: 'var(--color-outline-variant)',
-                    borderWidth: '1px'
-                  }}
+                <Card3D
+                  className="rounded-3xl p-6 h-full border transition-all hover:shadow-xl hover:-translate-y-1"
+                  style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                 >
-                  <div 
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
-                    style={{ background: 'var(--color-primary)', opacity: 0.1 }}
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: LENITY.accentSoft }}
                   >
-                    <Target className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
+                    <Target className="w-5 h-5" style={{ color: LENITY.accent }} />
                   </div>
-                  <h3 
-                    className="font-display font-semibold mb-3" 
-                    style={{ 
-                      fontSize: 'var(--font-size-xl)',
-                      color: 'var(--color-on-surface)',
-                      lineHeight: 'var(--line-height-snug)'
-                    }}
+                  <h3
+                    className="font-semibold mb-3"
+                    style={{ fontFamily: SERIF, fontSize: "1.25rem", color: LENITY.ink, lineHeight: 1.35 }}
                   >
                     हमारा मिशन
                   </h3>
-                  <p 
-                    style={{ 
-                      color: 'var(--color-secondary-text)',
-                      fontSize: 'var(--font-size-sm)',
-                      lineHeight: 'var(--line-height-relaxed)'
-                    }}
-                  >
+                  <p style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}>
                     To provide free and subsidized marriage services, create a greener environment through
                     tree plantation, support the poor with essential goods, and promote health and education
                     in rural communities of West Champaran, Bihar.
@@ -257,37 +173,23 @@ export default function AboutPage() {
                 </Card3D>
               </Reveal>
               <Reveal animation="slide-left">
-                <Card3D 
-                  className="rounded-2xl p-6 h-full border" 
-                  style={{ 
-                    background: 'var(--color-surface)',
-                    borderColor: 'var(--color-outline-variant)',
-                    borderWidth: '1px'
-                  }}
+                <Card3D
+                  className="rounded-3xl p-6 h-full border transition-all hover:shadow-xl hover:-translate-y-1"
+                  style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                 >
-                  <div 
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
-                    style={{ background: 'var(--color-accent-green)', opacity: 0.12 }}
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: LENITY.accentSoft }}
                   >
-                    <Eye className="w-5 h-5" style={{ color: 'var(--color-accent-green)' }} />
+                    <Eye className="w-5 h-5" style={{ color: LENITY.accent }} />
                   </div>
-                  <h3 
-                    className="font-display font-semibold mb-3" 
-                    style={{ 
-                      fontSize: 'var(--font-size-xl)',
-                      color: 'var(--color-on-surface)',
-                      lineHeight: 'var(--line-height-snug)'
-                    }}
+                  <h3
+                    className="font-semibold mb-3"
+                    style={{ fontFamily: SERIF, fontSize: "1.25rem", color: LENITY.ink, lineHeight: 1.35 }}
                   >
                     हमारा विजन
                   </h3>
-                  <p 
-                    style={{ 
-                      color: 'var(--color-secondary-text)',
-                      fontSize: 'var(--font-size-sm)',
-                      lineHeight: 'var(--line-height-relaxed)'
-                    }}
-                  >
+                  <p style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}>
                     A society where no family is unable to marry off their children due to poverty, every
                     village has green cover, hunger and preventable disease are eliminated, and every child
                     has access to quality education — a truly self-reliant community.
@@ -299,55 +201,23 @@ export default function AboutPage() {
         </section>
 
         {/* ── Team ── */}
-        <section 
-          className="dot-grid relative overflow-hidden" 
-          style={{ 
-            paddingTop: 'var(--section-padding-md)', 
-            paddingBottom: 'var(--section-padding-md)',
-            background: 'var(--color-surface)'
-          }}
+        <section
+          className="relative overflow-hidden"
+          style={{ paddingTop: "6rem", paddingBottom: "6rem", background: LENITY.bg }}
         >
-          <div 
-            className="absolute top-1/3 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" 
-            style={{ background: 'var(--color-primary)', opacity: 0.06 }}
-          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <span 
-                className="mb-3 block w-fit mx-auto"
-                style={{
-                  background: 'var(--color-primary)',
-                  color: 'var(--color-surface)',
-                  opacity: 0.9,
-                  fontSize: 'var(--font-size-xs)',
-                  fontWeight: 'var(--font-weight-bold)',
-                  padding: '0.375rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  letterSpacing: 'var(--letter-spacing-widest)',
-                  textTransform: 'uppercase'
-                }}
-              >
+              <span className="mb-3 inline-block w-fit mx-auto" style={eyebrowStyle()}>
                 Our Team
               </span>
-              <h2 
-                className="font-display font-semibold" 
-                style={{ 
-                  fontSize: 'var(--font-size-3xl)',
-                  color: 'var(--color-on-surface)',
-                  letterSpacing: 'var(--letter-spacing-tight)',
-                  marginBottom: '0.75rem'
-                }}
+              <h2
+                className="font-semibold"
+                style={{ fontFamily: SERIF, fontSize: "2rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.75rem" }}
               >
                 हमारी टीम
               </h2>
-              <div className="section-divider" />
-              <p 
-                className="mt-3" 
-                style={{ 
-                  color: 'var(--color-secondary-text)',
-                  fontSize: 'var(--font-size-sm)'
-                }}
-              >
+              <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
+              <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>
                 {members.length} dedicated members working for community development
               </p>
             </Reveal>
@@ -357,47 +227,28 @@ export default function AboutPage() {
                 <Reveal key={member.id} delay={idx * 30} animation="scale">
                   <Card3D
                     intensity={8}
-                    className="rounded-2xl border p-4 text-center cursor-default"
-                    style={{ 
-                      background: 'var(--color-surface-elevated)',
-                      borderColor: 'var(--color-outline-variant)',
-                      borderWidth: '1px'
-                    }}
+                    className="rounded-3xl border p-4 text-center cursor-default transition-all hover:shadow-xl hover:-translate-y-1"
+                    style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                   >
                     <div
-                      className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold ring-pulse relative"
-                      style={{ 
-                        background: avatarColors[idx % avatarColors.length],
-                        fontSize: 'var(--font-size-sm)',
-                        fontWeight: 'var(--font-weight-bold)'
-                      }}
+                      className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold relative"
+                      style={{ background: LENITY.accent, fontSize: "0.875rem", fontWeight: 700 }}
                     >
                       {member.initials}
                     </div>
-                    <h4 
-                      className="font-semibold leading-tight mb-1" 
-                      style={{ 
-                        color: 'var(--color-on-surface)',
-                        fontSize: 'var(--font-size-xs)',
-                        lineHeight: 'var(--line-height-snug)'
-                      }}
+                    <h4
+                      className="font-semibold leading-tight mb-1"
+                      style={{ color: LENITY.ink, fontSize: "0.7rem", lineHeight: 1.35 }}
                     >
                       {member.name}
                     </h4>
-                    <span 
+                    <span
                       className="inline-block font-semibold rounded-full px-2 py-0.5"
                       style={{
-                        fontSize: 'var(--font-size-xs)',
+                        fontSize: "0.7rem",
                         ...(member.designation === "Member"
-                          ? { 
-                              background: 'var(--color-surface-muted)', 
-                              color: 'var(--color-secondary-text)' 
-                            }
-                          : { 
-                              background: 'var(--color-primary)', 
-                              color: 'var(--color-surface)',
-                              opacity: 0.9
-                            })
+                          ? { background: LENITY.soft, color: LENITY.muted }
+                          : { background: LENITY.accentSoft, color: LENITY.accent }),
                       }}
                     >
                       {member.designation}
@@ -410,113 +261,57 @@ export default function AboutPage() {
         </section>
 
         {/* ── Legal Docs ── */}
-        <section 
-          className="relative overflow-hidden" 
-          style={{ 
-            paddingTop: 'var(--section-padding-md)', 
-            paddingBottom: 'var(--section-padding-md)',
-            background: 'var(--color-surface-elevated)'
-          }}
+        <section
+          className="relative overflow-hidden"
+          style={{ paddingTop: "6rem", paddingBottom: "6rem", background: LENITY.soft }}
         >
-          <div 
-            className="absolute bottom-0 right-0 w-96 h-64 rounded-full blur-3xl pointer-events-none" 
-            style={{ background: 'var(--color-accent-green)', opacity: 0.05 }}
-          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <span 
-                className="mb-3 block w-fit mx-auto"
-                style={{
-                  background: 'var(--color-primary)',
-                  color: 'var(--color-surface)',
-                  opacity: 0.9,
-                  fontSize: 'var(--font-size-xs)',
-                  fontWeight: 'var(--font-weight-bold)',
-                  padding: '0.375rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  letterSpacing: 'var(--letter-spacing-widest)',
-                  textTransform: 'uppercase'
-                }}
-              >
+              <span className="mb-3 inline-block w-fit mx-auto" style={eyebrowStyle()}>
                 Transparency
               </span>
-              <h2 
-                className="font-display font-semibold" 
-                style={{ 
-                  fontSize: 'var(--font-size-3xl)',
-                  color: 'var(--color-on-surface)',
-                  letterSpacing: 'var(--letter-spacing-tight)',
-                  marginBottom: '0.75rem'
-                }}
+              <h2
+                className="font-semibold"
+                style={{ fontFamily: SERIF, fontSize: "2rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.75rem" }}
               >
                 कानूनी दस्तावेज़
               </h2>
-              <div className="section-divider" />
-              <p 
-                className="mt-3" 
-                style={{ 
-                  color: 'var(--color-secondary-text)',
-                  fontSize: 'var(--font-size-sm)'
-                }}
-              >
+              <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
+              <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>
                 All legal registrations and certifications
               </p>
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {legalDocs.map((doc, i) => (
                 <Reveal key={doc.title} delay={i * 70} animation="slide-up">
-                  <Card3D 
-                    className="rounded-2xl border p-6 h-full shine-sweep" 
-                    style={{ 
-                      background: 'var(--color-surface-elevated)',
-                      borderColor: 'var(--color-outline-variant)',
-                      borderWidth: '1px'
-                    }}
+                  <Card3D
+                    className="rounded-3xl border p-6 h-full transition-all hover:shadow-xl hover:-translate-y-1"
+                    style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                   >
-                    <div 
-                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
-                      style={{ background: 'var(--color-primary)', opacity: 0.08 }}
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                      style={{ background: LENITY.accentSoft }}
                     >
-                      <doc.icon className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
+                      <doc.icon className="w-5 h-5" style={{ color: LENITY.accent }} />
                     </div>
-                    <h3 
-                      className="font-semibold mb-1" 
-                      style={{ 
-                        color: 'var(--color-on-surface)',
-                        fontSize: 'var(--font-size-sm)',
-                        fontWeight: 'var(--font-weight-semibold)'
-                      }}
+                    <h3
+                      className="font-semibold mb-1"
+                      style={{ fontFamily: SERIF, color: LENITY.ink, fontSize: "0.875rem", fontWeight: 600 }}
                     >
                       {doc.title}
                     </h3>
-                    <p 
-                      className="font-mono mb-2" 
-                      style={{ 
-                        color: 'var(--color-primary)',
-                        fontSize: 'var(--font-size-xs)',
-                        fontWeight: 'var(--font-weight-medium)'
-                      }}
+                    <p
+                      className="font-mono mb-2"
+                      style={{ color: LENITY.accent, fontSize: "0.7rem", fontWeight: 500 }}
                     >
                       {doc.number}
                     </p>
-                    <p 
-                      className="mb-4" 
-                      style={{ 
-                        color: 'var(--color-secondary-text)',
-                        fontSize: 'var(--font-size-xs)',
-                        lineHeight: 'var(--line-height-snug)'
-                      }}
-                    >
+                    <p className="mb-4" style={{ color: LENITY.muted, fontSize: "0.7rem", lineHeight: 1.35 }}>
                       {doc.desc}
                     </p>
-                    <button 
-                      className="flex items-center gap-1.5 font-semibold border rounded-full px-3 py-1.5 hover:opacity-80 transition-opacity"
-                      style={{
-                        fontSize: 'var(--font-size-xs)',
-                        color: 'var(--color-primary)',
-                        borderColor: 'var(--color-primary)',
-                        borderWidth: '1px'
-                      }}
+                    <button
+                      className="flex items-center gap-1.5 font-semibold rounded-full px-3 py-1.5 text-white transition-all hover:scale-105"
+                      style={{ fontSize: "0.7rem", background: LENITY.accent }}
                     >
                       <Download className="w-3 h-3" /> Download
                     </button>

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Calendar, Tag, Heart, ArrowRight } from "lucide-react";
+import { Calendar, Tag, ArrowRight, HandHeart } from "lucide-react";
+import { LENITY, SERIF, IMG } from "@/theme/lenity";
 
 const categories = ["All", "Events", "Environment", "Relief Work", "Health", "Education", "Announcement"];
 
@@ -16,7 +17,7 @@ const posts = [
     excerpt:
       "This year's mass marriage ceremony witnessed 12 families unite under one roof with the blessings of Shiv Mandir. The grand event was attended by over 500 community members at Sukanya Utsav Bhawan, Hariwatika Chowk.",
     tags: ["vivah", "ceremony", "community"],
-    color: "#855300",
+    img: IMG.community,
   },
   {
     id: 2,
@@ -26,7 +27,7 @@ const posts = [
     excerpt:
       "Volunteers and community members came together to plant 2000 saplings across Bettiah and surrounding villages. School children, teachers, and local officials participated in this green initiative.",
     tags: ["environment", "trees", "campaign"],
-    color: "#006d3e",
+    img: IMG.trees,
   },
   {
     id: 3,
@@ -36,7 +37,7 @@ const posts = [
     excerpt:
       "As winter approached, our team distributed warm blankets and essentials to 500 underprivileged families across 8 villages in West Champaran. Priority was given to the elderly and children.",
     tags: ["relief", "winter", "garib-sahayata"],
-    color: "#855300",
+    img: IMG.relief,
   },
   {
     id: 4,
@@ -46,7 +47,7 @@ const posts = [
     excerpt:
       "Our quarterly free health camp provided consultations to 300+ patients. Services included blood pressure check, diabetes screening, eye examination, and free distribution of essential medicines.",
     tags: ["health", "camp", "free-medical"],
-    color: "#006d3e",
+    img: IMG.children,
   },
   {
     id: 5,
@@ -56,7 +57,7 @@ const posts = [
     excerpt:
       "Fifty deserving girl students from economically weak backgrounds received scholarship awards to support their higher education. The ceremony was presided over by Director Ramanand Yadav.",
     tags: ["education", "girls", "scholarship"],
-    color: "#855300",
+    img: IMG.about1,
   },
   {
     id: 6,
@@ -66,7 +67,7 @@ const posts = [
     excerpt:
       "The Annual General Meeting of Hariwatika Shiv Mandir Vivah Sewa Samiti was held at Sukanya Utsav Bhawan. New office-bearers were elected, financial reports were presented, and future plans discussed.",
     tags: ["agm", "announcement", "meeting"],
-    color: "#006d3e",
+    img: IMG.whatWeDo,
   },
   {
     id: 7,
@@ -76,7 +77,7 @@ const posts = [
     excerpt:
       "Hariwatika Samiti celebrated Independence Day with flag hoisting, patriotic songs, and a cultural program by local school students. Sweets were distributed to over 200 attendees.",
     tags: ["independence-day", "celebration", "patriotic"],
-    color: "#855300",
+    img: IMG.about2,
   },
   {
     id: 8,
@@ -86,7 +87,7 @@ const posts = [
     excerpt:
       "Heavy rainfall and floods in parts of West Champaran displaced numerous families. Our team set up a relief camp providing food, water, and essential supplies to affected households.",
     tags: ["flood", "relief", "emergency"],
-    color: "#006d3e",
+    img: IMG.relief,
   },
   {
     id: 9,
@@ -96,7 +97,7 @@ const posts = [
     excerpt:
       "On World Environment Day, members pledged to plant at least 10 trees each and participate in community clean-up drives. Over 500 saplings were planted across Bettiah.",
     tags: ["environment-day", "plantation", "awareness"],
-    color: "#006d3e",
+    img: IMG.trees,
   },
 ];
 
@@ -113,112 +114,122 @@ export default function BlogPage() {
     <>
       <Navbar />
       <main>
-        {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
+        {/* ════════════ HERO ════════════ */}
+        <section className="relative overflow-hidden pt-36 pb-24" style={{ background: LENITY.soft }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-block bg-white/10 text-[#F4A433] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-4">
-              News & Updates
+            <span
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-5"
+              style={{ color: LENITY.accent }}
+            >
+              <span
+                className="inline-flex w-5 h-5 rounded-full items-center justify-center"
+                style={{ background: `${LENITY.accent}1a` }}
+              >
+                <HandHeart className="w-3 h-3" />
+              </span>
+              News &amp; Updates
             </span>
             <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
+              className="text-4xl sm:text-5xl font-bold mb-5 leading-[1.1]"
+              style={{ fontFamily: SERIF, color: LENITY.ink }}
             >
               समाचार और अपडेट
             </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <p className="text-base sm:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: LENITY.muted }}>
               Stay updated with our latest activities, events, and community programs.
             </p>
           </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
         </section>
 
-        {/* Filter */}
-        <section className="py-6 bg-[#fbf9f4] border-b border-[#e4e2dd]">
+        {/* ════════════ FILTER ════════════ */}
+        <section className="py-6 bg-white border-b" style={{ borderColor: LENITY.line }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeCategory === cat
-                      ? "bg-[#855300] text-white"
-                      : "bg-white border border-[#e4e2dd] text-[#524435] hover:border-[#855300] hover:text-[#855300]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+              {categories.map((cat) => {
+                const active = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className="px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105"
+                    style={
+                      active
+                        ? { background: LENITY.accent, color: "#ffffff" }
+                        : { background: "#ffffff", color: LENITY.muted, border: `1px solid ${LENITY.line}` }
+                    }
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* Posts */}
-        <section className="py-16 bg-[#fbf9f4]">
+        {/* ════════════ POSTS ════════════ */}
+        <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((post) => (
                 <div
                   key={post.id}
-                  className="bg-white rounded-2xl border border-[#e4e2dd] overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white rounded-3xl border overflow-hidden h-full flex flex-col transition-all hover:shadow-xl hover:-translate-y-1"
+                  style={{ borderColor: LENITY.line }}
                 >
-                  {/* Card image placeholder */}
-                  <div
-                    className="h-40 flex items-center justify-center"
-                    style={{ background: `linear-gradient(135deg, ${post.color}15, ${post.color}08)` }}
-                  >
-                    <Heart
-                      className="w-14 h-14"
-                      style={{ color: post.color, opacity: 0.25 }}
+                  {/* Card image */}
+                  <div className="h-48 relative overflow-hidden">
+                    <img
+                      src={post.img}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
                     />
+                    <span
+                      className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1 text-white"
+                      style={{ background: LENITY.accent }}
+                    >
+                      {post.category}
+                    </span>
                   </div>
 
-                  <div className="p-5">
+                  <div className="p-6 flex flex-col flex-1">
                     {/* Meta */}
-                    <div className="flex items-center justify-between mb-2">
-                      <span
-                        className="text-[10px] font-bold rounded-full px-2.5 py-0.5"
-                        style={{ background: `${post.color}15`, color: post.color }}
-                      >
-                        {post.category}
-                      </span>
-                      <div className="flex items-center gap-1 text-[#524435] text-[10px]">
-                        <Calendar className="w-3 h-3" />
-                        {post.date}
-                      </div>
+                    <div className="flex items-center gap-1 text-[11px] mb-2" style={{ color: LENITY.muted }}>
+                      <Calendar className="w-3 h-3" />
+                      {post.date}
                     </div>
 
                     <h3
-                      className="font-semibold text-[#1b1c19] text-base leading-snug mb-2"
-                      style={{ fontFamily: "'Literata', serif" }}
+                      className="font-bold text-base leading-snug mb-2"
+                      style={{ fontFamily: SERIF, color: LENITY.ink }}
                     >
                       {post.title}
                     </h3>
 
-                    <p className={`text-[#524435] text-xs leading-relaxed ${expandedId === post.id ? "" : "line-clamp-3"}`}>
+                    <p
+                      className={`text-xs leading-relaxed ${expandedId === post.id ? "" : "line-clamp-3"}`}
+                      style={{ color: LENITY.muted }}
+                    >
                       {post.excerpt}
                     </p>
 
                     <button
                       onClick={() => setExpandedId(expandedId === post.id ? null : post.id)}
-                      className="mt-2 flex items-center gap-1 text-xs font-semibold transition-colors"
-                      style={{ color: post.color }}
+                      className="mt-3 inline-flex items-center gap-1 text-xs font-bold transition-colors"
+                      style={{ color: LENITY.accent }}
                     >
                       {expandedId === post.id ? "Show less" : "Read more"}
                       <ArrowRight className={`w-3 h-3 transition-transform ${expandedId === post.id ? "rotate-90" : ""}`} />
                     </button>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5 mt-3">
+                    <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t" style={{ borderColor: LENITY.line }}>
                       {post.tags.map((tag) => (
-                        <span key={tag} className="flex items-center gap-0.5 text-[9px] text-[#524435] bg-gray-50 rounded-full px-2 py-0.5">
+                        <span
+                          key={tag}
+                          className="flex items-center gap-0.5 text-[9px] rounded-full px-2 py-0.5"
+                          style={{ color: LENITY.accent, background: `${LENITY.accent}14` }}
+                        >
                           <Tag className="w-2 h-2" />
                           {tag}
                         </span>
@@ -231,7 +242,7 @@ export default function BlogPage() {
 
             {filtered.length === 0 && (
               <div className="text-center py-16">
-                <p className="text-[#524435]">No posts found in this category.</p>
+                <p style={{ color: LENITY.muted }}>No posts found in this category.</p>
               </div>
             )}
           </div>
