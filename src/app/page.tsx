@@ -22,23 +22,49 @@ const LENITY = {
   muted: "#6b6b6b",
   soft: "#f7f7f5",
   line: "#ececea",
+  amber: "#f0a830",
+  red: "#e8542a",
+  blue: "#3a7bd5",
 };
 
 const SERIF = "'Literata', serif";
 
 /* Unsplash hotlinks — community / charity / India themed */
 const IMG = {
-  hero:      "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1600&q=80&auto=format&fit=crop",
-  about1:    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=700&q=80&auto=format&fit=crop",
-  about2:    "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=700&q=80&auto=format&fit=crop",
+  hero:      "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80&auto=format&fit=crop",
+  about1:    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=700&q=80&auto=format&fit=crop",
+  about2:    "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=700&q=80&auto=format&fit=crop",
   avatar:    "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=200&q=80&auto=format&fit=crop",
-  whatWeDo:  "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=900&q=80&auto=format&fit=crop",
+  whatWeDo:  "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=900&q=80&auto=format&fit=crop",
   svc: [
-    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1604608672516-f1b9b1d37076?w=400&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80&auto=format&fit=crop",
   ],
+  community: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=900&q=80&auto=format&fit=crop",
+  children:  "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=900&q=80&auto=format&fit=crop",
 };
+
+/* reference-theme: 3 overlapping feature cards under hero (red / photo / blue) */
+const featureCards = [
+  { key: "crowd",  bg: "#e8542a", img: null,
+    titleEn: "Crowdfunding", titleHi: "क्राउडफंडिंग",
+    descEn: "Our charity activities go further with your donation. We call on fundraising from anyone who can.",
+    descHi: "आपके दान से हमारी सेवाएँ और आगे बढ़ती हैं। हर सहयोगी का स्वागत है।", href: "/donate" },
+  { key: "vol",    bg: null, img: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=600&q=80&auto=format&fit=crop",
+    titleEn: "Become a Volunteer", titleHi: "स्वयंसेवक बनें", descEn: "", descHi: "", href: "/volunteer" },
+  { key: "school", bg: "#3a7bd5", img: null,
+    titleEn: "Give Scholarship", titleHi: "छात्रवृत्ति दें",
+    descEn: "We believe education is the best way to help those in need. Support a child's future today.",
+    descHi: "शिक्षा ही जरूरतमंदों की सबसे बड़ी मदद है। आज एक बच्चे के भविष्य का सहयोग करें।", href: "/donate" },
+];
+
+/* reference-theme: "Our Projects" amber band */
+const projects = [
+  { titleEn: "Women Empowerment", titleHi: "महिला सशक्तिकरण", img: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80&auto=format&fit=crop" },
+  { titleEn: "Donation Drive",    titleHi: "दान अभियान",       img: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=80&auto=format&fit=crop" },
+  { titleEn: "Community Care",    titleHi: "सामुदायिक सेवा",   img: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=600&q=80&auto=format&fit=crop" },
+];
 
 /* ─────────────────────────────────────────────────────────────
    BILINGUAL CONTENT
@@ -222,11 +248,11 @@ export default function HomePage() {
 
       {/* ════════════ HERO ════════════ */}
       <section className="relative min-h-[88vh] flex items-center overflow-hidden">
-        <img src={IMG.hero} alt="Mother and child supported by Hariwatika Samiti"
+        <img src={IMG.hero} alt="Wedding ceremony facilitated by Hariwatika Vivah Sewa Samiti"
           className="absolute inset-0 w-full h-full object-cover" loading="eager" />
         {/* dark left-to-right overlay keeps white navbar text readable */}
         <div className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, rgba(15,10,5,0.88) 0%, rgba(15,10,5,0.65) 40%, rgba(15,10,5,0.15) 75%, transparent 100%)" }} />
+          style={{ background: "linear-gradient(90deg, rgba(15,10,5,0.70) 0%, rgba(15,10,5,0.45) 50%, rgba(15,10,5,0.30) 100%)" }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16">
           <div className="max-w-2xl">
@@ -261,6 +287,34 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════ FEATURE CARDS (overlap hero) ════════════ */}
+      <section className="relative z-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative">
+          <div className="grid sm:grid-cols-3 rounded-2xl overflow-hidden shadow-2xl">
+            {featureCards.map((c) => (
+              <div key={c.key} className="relative min-h-[300px] flex flex-col justify-center items-center text-center p-8 group overflow-hidden"
+                style={c.bg ? { background: c.bg } : undefined}>
+                {c.img && (
+                  <>
+                    <img src={c.img} alt={t(c.titleEn, c.titleHi)} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <div className="absolute inset-0" style={{ background: "rgba(15,10,5,0.62)" }} />
+                  </>
+                )}
+                <div className="relative z-10 text-white">
+                  <h3 className="text-xl font-bold mb-3" style={{ fontFamily: SERIF }}>{t(c.titleEn, c.titleHi)}</h3>
+                  <span className="block w-10 h-0.5 bg-white/70 mx-auto mb-4" />
+                  {c.descEn && <p className="text-sm text-white/85 leading-relaxed mb-5 max-w-xs">{t(c.descEn, c.descHi)}</p>}
+                  <Link href={c.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/60 px-5 py-2.5 text-xs font-bold text-white hover:bg-white/15 transition-all">
+                    {t("Learn More", "और जानें")} <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -408,6 +462,34 @@ export default function HomePage() {
               <div className="text-white/70 text-sm font-medium">{t(s.en, s.hi)}</div>
             </Fade>
           ))}
+        </div>
+      </section>
+
+      {/* ════════════ OUR PROJECTS (amber band) ════════════ */}
+      <section className="py-24" style={{ background: LENITY.amber }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Fade className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3" style={{ fontFamily: SERIF }}>
+              {t("Our Projects", "हमारी परियोजनाएं")}
+            </h2>
+            <span className="block w-14 h-1 bg-white/80 mx-auto rounded-full" />
+          </Fade>
+          <div className="grid sm:grid-cols-3 gap-7">
+            {projects.map((p) => (
+              <Fade key={p.titleEn}>
+                <Link href="/projects" className="block rounded-3xl overflow-hidden shadow-xl group relative">
+                  <img src={p.img} alt={t(p.titleEn, p.titleHi)} className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(15,10,5,0.78) 100%)" }} />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-lg font-bold text-white" style={{ fontFamily: SERIF }}>{t(p.titleEn, p.titleHi)}</h3>
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-white/90 mt-1">
+                      {t("View Project", "देखें")} <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              </Fade>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Heart, Globe } from "lucide-react";
+import { Menu, X, Heart, Globe, MapPin, Phone, Clock } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
+import { LENITY, CONTACT } from "@/theme/lenity";
 
 const navLinksEn = [
   { href: "/", label: "Home" },
@@ -50,12 +51,12 @@ export default function Navbar() {
 
   /* Decide text colour based on scroll state */
   const linkColour = scrolled || mobileOpen
-    ? "text-[#1b1c19] hover:text-[#855300] hover:bg-orange-50"
-    : "text-white hover:text-[#F4A433] hover:bg-white/10";
+    ? "text-[#1b1c19] hover:text-[#F97316] hover:bg-orange-50"
+    : "text-white hover:text-[#F97316] hover:bg-white/10";
 
   const activeLinkColour = scrolled || mobileOpen
-    ? "text-[#855300] bg-orange-50"
-    : "text-[#F4A433] bg-white/10";
+    ? "text-[#F97316] bg-orange-50"
+    : "text-[#F97316] bg-white/10";
 
   return (
     <>
@@ -66,18 +67,41 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
+        {/* ── Top utility bar (collapses on scroll) ── */}
+        <div
+          className="hidden lg:block overflow-hidden transition-all duration-500 text-white"
+          style={{
+            background: LENITY.dark,
+            maxHeight: scrolled ? 0 : 40,
+            opacity: scrolled ? 0 : 1,
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-10 text-[11px]">
+            <div className="flex items-center gap-5">
+              <span className="inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />{CONTACT.address}</span>
+              <span className="inline-flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />{CONTACT.phone}</span>
+              <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />{CONTACT.hours}</span>
+            </div>
+            <div className="flex items-center gap-4 font-semibold">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">Facebook</a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">Instagram</a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">YouTube</a>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* ── Logo ── */}
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#855300] shadow-md">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F97316] shadow-md">
                 <Heart className="w-5 h-5 text-white fill-white" />
               </span>
               <div className="flex flex-col leading-tight">
                 <span
                   className={`text-lg font-bold transition-colors duration-300 ${
-                    scrolled ? "text-[#855300]" : "text-white"
+                    scrolled ? "text-[#F97316]" : "text-white"
                   }`}
                   style={{ fontFamily: "'Literata', Georgia, serif" }}
                 >
@@ -85,7 +109,7 @@ export default function Navbar() {
                 </span>
                 <span
                   className={`text-[10px] font-medium hidden sm:block transition-colors duration-300 ${
-                    scrolled ? "text-[#524435]" : "text-white/70"
+                    scrolled ? "text-[#6b6b6b]" : "text-white/70"
                   }`}
                 >
                   Shiv Mandir Vivah Sewa Samiti
@@ -117,7 +141,7 @@ export default function Navbar() {
                 aria-label="Switch language"
                 className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-all duration-200 border ${
                   scrolled
-                    ? "border-[#e4e2dd] text-[#855300] hover:bg-orange-50"
+                    ? "border-[#ececea] text-[#F97316] hover:bg-orange-50"
                     : "border-white/30 text-white hover:bg-white/10"
                 }`}
               >
@@ -128,7 +152,7 @@ export default function Navbar() {
               {/* Donate CTA */}
               <Link
                 href="/donate"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#855300] hover:bg-[#653e00] text-white rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea670c] text-white rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 {t("Donate Now", "दान करें")}
@@ -152,7 +176,7 @@ export default function Navbar() {
 
         {/* ── Mobile Drawer ── */}
         <div
-          className={`lg:hidden bg-white border-t border-[#e4e2dd] shadow-xl overflow-hidden transition-all duration-300 ${
+          className={`lg:hidden bg-white border-t border-[#ececea] shadow-xl overflow-hidden transition-all duration-300 ${
             mobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
@@ -163,32 +187,32 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "text-[#855300] bg-orange-50 font-semibold"
-                    : "text-[#1b1c19] hover:text-[#855300] hover:bg-orange-50"
+                    ? "text-[#F97316] bg-orange-50 font-semibold"
+                    : "text-[#1b1c19] hover:text-[#F97316] hover:bg-orange-50"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="pt-3 mt-2 border-t border-[#e4e2dd] space-y-2">
+            <div className="pt-3 mt-2 border-t border-[#ececea] space-y-2">
               <Link
                 href="/donate"
-                className="flex items-center justify-center gap-2 w-full bg-[#855300] hover:bg-[#653e00] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-[#F97316] hover:bg-[#ea670c] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 {t("Donate Now", "दान करें")}
               </Link>
               <Link
                 href="/registration"
-                className="flex items-center justify-center w-full border border-[#855300] text-[#855300] hover:bg-[#855300] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center w-full border border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 {t("Marriage Registration", "विवाह पंजीकरण")}
               </Link>
               {/* Language toggle in drawer */}
               <button
                 onClick={toggle}
-                className="flex items-center justify-center gap-2 w-full border border-[#e4e2dd] text-[#524435] hover:bg-orange-50 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full border border-[#ececea] text-[#6b6b6b] hover:bg-orange-50 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Globe className="w-4 h-4" />
                 {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}
