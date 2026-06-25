@@ -36,8 +36,8 @@ const sortedMembers = [...members].sort(
 );
 
 const avatarColors = [
-  "#855300","#006d3e","#6b3d00","#004d2e","#a06400",
-  "#007848","#5c3000","#003d20","#c47a00","#005c38",
+  "var(--color-primary)","var(--color-accent-green)","var(--color-primary-dark)","var(--color-accent-green-light)",
+  "var(--color-accent)","var(--color-primary-light)","#6B3D00","#003D20","#C47A00","#005C38",
 ];
 
 export default function AboutPage() {
@@ -49,50 +49,137 @@ export default function AboutPage() {
           tag="Established 2000"
           title="हमारे बारे में"
           subtitle="A community-driven charitable organization serving underprivileged families in West Champaran, Bihar for over 25 years."
-          icon={<Users className="w-8 h-8 text-[#F4A433]" />}
+          icon={<Users className="w-7 h-7" style={{ color: 'var(--color-accent)' }} />}
         />
 
         {/* ── History ── */}
-        <section className="py-20 bg-[#fbf9f4] dot-grid relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-[#855300]/5 blur-3xl hero-blob-1 pointer-events-none" />
+        <section 
+          className="dot-grid relative overflow-hidden" 
+          style={{ 
+            paddingTop: 'var(--section-padding-md)', 
+            paddingBottom: 'var(--section-padding-md)',
+            background: 'var(--color-surface)'
+          }}
+        >
+          <div 
+            className="absolute top-0 left-0 w-80 h-80 rounded-full blur-3xl hero-blob-1 pointer-events-none" 
+            style={{ background: 'var(--color-primary)', opacity: 0.05 }}
+          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <Reveal animation="slide-right">
-                <span className="section-tag mb-4 block w-fit">Our History</span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#1b1c19] mb-5 gradient-text-gold" style={{ fontFamily: "'Literata', serif" }}>
+                <span 
+                  className="mb-4 block w-fit"
+                  style={{
+                    background: 'var(--color-primary)',
+                    color: 'var(--color-surface)',
+                    opacity: 0.9,
+                    fontSize: 'var(--font-size-xs)',
+                    fontWeight: 'var(--font-weight-bold)',
+                    padding: '0.375rem 1rem',
+                    borderRadius: 'var(--radius-full)',
+                    letterSpacing: 'var(--letter-spacing-widest)',
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  Our History
+                </span>
+                <h2 
+                  className="gradient-text-premium font-display font-semibold mb-4" 
+                  style={{ 
+                    fontSize: 'var(--font-size-3xl)',
+                    lineHeight: 'var(--line-height-tight)',
+                    letterSpacing: 'var(--letter-spacing-tight)'
+                  }}
+                >
                   हमारी यात्रा
                 </h2>
-                <p className="text-[#524435] leading-relaxed mb-4">
+                <p 
+                  className="mb-4" 
+                  style={{ 
+                    color: 'var(--color-secondary-text)',
+                    fontSize: 'var(--font-size-base)',
+                    lineHeight: 'var(--line-height-relaxed)'
+                  }}
+                >
                   Founded in the year 2000 at the sacred Hariwatika Shiv Mandir in Bettiah, West Champaran,
                   our samiti began with a simple vision — to assist poor families in conducting dignified
                   marriages for their daughters and sons.
                 </p>
-                <p className="text-[#524435] leading-relaxed mb-4">
+                <p 
+                  className="mb-4" 
+                  style={{ 
+                    color: 'var(--color-secondary-text)',
+                    fontSize: 'var(--font-size-base)',
+                    lineHeight: 'var(--line-height-relaxed)'
+                  }}
+                >
                   Over the years, the scope expanded to include tree plantation, poverty relief, health
                   camps, and educational support. Today we proudly serve thousands of families.
                 </p>
-                <p className="text-[#524435] leading-relaxed">
-                  Our work is guided by <strong className="text-[#855300]">सेवा ही धर्म है</strong> —
-                  Service is the highest duty. Every activity is transparent, inclusive, and respectful.
+                <p 
+                  style={{ 
+                    color: 'var(--color-secondary-text)',
+                    fontSize: 'var(--font-size-base)',
+                    lineHeight: 'var(--line-height-relaxed)'
+                  }}
+                >
+                  Our work is guided by{' '}
+                  <strong 
+                    className="font-display" 
+                    style={{ 
+                      color: 'var(--color-primary)',
+                      fontWeight: 'var(--font-weight-semibold)'
+                    }}
+                  >
+                    सेवा ही धर्म है
+                  </strong>
+                  {' '}— Service is the highest duty. Every activity is transparent, inclusive, and respectful.
                 </p>
               </Reveal>
 
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {timeline.map((item, i) => (
-                  <Reveal key={item.year} delay={i * 70} animation="slide-left">
+                  <Reveal key={item.year} delay={i * 60} animation="slide-left">
                     <div className="flex gap-4 items-start">
                       <div className="flex flex-col items-center shrink-0">
                         <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold shine-sweep"
-                          style={{ background: i % 2 === 0 ? "#855300" : "#006d3e" }}
+                          className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold shine-sweep"
+                          style={{ 
+                            background: i % 2 === 0 ? 'var(--color-primary)' : 'var(--color-accent-green)',
+                            fontSize: 'var(--font-size-xs)',
+                            fontWeight: 'var(--font-weight-bold)'
+                          }}
                         >
                           {item.year.slice(2)}
                         </div>
-                        {i < timeline.length - 1 && <div className="w-0.5 h-5 bg-[#e4e2dd] mt-1" />}
+                        {i < timeline.length - 1 && (
+                          <div 
+                            className="w-0.5 h-4 mt-1" 
+                            style={{ background: 'var(--color-outline-variant)' }}
+                          />
+                        )}
                       </div>
-                      <div className="pb-3">
-                        <span className="text-xs font-bold text-[#855300]">{item.year}</span>
-                        <p className="text-[#1b1c19] text-sm mt-0.5">{item.event}</p>
+                      <div className="pb-2">
+                        <span 
+                          className="font-bold block mb-0.5" 
+                          style={{ 
+                            color: 'var(--color-primary)',
+                            fontSize: 'var(--font-size-xs)',
+                            fontWeight: 'var(--font-weight-bold)'
+                          }}
+                        >
+                          {item.year}
+                        </span>
+                        <p 
+                          style={{ 
+                            color: 'var(--color-on-surface)',
+                            fontSize: 'var(--font-size-sm)',
+                            lineHeight: 'var(--line-height-snug)'
+                          }}
+                        >
+                          {item.event}
+                        </p>
                       </div>
                     </div>
                   </Reveal>
@@ -103,23 +190,66 @@ export default function AboutPage() {
         </section>
 
         {/* ── Mission & Vision ── */}
-        <section className="py-20 bg-white line-grid relative overflow-hidden">
-          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-[#F4A433]/6 blur-3xl hero-blob-2 pointer-events-none" />
+        <section 
+          className="line-grid relative overflow-hidden" 
+          style={{ 
+            paddingTop: 'var(--section-padding-md)', 
+            paddingBottom: 'var(--section-padding-md)',
+            background: 'var(--color-surface-elevated)'
+          }}
+        >
+          <div 
+            className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl hero-blob-2 pointer-events-none" 
+            style={{ background: 'var(--color-accent)', opacity: 0.06 }}
+          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1b1c19]" style={{ fontFamily: "'Literata', serif" }}>
+              <h2 
+                className="font-display font-semibold" 
+                style={{ 
+                  fontSize: 'var(--font-size-3xl)',
+                  color: 'var(--color-on-surface)',
+                  letterSpacing: 'var(--letter-spacing-tight)',
+                  marginBottom: '0.75rem'
+                }}
+              >
                 हमारा उद्देश्य
               </h2>
               <div className="section-divider" />
             </Reveal>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               <Reveal animation="slide-right">
-                <Card3D className="bg-[#fbf9f4] rounded-2xl p-8 border border-[#e4e2dd] h-full">
-                  <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center mb-4">
-                    <Target className="w-6 h-6 text-[#855300]" />
+                <Card3D 
+                  className="rounded-2xl p-6 h-full border" 
+                  style={{ 
+                    background: 'var(--color-surface)',
+                    borderColor: 'var(--color-outline-variant)',
+                    borderWidth: '1px'
+                  }}
+                >
+                  <div 
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
+                    style={{ background: 'var(--color-primary)', opacity: 0.1 }}
+                  >
+                    <Target className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
                   </div>
-                  <h3 className="text-xl font-bold text-[#1b1c19] mb-3" style={{ fontFamily: "'Literata', serif" }}>हमारा मिशन</h3>
-                  <p className="text-[#524435] leading-relaxed text-sm">
+                  <h3 
+                    className="font-display font-semibold mb-3" 
+                    style={{ 
+                      fontSize: 'var(--font-size-xl)',
+                      color: 'var(--color-on-surface)',
+                      lineHeight: 'var(--line-height-snug)'
+                    }}
+                  >
+                    हमारा मिशन
+                  </h3>
+                  <p 
+                    style={{ 
+                      color: 'var(--color-secondary-text)',
+                      fontSize: 'var(--font-size-sm)',
+                      lineHeight: 'var(--line-height-relaxed)'
+                    }}
+                  >
                     To provide free and subsidized marriage services, create a greener environment through
                     tree plantation, support the poor with essential goods, and promote health and education
                     in rural communities of West Champaran, Bihar.
@@ -127,12 +257,37 @@ export default function AboutPage() {
                 </Card3D>
               </Reveal>
               <Reveal animation="slide-left">
-                <Card3D className="bg-[#f0fdf4] rounded-2xl p-8 border border-green-100 h-full">
-                  <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mb-4">
-                    <Eye className="w-6 h-6 text-[#006d3e]" />
+                <Card3D 
+                  className="rounded-2xl p-6 h-full border" 
+                  style={{ 
+                    background: 'var(--color-surface)',
+                    borderColor: 'var(--color-outline-variant)',
+                    borderWidth: '1px'
+                  }}
+                >
+                  <div 
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
+                    style={{ background: 'var(--color-accent-green)', opacity: 0.12 }}
+                  >
+                    <Eye className="w-5 h-5" style={{ color: 'var(--color-accent-green)' }} />
                   </div>
-                  <h3 className="text-xl font-bold text-[#1b1c19] mb-3" style={{ fontFamily: "'Literata', serif" }}>हमारा विजन</h3>
-                  <p className="text-[#524435] leading-relaxed text-sm">
+                  <h3 
+                    className="font-display font-semibold mb-3" 
+                    style={{ 
+                      fontSize: 'var(--font-size-xl)',
+                      color: 'var(--color-on-surface)',
+                      lineHeight: 'var(--line-height-snug)'
+                    }}
+                  >
+                    हमारा विजन
+                  </h3>
+                  <p 
+                    style={{ 
+                      color: 'var(--color-secondary-text)',
+                      fontSize: 'var(--font-size-sm)',
+                      lineHeight: 'var(--line-height-relaxed)'
+                    }}
+                  >
                     A society where no family is unable to marry off their children due to poverty, every
                     village has green cover, hunger and preventable disease are eliminated, and every child
                     has access to quality education — a truly self-reliant community.
@@ -144,35 +299,107 @@ export default function AboutPage() {
         </section>
 
         {/* ── Team ── */}
-        <section className="py-20 bg-[#fbf9f4] dot-grid relative overflow-hidden">
-          <div className="absolute top-1/3 left-0 w-80 h-80 rounded-full bg-[#855300]/6 blur-3xl pointer-events-none" />
+        <section 
+          className="dot-grid relative overflow-hidden" 
+          style={{ 
+            paddingTop: 'var(--section-padding-md)', 
+            paddingBottom: 'var(--section-padding-md)',
+            background: 'var(--color-surface)'
+          }}
+        >
+          <div 
+            className="absolute top-1/3 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" 
+            style={{ background: 'var(--color-primary)', opacity: 0.06 }}
+          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <span className="section-tag mb-3 block w-fit mx-auto">Our Team</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1b1c19]" style={{ fontFamily: "'Literata', serif" }}>हमारी टीम</h2>
+              <span 
+                className="mb-3 block w-fit mx-auto"
+                style={{
+                  background: 'var(--color-primary)',
+                  color: 'var(--color-surface)',
+                  opacity: 0.9,
+                  fontSize: 'var(--font-size-xs)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  padding: '0.375rem 1rem',
+                  borderRadius: 'var(--radius-full)',
+                  letterSpacing: 'var(--letter-spacing-widest)',
+                  textTransform: 'uppercase'
+                }}
+              >
+                Our Team
+              </span>
+              <h2 
+                className="font-display font-semibold" 
+                style={{ 
+                  fontSize: 'var(--font-size-3xl)',
+                  color: 'var(--color-on-surface)',
+                  letterSpacing: 'var(--letter-spacing-tight)',
+                  marginBottom: '0.75rem'
+                }}
+              >
+                हमारी टीम
+              </h2>
               <div className="section-divider" />
-              <p className="text-[#524435] mt-3">{members.length} dedicated members working for community development</p>
+              <p 
+                className="mt-3" 
+                style={{ 
+                  color: 'var(--color-secondary-text)',
+                  fontSize: 'var(--font-size-sm)'
+                }}
+              >
+                {members.length} dedicated members working for community development
+              </p>
             </Reveal>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {sortedMembers.map((member, idx) => (
-                <Reveal key={member.id} delay={idx * 35} animation="scale">
+                <Reveal key={member.id} delay={idx * 30} animation="scale">
                   <Card3D
                     intensity={8}
-                    className="bg-white rounded-2xl border border-[#e4e2dd] p-4 text-center cursor-default"
+                    className="rounded-2xl border p-4 text-center cursor-default"
+                    style={{ 
+                      background: 'var(--color-surface-elevated)',
+                      borderColor: 'var(--color-outline-variant)',
+                      borderWidth: '1px'
+                    }}
                   >
                     <div
-                      className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold text-base ring-pulse relative"
-                      style={{ background: avatarColors[idx % avatarColors.length] }}
+                      className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold ring-pulse relative"
+                      style={{ 
+                        background: avatarColors[idx % avatarColors.length],
+                        fontSize: 'var(--font-size-sm)',
+                        fontWeight: 'var(--font-weight-bold)'
+                      }}
                     >
                       {member.initials}
                     </div>
-                    <h4 className="font-semibold text-[#1b1c19] text-xs leading-tight mb-1">{member.name}</h4>
-                    <span className={`inline-block text-[9px] font-semibold rounded-full px-2 py-0.5 ${
-                      member.designation === "Member"
-                        ? "bg-gray-100 text-[#524435]"
-                        : "bg-orange-100 text-[#855300]"
-                    }`}>
+                    <h4 
+                      className="font-semibold leading-tight mb-1" 
+                      style={{ 
+                        color: 'var(--color-on-surface)',
+                        fontSize: 'var(--font-size-xs)',
+                        lineHeight: 'var(--line-height-snug)'
+                      }}
+                    >
+                      {member.name}
+                    </h4>
+                    <span 
+                      className="inline-block font-semibold rounded-full px-2 py-0.5"
+                      style={{
+                        fontSize: 'var(--font-size-xs)',
+                        ...(member.designation === "Member"
+                          ? { 
+                              background: 'var(--color-surface-muted)', 
+                              color: 'var(--color-secondary-text)' 
+                            }
+                          : { 
+                              background: 'var(--color-primary)', 
+                              color: 'var(--color-surface)',
+                              opacity: 0.9
+                            })
+                      }}
+                    >
                       {member.designation}
                     </span>
                   </Card3D>
@@ -183,26 +410,114 @@ export default function AboutPage() {
         </section>
 
         {/* ── Legal Docs ── */}
-        <section className="py-20 bg-white relative overflow-hidden">
-          <div className="absolute bottom-0 right-0 w-96 h-64 rounded-full bg-[#006d3e]/5 blur-3xl pointer-events-none" />
+        <section 
+          className="relative overflow-hidden" 
+          style={{ 
+            paddingTop: 'var(--section-padding-md)', 
+            paddingBottom: 'var(--section-padding-md)',
+            background: 'var(--color-surface-elevated)'
+          }}
+        >
+          <div 
+            className="absolute bottom-0 right-0 w-96 h-64 rounded-full blur-3xl pointer-events-none" 
+            style={{ background: 'var(--color-accent-green)', opacity: 0.05 }}
+          />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
-              <span className="section-tag mb-3 block w-fit mx-auto">Transparency</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1b1c19]" style={{ fontFamily: "'Literata', serif" }}>कानूनी दस्तावेज़</h2>
+              <span 
+                className="mb-3 block w-fit mx-auto"
+                style={{
+                  background: 'var(--color-primary)',
+                  color: 'var(--color-surface)',
+                  opacity: 0.9,
+                  fontSize: 'var(--font-size-xs)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  padding: '0.375rem 1rem',
+                  borderRadius: 'var(--radius-full)',
+                  letterSpacing: 'var(--letter-spacing-widest)',
+                  textTransform: 'uppercase'
+                }}
+              >
+                Transparency
+              </span>
+              <h2 
+                className="font-display font-semibold" 
+                style={{ 
+                  fontSize: 'var(--font-size-3xl)',
+                  color: 'var(--color-on-surface)',
+                  letterSpacing: 'var(--letter-spacing-tight)',
+                  marginBottom: '0.75rem'
+                }}
+              >
+                कानूनी दस्तावेज़
+              </h2>
               <div className="section-divider" />
-              <p className="text-[#524435] mt-3">All legal registrations and certifications</p>
+              <p 
+                className="mt-3" 
+                style={{ 
+                  color: 'var(--color-secondary-text)',
+                  fontSize: 'var(--font-size-sm)'
+                }}
+              >
+                All legal registrations and certifications
+              </p>
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {legalDocs.map((doc, i) => (
-                <Reveal key={doc.title} delay={i * 80} animation="slide-up">
-                  <Card3D className="bg-white rounded-2xl border border-[#e4e2dd] p-6 h-full shine-sweep">
-                    <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-                      <doc.icon className="w-6 h-6 text-[#855300]" />
+                <Reveal key={doc.title} delay={i * 70} animation="slide-up">
+                  <Card3D 
+                    className="rounded-2xl border p-6 h-full shine-sweep" 
+                    style={{ 
+                      background: 'var(--color-surface-elevated)',
+                      borderColor: 'var(--color-outline-variant)',
+                      borderWidth: '1px'
+                    }}
+                  >
+                    <div 
+                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" 
+                      style={{ background: 'var(--color-primary)', opacity: 0.08 }}
+                    >
+                      <doc.icon className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
                     </div>
-                    <h3 className="font-semibold text-[#1b1c19] mb-1">{doc.title}</h3>
-                    <p className="text-xs font-mono text-[#855300] mb-1">{doc.number}</p>
-                    <p className="text-[#524435] text-xs mb-4">{doc.desc}</p>
-                    <button className="flex items-center gap-1.5 text-xs font-semibold text-[#855300] hover:text-[#653e00] border border-[#855300]/30 rounded-full px-3 py-1.5 hover:bg-orange-50 transition-colors">
+                    <h3 
+                      className="font-semibold mb-1" 
+                      style={{ 
+                        color: 'var(--color-on-surface)',
+                        fontSize: 'var(--font-size-sm)',
+                        fontWeight: 'var(--font-weight-semibold)'
+                      }}
+                    >
+                      {doc.title}
+                    </h3>
+                    <p 
+                      className="font-mono mb-2" 
+                      style={{ 
+                        color: 'var(--color-primary)',
+                        fontSize: 'var(--font-size-xs)',
+                        fontWeight: 'var(--font-weight-medium)'
+                      }}
+                    >
+                      {doc.number}
+                    </p>
+                    <p 
+                      className="mb-4" 
+                      style={{ 
+                        color: 'var(--color-secondary-text)',
+                        fontSize: 'var(--font-size-xs)',
+                        lineHeight: 'var(--line-height-snug)'
+                      }}
+                    >
+                      {doc.desc}
+                    </p>
+                    <button 
+                      className="flex items-center gap-1.5 font-semibold border rounded-full px-3 py-1.5 hover:opacity-80 transition-opacity"
+                      style={{
+                        fontSize: 'var(--font-size-xs)',
+                        color: 'var(--color-primary)',
+                        borderColor: 'var(--color-primary)',
+                        borderWidth: '1px'
+                      }}
+                    >
                       <Download className="w-3 h-3" /> Download
                     </button>
                   </Card3D>
