@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
+import ProjectMap from "@/components/ProjectMap";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Heart, TreePine, Users, Stethoscope, BookOpen, CalendarDays, MapPin, type LucideIcon } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
@@ -44,7 +45,7 @@ export default function ProjectsContent({
   categories: string[];
   header: Header & { img: string | null };
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [activeCategory, setActiveCategory] = useState("All");
 
   const allCats = ["All", ...categories];
@@ -62,6 +63,9 @@ export default function ProjectsContent({
           image={header.img ?? IMG.community}
         />
 
+        {/* Project Map */}
+        <ProjectMap projects={projects} lang={lang === "hi" ? "hi" : "en"} />
+
         {/* Filter Tabs */}
         <section className="py-8" style={{ background: LENITY.soft, borderBottom: `1px solid ${LENITY.line}` }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,7 +80,7 @@ export default function ProjectsContent({
                     style={
                       active
                         ? { background: LENITY.accent, color: LENITY.ink }
-                        : { background: "#0d1229", color: LENITY.ink, border: `1px solid ${LENITY.line}` }
+                        : { background: "#fff8f5", color: LENITY.ink, border: `1px solid ${LENITY.line}` }
                     }
                   >
                     {cat}
@@ -98,7 +102,7 @@ export default function ProjectsContent({
                 return (
                   <Reveal key={project.id} delay={i * 70} animation="slide-up">
                     <Card3D
-                      className="bg-[#0d1229] rounded-3xl border overflow-hidden flex flex-col h-full transition-all hover:shadow-xl hover:-translate-y-1"
+                      className="bg-white rounded-3xl border overflow-hidden flex flex-col h-full transition-all hover:shadow-xl hover:-translate-y-1"
                       style={{ borderColor: LENITY.line }}
                     >
                       <div className="h-24 flex items-center justify-center relative" style={{ background: LENITY.accentSoft }}>
@@ -108,7 +112,7 @@ export default function ProjectsContent({
                             className="text-[10px] font-bold rounded-full px-2.5 py-0.5"
                             style={
                               done
-                                ? { background: "#00e5a0", color: "#050818" }
+                                ? { background: "#22c55e", color: "#ffffff" }
                                 : { background: LENITY.accent, color: LENITY.bg }
                             }
                           >
@@ -152,7 +156,7 @@ export default function ProjectsContent({
         </section>
 
         {/* Future Plans */}
-        <section className="py-20 bg-[#0d1229]">
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-12">
               <span className="inline-flex items-center gap-3 mb-3 text-xs font-bold uppercase tracking-[0.22em]" style={{ color: LENITY.ink }}>

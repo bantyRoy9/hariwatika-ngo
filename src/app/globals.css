@@ -7,38 +7,38 @@
      Change these values to instantly update the entire site
      ══════════════════════════════════════════════════════════════ */
   
-  /* ─── Primary Colors (Main Brand) — NEON ─── */
-  --color-primary: #63d2ff;           /* Neon cyan */
-  --color-primary-dark: #00b4d8;      /* Deep cyan */
-  --color-primary-light: #9ee4ff;     /* Light cyan */
+  /* ─── Primary Colors (Main Brand) — WARM ORANGE-RED ─── */
+  --color-primary: #E84523;           /* CRY orange-red */
+  --color-primary-dark: #c93b1d;      /* Deep orange-red */
+  --color-primary-light: #f07455;     /* Light orange-red */
 
   /* ─── Accent Colors (Highlights & CTAs) ─── */
-  --color-accent: #b57bff;            /* Neon purple */
-  --color-accent-bright: #ff6eb4;     /* Neon pink */
-  --color-accent-green: #00e5a0;      /* Neon green */
-  --color-accent-green-light: #2effb8; /* Bright green */
+  --color-accent: #f59e0b;            /* Warm amber */
+  --color-accent-bright: #ec4899;     /* Pink */
+  --color-accent-green: #22c55e;      /* Success green */
+  --color-accent-green-light: #4ade80; /* Light green */
 
-  /* ─── Surface Colors (Backgrounds) — DARK ─── */
-  --color-surface: #050818;           /* Near-black base */
-  --color-surface-soft: #090d1f;      /* Soft raised */
-  --color-surface-muted: #111630;     /* Muted panel */
-  --color-surface-elevated: #0d1229;  /* Card surface */
+  /* ─── Surface Colors (Backgrounds) — WARM WHITE ─── */
+  --color-surface: #ffffff;           /* White base */
+  --color-surface-soft: #fdf6f0;      /* Warm off-white */
+  --color-surface-muted: #f3f4f6;     /* Light gray panel */
+  --color-surface-elevated: #fff8f5;  /* Warm white card */
 
   /* ─── Text Colors ─── */
-  --color-on-surface: #e8f4ff;        /* Light - primary text */
-  --color-on-surface-variant: #b8cce0; /* Soft light - secondary */
-  --color-secondary-text: #94a8c4;    /* Muted - tertiary */
-  --color-text-muted: #7a8fad;        /* Dim - captions */
+  --color-on-surface: #1a1a1a;        /* Near-black text */
+  --color-on-surface-variant: #374151; /* Dark gray secondary */
+  --color-secondary-text: #6b7280;    /* Gray tertiary */
+  --color-text-muted: #9ca3af;        /* Light gray captions */
 
   /* ─── Border & Outline Colors ─── */
-  --color-outline: rgba(99,210,255,0.20);   /* Main border */
-  --color-outline-variant: rgba(99,210,255,0.12); /* Light border */
-  --color-outline-subtle: rgba(99,210,255,0.07);  /* Subtle divider */
+  --color-outline: rgba(232,69,35,0.20);        /* Main border */
+  --color-outline-variant: rgba(232,69,35,0.12); /* Light border */
+  --color-outline-subtle: rgba(232,69,35,0.07);  /* Subtle divider */
 
   /* ─── Shadow Colors (RGB for transparency) ─── */
-  --shadow-color-primary: 99, 210, 255;  /* Cyan glow shadows */
-  --shadow-color-dark: 2, 4, 12;         /* Deep black for depth */
-  
+  --shadow-color-primary: 232, 69, 35;   /* Warm shadows */
+  --shadow-color-dark: 26, 26, 26;       /* Dark depth */
+
   --color-shadow-xs: rgba(var(--shadow-color-primary), 0.04);
   --color-shadow-sm: rgba(var(--shadow-color-primary), 0.08);
   --color-shadow-md: rgba(var(--shadow-color-primary), 0.12);
@@ -46,12 +46,12 @@
   --color-shadow-xl: rgba(var(--shadow-color-primary), 0.24);
 
   /* ─── Utility Colors ─── */
-  --color-white: #e8f4ff;
-  --color-black: #050818;
-  --color-success: #00e5a0;
-  --color-warning: #ffcc44;
-  --color-error: #ff5555;
-  --color-info: #63d2ff;
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #E84523;
+  --color-info: #2563eb;
 
   /* ═══════════════════════════════════════════════════════════════
      📝 TYPOGRAPHY SYSTEM — Premium Font Sizing
@@ -184,7 +184,7 @@ html {
 
 html { background: var(--color-surface); }
 body {
-  background: transparent; /* .cyber-grid (fixed, z-index:-2) is the visible base layer */
+  background: var(--color-surface);
   color: var(--color-on-surface);
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
@@ -493,6 +493,17 @@ p {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary-light) var(--color-surface-muted);
+}
+
+/* ── Admin dashboard dark overrides ── */
+.admin-surface {
+  background: #0f1117;
+  color: #e2e8f0;
+}
+.admin-card {
+  background: #161b27;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
 }
 
 /* Print styles */
@@ -935,15 +946,15 @@ p {
   transition: left 0.8s var(--ease-elegant), opacity 0.4s;
 }
 
-/* ── Glassmorphism card ── */
+/* ── Warm glass card ── */
 .glass-card {
-  background: rgba(13, 18, 41, 0.7);
+  background: rgba(255, 248, 245, 0.85);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(99, 210, 255, 0.18);
+  border: 1px solid rgba(232, 69, 35, 0.15);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(99, 210, 255, 0.12);
+    0 12px 40px rgba(232, 69, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* ── Section divider ── */
@@ -1313,7 +1324,7 @@ p {
   font-size: clamp(3.5rem, 8vw, 6rem);
   line-height: 0.8;
   color: transparent;
-  -webkit-text-stroke: 2px #63d2ff;
+  -webkit-text-stroke: 2px #E84523;
   letter-spacing: -0.02em;
 }
 
@@ -1332,25 +1343,18 @@ p {
    CYBERPUNK EFFECT LAYER — ported from omiedutrack
    ══════════════════════════════════════════════════════════════ */
 
-/* ── Animated neon grid background ── */
+/* ── Warm subtle dot grid background (replaces cyberpunk grid) ── */
 .cyber-grid {
   position: fixed;
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background-color: #050818;
-  background-image:
-    linear-gradient(rgba(99,210,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,210,255,0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: cyber-grid-move 20s linear infinite;
-}
-@keyframes cyber-grid-move {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 50px; }
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(232,69,35,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-/* ── Floating glow orbs ── */
+/* ── Warm soft glow orbs ── */
 .cyber-orbs {
   position: fixed;
   inset: 0;
@@ -1364,9 +1368,9 @@ p {
   filter: blur(80px);
   animation: orb-float 10s ease-in-out infinite;
 }
-.cyber-orbs .orb1 { width: 500px; height: 500px; background: radial-gradient(#63d2ff22, transparent 70%); top: -150px; left: -150px; animation-delay: 0s; }
-.cyber-orbs .orb2 { width: 400px; height: 400px; background: radial-gradient(#b57bff22, transparent 70%); bottom: -100px; right: -100px; animation-delay: 4s; }
-.cyber-orbs .orb3 { width: 300px; height: 300px; background: radial-gradient(#ff6eb422, transparent 70%); top: 30%; left: 60%; animation-delay: 7s; }
+.cyber-orbs .orb1 { width: 500px; height: 500px; background: radial-gradient(rgba(232,69,35,0.08), transparent 70%); top: -150px; left: -150px; animation-delay: 0s; }
+.cyber-orbs .orb2 { width: 400px; height: 400px; background: radial-gradient(rgba(245,158,11,0.07), transparent 70%); bottom: -100px; right: -100px; animation-delay: 4s; }
+.cyber-orbs .orb3 { width: 300px; height: 300px; background: radial-gradient(rgba(232,69,35,0.05), transparent 70%); top: 30%; left: 60%; animation-delay: 7s; }
 @keyframes orb-float {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33%      { transform: translate(30px, -20px) scale(1.05); }
@@ -1399,19 +1403,19 @@ p {
   transition: transform 0.4s;
 }
 .btn-future:hover::before { transform: translateX(100%); }
-.btn-cyan { background: linear-gradient(135deg, #00b4d8, #63d2ff); color: #050818; box-shadow: 0 0 30px rgba(99,210,255,0.3); }
-.btn-cyan:hover { box-shadow: 0 0 50px rgba(99,210,255,0.5); transform: translateY(-2px); }
-.btn-purple { background: linear-gradient(135deg, #7b2ff7, #b57bff); color: #fff; box-shadow: 0 0 30px rgba(181,123,255,0.3); }
-.btn-purple:hover { box-shadow: 0 0 50px rgba(181,123,255,0.5); transform: translateY(-2px); }
+.btn-cyan { background: linear-gradient(135deg, #c93b1d, #E84523); color: #fff; box-shadow: 0 4px 20px rgba(232,69,35,0.3); }
+.btn-cyan:hover { box-shadow: 0 6px 28px rgba(232,69,35,0.5); transform: translateY(-2px); }
+.btn-purple { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; box-shadow: 0 4px 20px rgba(245,158,11,0.3); }
+.btn-purple:hover { box-shadow: 0 6px 28px rgba(245,158,11,0.5); transform: translateY(-2px); }
 .btn-outline-cyber {
   background: transparent;
   color: var(--color-primary);
-  border: 1px solid rgba(99,210,255,0.4);
+  border: 1px solid rgba(232,69,35,0.4);
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
 }
-.btn-outline-cyber:hover { background: rgba(99,210,255,0.1); border-color: var(--color-primary); }
+.btn-outline-cyber:hover { background: rgba(232,69,35,0.08); border-color: var(--color-primary); }
 
-/* ── Glowing-border card ── */
+/* ── Warm border card ── */
 .glow-card {
   position: relative;
   background: var(--color-surface-elevated);
@@ -1424,16 +1428,16 @@ p {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-primary), transparent);
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
 }
 .glow-card:hover {
-  border-color: rgba(99,210,255,0.35);
+  border-color: rgba(232,69,35,0.35);
   transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(99,210,255,0.15);
+  box-shadow: 0 8px 30px rgba(232,69,35,0.12);
 }
 
-/* ── Neon divider ── */
+/* ── Warm divider ── */
 .glow-line {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
@@ -1442,8 +1446,8 @@ p {
   border: none;
 }
 
-/* ── Neon text glow utility ── */
-.neon-glow { text-shadow: 0 0 12px rgba(99,210,255,0.6), 0 0 30px rgba(99,210,255,0.3); }
+/* ── Warm brand text utility (replaces neon-glow) ── */
+.neon-glow { color: var(--color-primary); font-weight: 700; }
 
 /* disable ambient bg motion for reduced-motion users */
 @media (prefers-reduced-motion: reduce) {

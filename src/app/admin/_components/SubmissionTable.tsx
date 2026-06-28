@@ -53,37 +53,43 @@ export default function SubmissionTable({
     if (typeof v === "string" && v.startsWith("[")) {
       try { return (JSON.parse(v) as string[]).join(", "); } catch { return v; }
     }
-    if (v instanceof Date) return v.toLocaleString();
+    if (v instanceof Date) {
+      return v.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+    }
+    // ISO date strings from serialized RSC props
+    if (typeof v === "string" && /^\d{4}-\d{2}-\d{2}T/.test(v)) {
+      return new Date(v).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+    }
     return String(v);
   };
 
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <p className="text-sm" style={{ color: LENITY.muted }}>{list.length} record(s)</p>
+        <p className="text-sm" style={{ color: LENITY.adminMuted }}>{list.length} record(s)</p>
         <Btn onClick={exportExcel}>Export Excel</Btn>
       </div>
-      <div className="overflow-x-auto rounded-xl border" style={{ borderColor: LENITY.line }}>
+      <div className="overflow-x-auto rounded-xl border" style={{ borderColor: LENITY.adminLine }}>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: LENITY.soft }}>
+            <tr style={{ background: LENITY.adminBg }}>
               {columns.map((c) => (
-                <th key={c.key} className="text-left px-3 py-2 font-semibold whitespace-nowrap" style={{ color: LENITY.ink }}>
+                <th key={c.key} className="text-left px-3 py-2 font-semibold whitespace-nowrap" style={{ color: LENITY.adminMuted }}>
                   {c.label}
                 </th>
               ))}
-              {statusOptions && <th className="px-3 py-2 text-left font-semibold" style={{ color: LENITY.ink }}>Status</th>}
+              {statusOptions && <th className="px-3 py-2 text-left font-semibold" style={{ color: LENITY.adminMuted }}>Status</th>}
               <th className="px-3 py-2" />
             </tr>
           </thead>
           <tbody>
             {list.length === 0 && (
-              <tr><td colSpan={columns.length + 2} className="px-3 py-6 text-center" style={{ color: LENITY.muted }}>No submissions yet.</td></tr>
+              <tr><td colSpan={columns.length + 2} className="px-3 py-6 text-center" style={{ color: LENITY.adminMuted }}>No submissions yet.</td></tr>
             )}
             {list.map((r) => (
-              <tr key={String(r.id)} className="border-t" style={{ borderColor: LENITY.line }}>
+              <tr key={String(r.id)} className="border-t" style={{ borderColor: LENITY.adminLine }}>
                 {columns.map((c) => (
-                  <td key={c.key} className="px-3 py-2 align-top" style={{ color: LENITY.ink }}>{fmt(r[c.key])}</td>
+                  <td key={c.key} className="px-3 py-2 align-top" style={{ color: LENITY.adminInk }}>{fmt(r[c.key])}</td>
                 ))}
                 {statusOptions && (
                   <td className="px-3 py-2">
@@ -91,7 +97,7 @@ export default function SubmissionTable({
                       value={String(r.status ?? "")}
                       onChange={(e) => setStatus(Number(r.id), e.target.value)}
                       className="border rounded px-2 py-1 text-xs"
-                      style={{ borderColor: LENITY.line }}
+                      style={{ background: LENITY.adminSoft, borderColor: LENITY.adminLine, color: LENITY.adminInk }}
                     >
                       {statusOptions.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>

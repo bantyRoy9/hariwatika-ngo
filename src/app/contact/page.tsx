@@ -57,7 +57,7 @@ export default function ContactPage() {
               {/* Left: Info */}
               <div className="lg:col-span-2 space-y-6">
                 <Reveal animation="slide-right">
-                  <Card3D intensity={5} className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={5} className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <h3
                     className="font-bold text-lg mb-4"
                     style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -137,7 +137,7 @@ export default function ContactPage() {
 
                 {/* Map Embed */}
                 <Reveal animation="slide-right" delay={100}>
-                  <Card3D intensity={3} className="bg-[#0d1229] rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={3} className="bg-white rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="p-4 border-b" style={{ borderColor: LENITY.line }}>
                     <h3 className="font-bold text-sm" style={{ color: LENITY.ink, fontFamily: SERIF }}>Find Us on Map</h3>
                   </div>
@@ -160,7 +160,7 @@ export default function ContactPage() {
               <div className="lg:col-span-3">
                 <Reveal animation="slide-left">
                 {submitted ? (
-                  <div className="bg-[#0d1229] rounded-3xl border p-8 text-center shadow-sm" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-white rounded-3xl border p-8 text-center shadow-sm" style={{ borderColor: LENITY.line }}>
                     <CheckCircle className="w-16 h-16 mx-auto mb-4" style={{ color: LENITY.accent }} />
                     <h3
                       className="text-xl font-bold mb-2"
@@ -190,7 +190,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8 shadow-sm" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-white rounded-3xl border p-6 sm:p-8 shadow-sm" style={{ borderColor: LENITY.line }}>
                     <h2
                       className="text-2xl font-bold mb-1"
                       style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -212,7 +212,7 @@ export default function ContactPage() {
                             placeholder="Your name"
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800"
                             style={{ borderColor: LENITY.line }}
                           />
                         </div>
@@ -227,7 +227,7 @@ export default function ContactPage() {
                             placeholder="10-digit mobile"
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800"
                             style={{ borderColor: LENITY.line }}
                           />
                         </div>
@@ -242,7 +242,7 @@ export default function ContactPage() {
                           placeholder="Optional"
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800"
                           style={{ borderColor: LENITY.line }}
                         />
                       </div>
@@ -255,7 +255,7 @@ export default function ContactPage() {
                           onChange={(e) => setForm({ ...form, subject: e.target.value })}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800"
                           style={{ borderColor: LENITY.line }}
                         >
                           <option value="">Select subject</option>
@@ -279,7 +279,7 @@ export default function ContactPage() {
                           rows={5}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none bg-[#111630] text-[#e8f4ff]"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none bg-gray-50 text-gray-800"
                           style={{ borderColor: LENITY.line }}
                         />
                       </div>

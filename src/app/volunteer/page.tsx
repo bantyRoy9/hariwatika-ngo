@@ -138,7 +138,7 @@ export default function VolunteerPage() {
             {submitted ? (
               <div className="max-w-2xl mx-auto">
                 <div
-                  className="bg-[#0d1229] rounded-3xl border overflow-hidden shadow-lg"
+                  className="bg-white rounded-3xl border overflow-hidden shadow-lg"
                   style={{ borderColor: LENITY.line }}
                 >
                   <div className="p-6 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
@@ -258,7 +258,7 @@ export default function VolunteerPage() {
                   ].map((b) => (
                     <div
                       key={b.title}
-                      className="bg-[#0d1229] rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
+                      className="bg-white rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
                       style={{ borderColor: LENITY.line }}
                     >
                       <div
@@ -277,7 +277,7 @@ export default function VolunteerPage() {
 
                 {/* Form */}
                 <div className="lg:col-span-2">
-                  <div className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                     <h2
                       className="text-xl font-bold mb-6"
                       style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -325,7 +325,7 @@ export default function VolunteerPage() {
                             required
                             value={form.gender}
                             onChange={(e) => setForm({ ...form, gender: e.target.value })}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff] transition-colors"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800 transition-colors"
                             style={{ borderColor: LENITY.line }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
@@ -413,7 +413,7 @@ export default function VolunteerPage() {
                           required
                           value={form.availability}
                           onChange={(e) => setForm({ ...form, availability: e.target.value })}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff] transition-colors"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-gray-50 text-gray-800 transition-colors"
                           style={{ borderColor: LENITY.line }}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}

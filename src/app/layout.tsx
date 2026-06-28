@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         className="min-h-full flex flex-col"
         style={{ fontFamily: "'Rajdhani', system-ui, sans-serif" }}
       >
-        {/* Animated cyberpunk ambient background (behind everything) */}
+        {/* Warm ambient background — soft dot grid + glow orbs (behind everything) */}
         <div className="cyber-grid" aria-hidden />
         <div className="cyber-orbs" aria-hidden>
           <div className="orb orb1" />

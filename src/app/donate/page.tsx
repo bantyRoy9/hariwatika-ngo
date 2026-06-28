@@ -74,7 +74,7 @@ export default function DonatePage() {
 
   /* shared input styling — light theme, orange focus */
   const inputClass =
-    "w-full rounded-xl px-4 py-3 text-sm bg-[#111630] text-[#e8f4ff] border transition-colors focus:outline-none";
+    "w-full rounded-xl px-4 py-3 text-sm bg-gray-50 text-gray-800 border transition-colors focus:outline-none";
   const inputStyle = { borderColor: LENITY.line, color: LENITY.ink } as React.CSSProperties;
   const onInputFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     e.currentTarget.style.borderColor = LENITY.accent;
@@ -88,7 +88,7 @@ export default function DonatePage() {
       <>
         <Navbar />
         <main className="min-h-screen flex items-center justify-center pt-20 pb-16 px-4" style={{ background: LENITY.soft }}>
-          <div className="max-w-md w-full bg-[#0d1229] rounded-3xl shadow-lg border overflow-hidden" style={{ borderColor: LENITY.line }}>
+          <div className="max-w-md w-full bg-white rounded-3xl shadow-lg border overflow-hidden" style={{ borderColor: LENITY.line }}>
             <div className="p-8 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
               <CheckCircle className="w-16 h-16 mx-auto mb-3" />
               <h2 className="text-2xl font-bold" style={{ fontFamily: SERIF }}>
@@ -185,7 +185,7 @@ export default function DonatePage() {
               {/* Form */}
               <div className="lg:col-span-3">
                 <Reveal animation="slide-right">
-                  <Card3D intensity={4} className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={4} className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                   <h2
                     className="text-xl font-bold mb-6"
                     style={{ color: LENITY.ink, fontFamily: SERIF }}
@@ -211,7 +211,7 @@ export default function DonatePage() {
                               style={
                                 active
                                   ? { background: LENITY.accent, color: LENITY.ink, borderColor: LENITY.accent }
-                                  : { borderColor: LENITY.line, color: LENITY.muted, background: "#111630" }
+                                  : { borderColor: LENITY.line, color: LENITY.muted, background: "#f9fafb" }
                               }
                             >
                               ₹{amt >= 1000 ? `${amt / 1000}K` : amt}
@@ -342,7 +342,7 @@ export default function DonatePage() {
               {/* Sidebar */}
               <div className="lg:col-span-2 space-y-6">
                 {/* UPI */}
-                <div className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-center gap-2 mb-4">
                     <Smartphone className="w-5 h-5" style={{ color: LENITY.accent }} />
                     <h3 className="font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}>Pay via UPI</h3>
@@ -374,7 +374,7 @@ export default function DonatePage() {
                 </div>
 
                 {/* Bank Details */}
-                <div className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-center gap-2 mb-4">
                     <Building2 className="w-5 h-5" style={{ color: LENITY.accent }} />
                     <h3 className="font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}>Bank Transfer</h3>

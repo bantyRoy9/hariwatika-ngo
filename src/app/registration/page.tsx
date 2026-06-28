@@ -106,7 +106,7 @@ export default function RegistrationPage() {
     win.print();
   };
 
-  const inputClass = "w-full border rounded-xl px-4 py-2.5 text-sm bg-[#111630] text-[#e8f4ff] focus:outline-none focus:ring-2 focus:ring-[#63d2ff] transition-colors";
+  const inputClass = "w-full border rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E84523] transition-colors";
   const inputStyle = { borderColor: LENITY.line, color: LENITY.ink } as React.CSSProperties;
   const labelClass = "block text-sm font-medium mb-1";
   const labelStyle = { color: LENITY.ink } as React.CSSProperties;
@@ -146,7 +146,7 @@ export default function RegistrationPage() {
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             {/* Tabs */}
             <div
-              className="flex gap-2 mb-8 bg-[#0d1229] rounded-2xl border p-1.5"
+              className="flex gap-2 mb-8 bg-white rounded-2xl border p-1.5"
               style={{ borderColor: LENITY.line }}
             >
               {([["boy", "वर पंजीकरण (Boy)"], ["girl", "कन्या पंजीकरण (Girl)"]] as [TabType, string][]).map(
@@ -170,7 +170,7 @@ export default function RegistrationPage() {
 
             {submitted[tab] ? (
               <div
-                className="bg-[#0d1229] rounded-3xl border shadow-lg overflow-hidden"
+                className="bg-white rounded-3xl border shadow-lg overflow-hidden"
                 style={{ borderColor: LENITY.line }}
               >
                 <div className="p-6 text-center" style={{ background: LENITY.yellow, color: LENITY.ink }}>
@@ -233,7 +233,7 @@ export default function RegistrationPage() {
               </div>
             ) : (
               <div
-                className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8"
+                className="bg-white rounded-3xl border p-6 sm:p-8"
                 style={{ borderColor: LENITY.line }}
               >
                 <form onSubmit={handleSubmit} className="space-y-5">

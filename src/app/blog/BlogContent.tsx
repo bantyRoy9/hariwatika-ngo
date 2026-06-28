@@ -57,7 +57,7 @@ export default function BlogContent({
           </div>
         </section>
 
-        <section className="py-6 bg-[#050818] border-b" style={{ borderColor: LENITY.line }}>
+        <section className="py-6 bg-white border-b" style={{ borderColor: LENITY.line }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap gap-2">
               {allCats.map((cat) => {
@@ -77,13 +77,13 @@ export default function BlogContent({
           </div>
         </section>
 
-        <section className="py-16 bg-[#050818]">
+        <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((post) => {
                 const title = t(post.titleEn, post.titleHi);
                 return (
-                  <div key={post.id} className="bg-[#0d1229] rounded-3xl border overflow-hidden h-full flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                  <div key={post.id} className="bg-white rounded-3xl border overflow-hidden h-full flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                     <div className="h-48 relative overflow-hidden">
                       {post.img && <img src={post.img} alt={title} className="w-full h-full object-cover" loading="lazy" />}
                       <span className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1" style={{ background: LENITY.yellow, color: LENITY.ink }}>

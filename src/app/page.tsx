@@ -1,17 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense, lazy } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
+import ImpactCounter from "@/components/ImpactCounter";
 import { useLang } from "@/context/LanguageContext";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { useTyped } from "@/hooks/useTyped";
 import {
   Heart, TreePine, Users, Stethoscope,
   BookOpen, Droplets, Wheat, ArrowRight,
-  Quote,
+  Quote, ChevronDown, MessageCircle, Star,
 } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
+
+const Hero3DCanvas = lazy(() => import("@/components/Hero3DCanvas"));
 
 const IMG = {
   hero:     "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80&auto=format&fit=crop",
@@ -31,17 +36,19 @@ const IMG = {
 ───────────────────────────────────────────────────────────── */
 const content = {
   hero: {
-    eyebrow: { en: "Hariwatika Vivah Sewa Samiti", hi: "हरिवाटिका विवाह सेवा समिति" },
-    line1:   { en: "A Relentless", hi: "अटूट" },
-    line2:   { en: "Pursuit.", hi: "सेवा।" },
-    tagline: { en: "To bring dignity, marriage, and lasting change to families across Bihar.", hi: "बिहार के परिवारों को सम्मान, विवाह और स्थायी बदलाव देने का संकल्प।" },
-    sub: {
-      en: "For over 25 years Hariwatika Shiv Mandir Vivah Sewa Samiti has facilitated marriages, planted forests, and stood with the poor across West Champaran — funded by a network of donors and volunteers who believe in this work.",
-      hi: "25 वर्षों से हरिवाटिका शिव मंदिर विवाह सेवा समिति ने पश्चिम चम्पारण में विवाह, वृक्षारोपण और गरीब सहायता की है — दानदाताओं और स्वयंसेवकों के सहयोग से।",
+    badge:  { en: "Serving Since 2000 — सेवा ही धर्म है", hi: "सेवा ही धर्म है — 2000 से समर्पित" },
+    line1:  { en: "Empowering Communities", hi: "समाज को सशक्त बना रहे" },
+    typed:  {
+      en: ["Marriage Assistance", "Tree Plantation", "Poverty Relief", "Healthcare Seva", "Education Support"],
+      hi: ["विवाह सेवा", "वृक्षारोपण", "गरीब सहायता", "स्वास्थ्य सेवा", "शिक्षा सहयोग"],
     },
-    cta1: { en: "Donate Now", hi: "दान करें" },
-    cta2: { en: "Our Work", hi: "हमारा काम" },
-    scroll: { en: "Learn More", hi: "और जानें" },
+    sub: {
+      en: "Hariwatika Shiv Mandir Vivah Sewa Samiti — transforming lives across West Champaran, Bihar since 2000.",
+      hi: "हरिवाटिका शिव मंदिर विवाह सेवा समिति — 2000 से बिहार के पश्चिम चम्पारण में जीवन बदल रहे हैं।",
+    },
+    cta1:   { en: "Donate Now", hi: "दान करें" },
+    cta2:   { en: "Our Work", hi: "हमारा काम" },
+    scroll: { en: "Explore", hi: "देखें" },
   },
   about: {
     h2:  { en: "Consistent Service", hi: "निरंतर सेवा" },
@@ -209,58 +216,85 @@ function NumberedSection({ num, label, children, alt = false }:
 ═══════════════════════════════════════════════════════════════ */
 export default function HomePage() {
   const [donateOpen, setDonateOpen] = useState(false);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const openDonate = () => setDonateOpen(true);
+  const mouse = useMouseParallax();
+  const typedPhrases = lang === "hi" ? content.hero.typed.hi : content.hero.typed.en;
+  const { displayed, cursor } = useTyped(typedPhrases);
 
   return (
     <>
       <Navbar />
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
 
-      {/* ════════════ HERO ════════════ */}
-      <section className="relative overflow-hidden" style={{ background: LENITY.bg }}>
-        {/* yellow watercolor wash top-left */}
-        <div className="absolute -top-32 -left-32 w-[640px] h-[640px] rounded-full pointer-events-none"
-          style={{ background: LENITY.yellowSoft, filter: "blur(8px)", opacity: 0.6 }} />
-        <div className="absolute top-40 right-0 w-[420px] h-[420px] rounded-full pointer-events-none"
-          style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
+      {/* ════════════ HERO — 3D Canvas Banner ════════════ */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #0d1229 0%, #1a1040 50%, #0d1229 100%)" }}>
+        {/* 3D canvas background */}
+        <Suspense fallback={null}>
+          <Hero3DCanvas />
+        </Suspense>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 lg:pt-44 pb-20 grid lg:grid-cols-2 gap-12 items-center">
-          {/* left: watercolor portrait */}
-          <Fade className="relative">
-            <WaterPortrait src={IMG.hero} alt={t("Wedding facilitated by the Samiti", "समिति द्वारा सम्पन्न विवाह")}
-              blob={LENITY.yellowSoft} className="w-full h-[420px] sm:h-[520px]" />
-          </Fade>
-
-          {/* right: editorial headline */}
-          <Fade>
-            <div className="mb-5"><Eyebrow>{t(content.hero.eyebrow.en, content.hero.eyebrow.hi)}</Eyebrow></div>
-            <h1 className="font-bold leading-[0.95] mb-4 text-5xl sm:text-6xl lg:text-7xl" style={{ fontFamily: SERIF, color: LENITY.ink }}>
-              {t(content.hero.line1.en, content.hero.line1.hi)}<br />
-              <span style={{ color: LENITY.ink }}>{t(content.hero.line2.en, content.hero.line2.hi)}</span>
-            </h1>
-            <p className="text-lg italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              {t(content.hero.tagline.en, content.hero.tagline.hi)}
-            </p>
-            <p className="text-[15px] leading-relaxed mb-9 max-w-xl" style={{ color: LENITY.muted }}>
-              {t(content.hero.sub.en, content.hero.sub.hi)}
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <button onClick={openDonate}
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm transition-all hover:scale-105"
-                style={{ background: LENITY.yellow, color: LENITY.ink }}>
-                {t(content.hero.cta1.en, content.hero.cta1.hi)} <ArrowRight className="w-4 h-4" />
-              </button>
-              <Link href="/projects"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm border-2 transition-all hover:bg-[#0d1229]"
-                style={{ borderColor: LENITY.ink, color: LENITY.ink }}>
-                {t(content.hero.cta2.en, content.hero.cta2.hi)}
-              </Link>
-            </div>
-          </Fade>
+        {/* Parallax orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute rounded-full"
+            style={{ width: 520, height: 520, top: "10%", left: "5%", background: LENITY.accentSoft, filter: "blur(80px)",
+              transform: `translate(${mouse.x * -30}px, ${mouse.y * -20}px)`, transition: "transform 0.1s ease-out" }} />
+          <div className="absolute rounded-full"
+            style={{ width: 380, height: 380, bottom: "15%", right: "8%", background: LENITY.yellowSoft, filter: "blur(60px)",
+              transform: `translate(${mouse.x * 25}px, ${mouse.y * 15}px)`, transition: "transform 0.1s ease-out" }} />
         </div>
-        {/* yellow rule under hero */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div className="h-1 w-full" style={{ background: LENITY.yellow }} /></div>
+
+        {/* Content */}
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 mb-8 text-xs font-semibold uppercase tracking-widest"
+            style={{ borderColor: "rgba(232,69,35,0.4)", background: "rgba(232,69,35,0.08)", color: "#f9a87a" }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: LENITY.accent }} />
+            {t(content.hero.badge.en, content.hero.badge.hi)}
+          </div>
+
+          {/* Headline */}
+          <h1 className="font-bold mb-4 leading-tight text-4xl sm:text-5xl lg:text-6xl xl:text-7xl"
+            style={{ fontFamily: SERIF, color: "#ffffff" }}>
+            {t(content.hero.line1.en, content.hero.line1.hi)}
+          </h1>
+
+          {/* Typed phrase */}
+          <div className="h-14 flex items-center justify-center mb-6">
+            <span className="text-2xl sm:text-3xl lg:text-4xl font-bold" style={{ color: LENITY.accent }}>
+              {displayed}
+              <span className="ml-0.5 inline-block w-0.5 h-8 align-middle" style={{ background: LENITY.accent, opacity: cursor ? 1 : 0 }} />
+            </span>
+          </div>
+
+          {/* Sub */}
+          <p className="text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.72)" }}>
+            {t(content.hero.sub.en, content.hero.sub.hi)}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
+            <button onClick={openDonate}
+              className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm transition-all hover:scale-105"
+              style={{ background: LENITY.accent, color: "#ffffff", boxShadow: "0 8px 30px rgba(232,69,35,0.4)" }}>
+              {t(content.hero.cta1.en, content.hero.cta1.hi)} <ArrowRight className="w-4 h-4" />
+            </button>
+            <Link href="/projects"
+              className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm border transition-all hover:bg-white/10"
+              style={{ borderColor: "rgba(255,255,255,0.3)", color: "#ffffff" }}>
+              {t(content.hero.cta2.en, content.hero.cta2.hi)}
+            </Link>
+          </div>
+
+          {/* Scroll cue */}
+          <div className="flex flex-col items-center gap-1 animate-bounce">
+            <span className="text-xs tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>
+              {t(content.hero.scroll.en, content.hero.scroll.hi)}
+            </span>
+            <ChevronDown className="w-4 h-4" style={{ color: "rgba(255,255,255,0.4)" }} />
+          </div>
+        </div>
       </section>
 
       {/* ════════════ 01 — CONSISTENT SERVICE ════════════ */}
@@ -324,7 +358,7 @@ export default function HomePage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
           {services.map((svc) => (
             <Fade key={svc.titleEn}>
-              <div className="bg-[#0d1229] rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+              <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                 <span className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: LENITY.yellowSoft }}>
                   <svc.icon className="w-6 h-6" style={{ color: LENITY.ink }} />
                 </span>
@@ -350,6 +384,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ════════════ IMPACT COUNTER ════════════ */}
+      <ImpactCounter stats={content.stats.map(s => ({ value: s.value, labelEn: s.en, labelHi: s.hi }))} />
+
       {/* ════════════ 03 — CHALLENGES & SOLUTIONS (campaigns) ════════════ */}
       <NumberedSection num="03" label={t(content.challenges.h2.en, content.challenges.h2.hi)}>
         <h2 className="text-4xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
@@ -363,7 +400,7 @@ export default function HomePage() {
             const pct = Math.round((c.raised / c.goal) * 100);
             return (
               <Fade key={c.titleEn}>
-                <div className="bg-[#0d1229] rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-start justify-between mb-5">
                     <h3 className="font-bold text-base leading-snug flex-1 pr-2" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(c.titleEn, c.titleHi)}</h3>
                     <span className="text-xs font-bold rounded-full px-2.5 py-1" style={{ color: LENITY.ink, background: LENITY.yellowSoft }}>{pct}%</span>
@@ -418,7 +455,7 @@ export default function HomePage() {
         <div className="grid md:grid-cols-3 gap-7">
           {blogPosts.map((post) => (
             <Fade key={post.titleEn}>
-              <div className="bg-[#0d1229] rounded-2xl border overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+              <div className="bg-white rounded-2xl border overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                 <div className="h-48 relative overflow-hidden">
                   <img src={post.img} alt={t(post.titleEn, post.titleHi)} className="w-full h-full object-cover" loading="lazy" />
                   <span className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1" style={{ background: LENITY.yellow, color: LENITY.ink }}>

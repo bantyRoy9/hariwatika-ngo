@@ -51,19 +51,19 @@ export default function Navbar() {
 
   /* Decide text colour based on scroll state */
   const linkColour = scrolled || mobileOpen
-    ? "text-[#e8f4ff] hover:text-[#63d2ff] hover:bg-[#63d2ff]/10"
-    : "text-white hover:text-[#63d2ff] hover:bg-white/10";
+    ? "text-gray-800 hover:text-[#E84523] hover:bg-[#E84523]/10"
+    : "text-white hover:text-white/80 hover:bg-white/10";
 
   const activeLinkColour = scrolled || mobileOpen
-    ? "text-[#63d2ff] bg-[#63d2ff]/10"
-    : "text-[#63d2ff] bg-white/10";
+    ? "text-[#E84523] bg-[#E84523]/10"
+    : "text-white bg-white/20";
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled || mobileOpen
-            ? "bg-[#0d1229]/95 backdrop-blur-md shadow-lg border-b border-[#63d2ff]/15"
+            ? "bg-white/95 backdrop-blur-md shadow-md border-b border-[#E84523]/15"
             : "bg-transparent"
         }`}
       >
@@ -95,13 +95,13 @@ export default function Navbar() {
 
             {/* ── Logo ── */}
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F2C200] shadow-md">
-                <Heart className="w-5 h-5 text-[#1d1d1b] fill-[#1d1d1b]" />
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#E84523] shadow-md">
+                <Heart className="w-5 h-5 text-white fill-white" />
               </span>
               <div className="flex flex-col leading-tight">
                 <span
                   className={`text-lg font-bold transition-colors duration-300 ${
-                    scrolled ? "text-[#F2C200]" : "text-white"
+                    scrolled ? "text-[#E84523]" : "text-white"
                   }`}
                   style={{ fontFamily: "'Exo 2', system-ui, sans-serif" }}
                 >
@@ -109,7 +109,7 @@ export default function Navbar() {
                 </span>
                 <span
                   className={`text-[10px] font-medium hidden sm:block transition-colors duration-300 ${
-                    scrolled ? "text-[#7a8fad]" : "text-white/70"
+                    scrolled ? "text-gray-500" : "text-white/70"
                   }`}
                 >
                   Shiv Mandir Vivah Sewa Samiti
@@ -141,7 +141,7 @@ export default function Navbar() {
                 aria-label="Switch language"
                 className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-all duration-200 border ${
                   scrolled
-                    ? "border-[#63d2ff]/15 text-[#F2C200] hover:bg-[#63d2ff]/10"
+                    ? "border-[#E84523]/20 text-[#E84523] hover:bg-[#E84523]/10"
                     : "border-white/30 text-white hover:bg-white/10"
                 }`}
               >
@@ -152,7 +152,7 @@ export default function Navbar() {
               {/* Donate CTA */}
               <Link
                 href="/donate"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F2C200] hover:bg-[#d9ae00] text-[#1d1d1b] rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#E84523] hover:bg-[#c93b1d] text-white rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
               >
                 <Heart className="w-4 h-4 fill-[#1d1d1b]" />
                 {t("Donate Now", "दान करें")}
@@ -163,7 +163,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className={`lg:hidden p-2 rounded-lg transition-colors ${
                   scrolled || mobileOpen
-                    ? "text-[#e8f4ff] hover:bg-[#63d2ff]/10"
+                    ? "text-gray-800 hover:bg-[#E84523]/10"
                     : "text-white hover:bg-white/10"
                 }`}
                 aria-label="Toggle menu"
@@ -176,7 +176,7 @@ export default function Navbar() {
 
         {/* ── Mobile Drawer ── */}
         <div
-          className={`lg:hidden bg-[#0d1229] border-t border-[#63d2ff]/15 shadow-xl overflow-hidden transition-all duration-300 ${
+          className={`lg:hidden bg-white border-t border-[#E84523]/15 shadow-xl overflow-hidden transition-all duration-300 ${
             mobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
@@ -187,32 +187,32 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "text-[#F2C200] bg-[#63d2ff]/10 font-semibold"
-                    : "text-[#e8f4ff] hover:text-[#F2C200] hover:bg-[#63d2ff]/10"
+                    ? "text-[#E84523] bg-[#E84523]/10 font-semibold"
+                    : "text-gray-700 hover:text-[#E84523] hover:bg-[#E84523]/10"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="pt-3 mt-2 border-t border-[#63d2ff]/15 space-y-2">
+            <div className="pt-3 mt-2 border-t border-[#E84523]/15 space-y-2">
               <Link
                 href="/donate"
-                className="flex items-center justify-center gap-2 w-full bg-[#F2C200] hover:bg-[#d9ae00] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-[#E84523] hover:bg-[#c93b1d] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 {t("Donate Now", "दान करें")}
               </Link>
               <Link
                 href="/registration"
-                className="flex items-center justify-center w-full border border-[#F2C200] text-[#F2C200] hover:bg-[#F2C200] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center w-full border border-[#E84523] text-[#E84523] hover:bg-[#E84523] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 {t("Marriage Registration", "विवाह पंजीकरण")}
               </Link>
               {/* Language toggle in drawer */}
               <button
                 onClick={toggle}
-                className="flex items-center justify-center gap-2 w-full border border-[#63d2ff]/15 text-[#7a8fad] hover:bg-[#63d2ff]/10 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Globe className="w-4 h-4" />
                 {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}

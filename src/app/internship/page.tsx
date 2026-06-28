@@ -184,7 +184,7 @@ export default function InternshipPage() {
         </section>
 
         {/* Opportunities */}
-        <section className="py-16 bg-[#050818]">
+        <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: LENITY.ink }}>
@@ -202,7 +202,7 @@ export default function InternshipPage() {
               {internships.map((intern) => (
                 <div
                   key={intern.id}
-                  className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+                  className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1"
                   style={{ borderColor: LENITY.line }}
                 >
                   <div className="flex items-start justify-between mb-3">
@@ -251,7 +251,7 @@ export default function InternshipPage() {
             {/* Application Form */}
             <div className="max-w-2xl mx-auto">
               {submitted ? (
-                <div className="bg-[#0d1229] rounded-3xl border shadow-lg overflow-hidden" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-3xl border shadow-lg overflow-hidden" style={{ borderColor: LENITY.line }}>
                   <div className="p-6 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
                     <CheckCircle className="w-12 h-12 mx-auto mb-2" />
                     <h3 className="text-lg font-bold" style={{ fontFamily: SERIF }}>
@@ -284,7 +284,7 @@ export default function InternshipPage() {
                   </div>
                 </div>
               ) : (
-                <div className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                   <h3
                     className="text-xl font-bold mb-6"
                     style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -322,7 +322,7 @@ export default function InternshipPage() {
                         required
                         value={form.role}
                         onChange={(e) => setForm({ ...form, role: e.target.value })}
-                        className="w-full rounded-xl px-4 py-2.5 text-sm bg-[#111630] text-[#e8f4ff] border focus:outline-none focus:ring-2"
+                        className="w-full rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 border focus:outline-none focus:ring-2"
                         style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                       >
                         <option value="">Select a role</option>
@@ -348,7 +348,7 @@ export default function InternshipPage() {
                           required
                           value={form.duration}
                           onChange={(e) => setForm({ ...form, duration: e.target.value })}
-                          className="w-full rounded-xl px-4 py-2.5 text-sm bg-[#111630] text-[#e8f4ff] border focus:outline-none focus:ring-2"
+                          className="w-full rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 border focus:outline-none focus:ring-2"
                           style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                         >
                           <option value="">Select duration</option>

@@ -13,6 +13,15 @@ type Group = { heading: string; items: Item[] };
 const NAV: Group[] = [
   { heading: "Dashboard", items: [{ label: "Overview", href: "/admin" }] },
   {
+    heading: "Analytics",
+    items: [
+      { label: "Donations Report", href: "/admin/donations" },
+      { label: "Volunteers", href: "/admin/volunteers" },
+      { label: "Projects Board", href: "/admin/projects" },
+      { label: "All Submissions", href: "/admin/submissions/all" },
+    ],
+  },
+  {
     heading: "Submissions",
     items: [
       { label: "Contact Messages", href: "/admin/submissions/contacts" },
@@ -58,17 +67,17 @@ export default function Sidebar() {
   const nav = (
     <nav className="flex flex-col gap-6 p-4">
       <div>
-        <Link href="/admin" className="block text-xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+        <Link href="/admin" className="block text-xl font-bold" style={{ fontFamily: SERIF, color: LENITY.adminInk }}>
           Hariwatika
         </Link>
-        <p className="text-[11px] uppercase tracking-wider" style={{ color: LENITY.muted }}>
+        <p className="text-[11px] uppercase tracking-wider" style={{ color: LENITY.adminMuted }}>
           CRM Admin
         </p>
       </div>
 
       {NAV.map((group) => (
         <div key={group.heading}>
-          <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: LENITY.muted }}>
+          <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: LENITY.adminMuted }}>
             {group.heading}
           </p>
           <div className="flex flex-col gap-0.5">
@@ -82,8 +91,8 @@ export default function Sidebar() {
                   className="rounded-lg px-3 py-2 text-sm transition-colors"
                   style={{
                     background: active ? LENITY.accent : "transparent",
-                    color: LENITY.ink,
-                    fontWeight: active ? 700 : 500,
+                    color: active ? "#ffffff" : LENITY.adminInk,
+                    fontWeight: active ? 700 : 400,
                   }}
                 >
                   {item.label}
@@ -98,7 +107,7 @@ export default function Sidebar() {
         <button
           type="submit"
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium w-full"
-          style={{ color: LENITY.red }}
+          style={{ color: "#f87171" }}
         >
           <LogOut className="w-4 h-4" /> Logout
         </button>
@@ -110,21 +119,21 @@ export default function Sidebar() {
     <>
       {/* Mobile top bar */}
       <div
-        className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 h-14 border-b bg-[#0d1229]"
-        style={{ borderColor: LENITY.line }}
+        className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 h-14 border-b"
+        style={{ background: LENITY.adminSoft, borderColor: LENITY.adminLine }}
       >
-        <span className="font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+        <span className="font-bold" style={{ fontFamily: SERIF, color: LENITY.adminInk }}>
           Hariwatika CRM
         </span>
-        <button onClick={() => setOpen(!open)} aria-label="Toggle menu">
+        <button onClick={() => setOpen(!open)} aria-label="Toggle menu" style={{ color: LENITY.adminInk }}>
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Desktop fixed sidebar */}
       <aside
-        className="hidden lg:block fixed top-0 left-0 bottom-0 w-64 border-r bg-[#0d1229] overflow-y-auto z-30"
-        style={{ borderColor: LENITY.line }}
+        className="hidden lg:block fixed top-0 left-0 bottom-0 w-64 border-r overflow-y-auto z-30"
+        style={{ background: LENITY.adminSoft, borderColor: LENITY.adminLine }}
       >
         {nav}
       </aside>
@@ -132,10 +141,10 @@ export default function Sidebar() {
       {/* Mobile drawer */}
       {open && (
         <>
-          <div className="lg:hidden fixed inset-0 bg-black/40 z-40" onClick={() => setOpen(false)} />
+          <div className="lg:hidden fixed inset-0 bg-black/60 z-40" onClick={() => setOpen(false)} />
           <aside
-            className="lg:hidden fixed top-0 left-0 bottom-0 w-72 border-r bg-[#0d1229] overflow-y-auto z-50"
-            style={{ borderColor: LENITY.line }}
+            className="lg:hidden fixed top-0 left-0 bottom-0 w-72 border-r overflow-y-auto z-50"
+            style={{ background: LENITY.adminSoft, borderColor: LENITY.adminLine }}
           >
             {nav}
           </aside>

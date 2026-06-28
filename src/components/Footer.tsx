@@ -10,18 +10,18 @@ export default function Footer() {
           {/* Column 1: About */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#00b4d8]">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#c93b1d]">
                 <Heart className="w-5 h-5 text-white fill-white" />
               </span>
               <span
-                className="text-xl font-bold text-[#63d2ff]"
+                className="text-xl font-bold text-[#E84523]"
                 style={{ fontFamily: "'Literata', Georgia, serif" }}
               >
                 Hariwatika
               </span>
             </div>
             <p
-              className="text-[#63d2ff] font-semibold mb-2"
+              className="text-[#E84523] font-semibold mb-2"
               style={{ fontFamily: "'Literata', Georgia, serif" }}
             >
               सेवा ही धर्म है
@@ -36,7 +36,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#00b4d8] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <span className="text-xs font-bold">f</span>
@@ -45,7 +45,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#00b4d8] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <AtSign className="w-4 h-4" />
@@ -54,7 +54,7 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#00b4d8] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
                 <Radio className="w-4 h-4" />
@@ -88,7 +88,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-[#63d2ff] text-sm transition-colors"
+                    className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -114,7 +114,7 @@ export default function Footer() {
                 <li key={idx}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-[#63d2ff] text-sm transition-colors"
+                    className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -128,7 +128,7 @@ export default function Footer() {
             <h3 className="font-semibold text-white mb-4">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex gap-3">
-                <MapPin className="w-4 h-4 text-[#63d2ff] mt-0.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-[#E84523] mt-0.5 flex-shrink-0" />
                 <span className="text-gray-400 text-sm leading-relaxed">
                   Sukanya Utsav Bhawan, Hariwatika Chowk,<br />
                   Bettiah, West Champaran,<br />
@@ -136,27 +136,27 @@ export default function Footer() {
                 </span>
               </li>
               <li className="flex gap-3 items-center">
-                <Phone className="w-4 h-4 text-[#63d2ff] flex-shrink-0" />
+                <Phone className="w-4 h-4 text-[#E84523] flex-shrink-0" />
                 <div className="flex flex-col">
                   <a
                     href="tel:+919473331919"
-                    className="text-gray-400 hover:text-[#63d2ff] text-sm transition-colors"
+                    className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
                     +91 9473331919
                   </a>
                   <a
                     href="tel:+919288390016"
-                    className="text-gray-400 hover:text-[#63d2ff] text-sm transition-colors"
+                    className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
                     +91 9288390016
                   </a>
                 </div>
               </li>
               <li className="flex gap-3 items-center">
-                <Mail className="w-4 h-4 text-[#63d2ff] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-[#E84523] flex-shrink-0" />
                 <a
                   href="mailto:hariwatikaseva@gmail.com"
-                  className="text-gray-400 hover:text-[#63d2ff] text-sm transition-colors break-all"
+                  className="text-gray-400 hover:text-[#E84523] text-sm transition-colors break-all"
                 >
                   hariwatikaseva@gmail.com
                 </a>
@@ -167,7 +167,7 @@ export default function Footer() {
             <div className="mt-4 rounded-xl overflow-hidden bg-white/5 border border-white/10">
               <div className="w-full h-28 flex items-center justify-center text-gray-500 text-xs">
                 <div className="text-center">
-                  <MapPin className="w-6 h-6 text-[#63d2ff] mx-auto mb-1" />
+                  <MapPin className="w-6 h-6 text-[#E84523] mx-auto mb-1" />
                   <span>Bettiah, West Champaran</span>
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function Footer() {
             © 2024 Hariwatika Shiv Mandir Vivah Sewa Samiti. All rights reserved.
           </p>
           <p className="text-gray-600 text-xs flex items-center gap-1">
-            Made with <Heart className="w-3 h-3 text-[#63d2ff] fill-[#63d2ff]" /> for community service
+            Made with <Heart className="w-3 h-3 text-[#E84523] fill-[#E84523]" /> for community service
           </p>
         </div>
       </div>

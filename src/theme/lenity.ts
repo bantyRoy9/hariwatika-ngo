@@ -1,26 +1,35 @@
 /**
- * LENITY THEME TOKENS — light charity look
+ * LENITY THEME TOKENS
  * Shared across all pages. Import from "@/theme/lenity".
+ * Public pages use the warm CRY-inspired palette.
+ * Admin uses adminBg/adminSoft/adminInk/adminLine tokens.
  */
 export const LENITY = {
-  // CYBERPUNK dark theme — neon on near-black (token names unchanged so pages recolor for free)
-  accent: "#63d2ff",                    // neon cyan
-  accentHover: "#00b4d8",
-  accentSoft: "rgba(99,210,255,0.12)",  // cyan wash for chips/fills
-  ink: "#e8f4ff",                       // light text (was near-black; now flips on dark bg)
-  muted: "#7a8fad",
-  bg: "#050818",                        // near-black base
-  soft: "#090d1f",                      // slightly raised surface
-  line: "rgba(99,210,255,0.12)",        // translucent cyan border
-  // accent / wash tokens (re-themed)
-  yellow: "#63d2ff",                    // cyan (was brand yellow)
-  yellowSoft: "rgba(99,210,255,0.15)",  // cyan watercolor wash
-  pink: "#b57bff",                      // neon purple (was pink wash)
-  pinkSoft: "rgba(181,123,255,0.15)",
-  amber: "#ffcc44",
-  red: "#ff5555",
-  blue: "#63d2ff",
-  dark: "#050818",                      // top utility bar background
+  // --- PUBLIC: warm, humanitarian (CRY.org-inspired) ---
+  accent:      "#E84523",                   // CRY orange-red
+  accentHover: "#c93b1d",
+  accentSoft:  "rgba(232,69,35,0.10)",
+  ink:         "#1a1a1a",                   // near-black text on white
+  muted:       "#6b7280",
+  bg:          "#ffffff",
+  soft:        "#fdf6f0",                   // warm off-white surface
+  line:        "rgba(232,69,35,0.15)",
+  yellow:      "#f59e0b",
+  yellowSoft:  "rgba(245,158,11,0.12)",
+  pink:        "#ec4899",
+  pinkSoft:    "rgba(236,72,153,0.12)",
+  amber:       "#f59e0b",
+  red:         "#E84523",
+  blue:        "#2563eb",
+  dark:        "#1a1a1a",                   // utility bar background
+  // --- ADMIN: dark dashboard with semantic data colors ---
+  adminBg:     "#0f1117",
+  adminSoft:   "#161b27",
+  adminLine:   "rgba(255,255,255,0.08)",
+  adminInk:    "#e2e8f0",
+  adminMuted:  "#64748b",
+  green:       "#22c55e",
+  greenSoft:   "rgba(34,197,94,0.12)",
 } as const;
 
 /** NGO contact info for the top utility bar */

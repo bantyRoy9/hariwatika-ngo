@@ -29,7 +29,7 @@ export default function TransparencyContent({
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="pt-28 pb-16 relative bg-[#050818]">
+        <section className="pt-28 pb-16 relative bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-4" style={{ color: LENITY.ink }}>
               <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
@@ -67,7 +67,7 @@ export default function TransparencyContent({
               {reports.map((report) => (
                 <div
                   key={report.year}
-                  className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+                  className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1"
                   style={{ borderColor: LENITY.line }}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4">
@@ -146,7 +146,7 @@ export default function TransparencyContent({
         </section>
 
         {/* Expense Breakdown */}
-        <section className="py-20 bg-[#050818]">
+        <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
