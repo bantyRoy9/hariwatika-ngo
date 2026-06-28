@@ -49,22 +49,14 @@ export default function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  /* Decide text colour based on scroll state */
-  const linkColour = scrolled || mobileOpen
-    ? "text-gray-800 hover:text-[#E84523] hover:bg-[#E84523]/10"
-    : "text-white hover:text-white/80 hover:bg-white/10";
-
-  const activeLinkColour = scrolled || mobileOpen
-    ? "text-[#E84523] bg-[#E84523]/10"
-    : "text-white bg-white/20";
+  const linkColour = "text-gray-700 hover:text-[#E84523] hover:bg-[#E84523]/10";
+  const activeLinkColour = "text-[#E84523] bg-[#E84523]/10 font-semibold";
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled || mobileOpen
-            ? "bg-white/95 backdrop-blur-md shadow-md border-b border-[#E84523]/15"
-            : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E84523]/15 transition-all duration-300 ${
+          scrolled ? "shadow-md" : ""
         }`}
       >
         {/* ── Top utility bar (collapses on scroll) ── */}
@@ -100,18 +92,12 @@ export default function Navbar() {
               </span>
               <div className="flex flex-col leading-tight">
                 <span
-                  className={`text-lg font-bold transition-colors duration-300 ${
-                    scrolled ? "text-[#E84523]" : "text-white"
-                  }`}
+                  className="text-lg font-bold text-[#E84523]"
                   style={{ fontFamily: "'Exo 2', system-ui, sans-serif" }}
                 >
                   Hariwatika
                 </span>
-                <span
-                  className={`text-[10px] font-medium hidden sm:block transition-colors duration-300 ${
-                    scrolled ? "text-gray-500" : "text-white/70"
-                  }`}
-                >
+                <span className="text-[10px] font-medium hidden sm:block text-gray-500">
                   Shiv Mandir Vivah Sewa Samiti
                 </span>
               </div>
@@ -139,11 +125,7 @@ export default function Navbar() {
               <button
                 onClick={toggle}
                 aria-label="Switch language"
-                className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-all duration-200 border ${
-                  scrolled
-                    ? "border-[#E84523]/20 text-[#E84523] hover:bg-[#E84523]/10"
-                    : "border-white/30 text-white hover:bg-white/10"
-                }`}
+                className="hidden sm:flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-all duration-200 border border-[#E84523]/20 text-[#E84523] hover:bg-[#E84523]/10"
               >
                 <Globe className="w-3.5 h-3.5" />
                 {lang === "hi" ? "EN" : "हि"}
@@ -161,11 +143,7 @@ export default function Navbar() {
               {/* Mobile burger */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`lg:hidden p-2 rounded-lg transition-colors ${
-                  scrolled || mobileOpen
-                    ? "text-gray-800 hover:bg-[#E84523]/10"
-                    : "text-white hover:bg-white/10"
-                }`}
+                className="lg:hidden p-2 rounded-lg transition-colors text-gray-800 hover:bg-[#E84523]/10"
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
