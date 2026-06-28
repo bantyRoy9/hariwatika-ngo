@@ -157,14 +157,14 @@ function Scene() {
       <CameraRig />
       <ambientLight intensity={0.4} />
       <pointLight position={[5, 5, 5]}   color="#F4A433" intensity={3} />
-      <pointLight position={[-5, -3, 3]} color="#855300" intensity={2} />
+      <pointLight position={[-5, -3, 3]} color="#63d2ff" intensity={2} />
       <pointLight position={[0, 3, -4]}  color="#48cc84" intensity={1.5} />
       <spotLight   position={[0, 8, 4]}  color="#ffd580" intensity={4} angle={0.3} penumbra={1} castShadow={false} />
 
       <StarField />
 
       {/* Big central distorted orb */}
-      <FloatingOrb position={[0, 0, -2]}    color="#855300" size={1.5}  speed={0.4} distort={0.5} />
+      <FloatingOrb position={[0, 0, -2]}    color="#63d2ff" size={1.5}  speed={0.4} distort={0.5} />
 
       {/* Mid orbs */}
       <FloatingOrb position={[3.5, 1, -3]}  color="#F4A433" size={0.8}  speed={0.6} distort={0.4} />
@@ -174,7 +174,7 @@ function Scene() {
 
       {/* Rings */}
       <Ring position={[4, -1.5, -3.5]} color="#F4A433" speed={0.5} />
-      <Ring position={[-4, 2, -4]}     color="#855300" speed={0.4} />
+      <Ring position={[-4, 2, -4]}     color="#63d2ff" speed={0.4} />
       <Ring position={[0.5, 3, -5]}    color="#ffffff" speed={0.3} />
 
       {/* Diamonds */}
