@@ -8,6 +8,7 @@ import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Phone, Mail, MapPin, MessageCircle, Clock, Send, CheckCircle } from "lucide-react";
+import { submitContact } from "@/app/actions/submissions";
 
 interface ContactForm {
   name: string;
@@ -23,13 +24,16 @@ export default function ContactPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    setError("");
+    const res = await submitContact(form);
     setLoading(false);
-    setSubmitted(true);
+    if (res.success) setSubmitted(true);
+    else setError(res.error);
   };
 
   const whatsappLink = `https://wa.me/919473331919?text=${encodeURIComponent(
@@ -53,7 +57,7 @@ export default function ContactPage() {
               {/* Left: Info */}
               <div className="lg:col-span-2 space-y-6">
                 <Reveal animation="slide-right">
-                  <Card3D intensity={5} className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={5} className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <h3
                     className="font-bold text-lg mb-4"
                     style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -62,11 +66,11 @@ export default function ContactPage() {
                   </h3>
                   <div className="space-y-4">
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.accentSoft }}>
-                        <MapPin className="w-5 h-5" style={{ color: LENITY.accent }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
+                        <MapPin className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: LENITY.accent }}>Address</p>
+                        <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-1" style={{ color: LENITY.ink }}><span className="inline-block w-5 h-0.5" style={{ background: LENITY.yellow }} />Address</p>
                         <p className="text-sm leading-relaxed" style={{ color: LENITY.ink }}>
                           Sukanya Utsav Bhawan,<br />
                           Hariwatika Chowk, Bettiah,<br />
@@ -76,11 +80,11 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.accentSoft }}>
-                        <Phone className="w-5 h-5" style={{ color: LENITY.accent }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
+                        <Phone className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: LENITY.accent }}>Phone</p>
+                        <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-1" style={{ color: LENITY.ink }}><span className="inline-block w-5 h-0.5" style={{ background: LENITY.yellow }} />Phone</p>
                         <a href="tel:+919473331919" className="block text-sm transition-colors hover:opacity-70" style={{ color: LENITY.ink }}>
                           +91 9473331919
                         </a>
@@ -91,11 +95,11 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.accentSoft }}>
-                        <Mail className="w-5 h-5" style={{ color: LENITY.accent }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
+                        <Mail className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: LENITY.accent }}>Email</p>
+                        <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-1" style={{ color: LENITY.ink }}><span className="inline-block w-5 h-0.5" style={{ background: LENITY.yellow }} />Email</p>
                         <a
                           href="mailto:hariwatikaseva@gmail.com"
                           className="text-sm transition-colors hover:opacity-70 break-all"
@@ -107,11 +111,11 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.accentSoft }}>
-                        <Clock className="w-5 h-5" style={{ color: LENITY.accent }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
+                        <Clock className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: LENITY.accent }}>Office Hours</p>
+                        <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] mb-1" style={{ color: LENITY.ink }}><span className="inline-block w-5 h-0.5" style={{ background: LENITY.yellow }} />Office Hours</p>
                         <p className="text-sm" style={{ color: LENITY.ink }}>Mon–Sat: 10:00 AM – 5:00 PM</p>
                         <p className="text-xs" style={{ color: LENITY.muted }}>Sunday by appointment</p>
                       </div>
@@ -133,7 +137,7 @@ export default function ContactPage() {
 
                 {/* Map Embed */}
                 <Reveal animation="slide-right" delay={100}>
-                  <Card3D intensity={3} className="bg-white rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={3} className="bg-[#0d1229] rounded-3xl border overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="p-4 border-b" style={{ borderColor: LENITY.line }}>
                     <h3 className="font-bold text-sm" style={{ color: LENITY.ink, fontFamily: SERIF }}>Find Us on Map</h3>
                   </div>
@@ -156,7 +160,7 @@ export default function ContactPage() {
               <div className="lg:col-span-3">
                 <Reveal animation="slide-left">
                 {submitted ? (
-                  <div className="bg-white rounded-3xl border p-8 text-center shadow-sm" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-[#0d1229] rounded-3xl border p-8 text-center shadow-sm" style={{ borderColor: LENITY.line }}>
                     <CheckCircle className="w-16 h-16 mx-auto mb-4" style={{ color: LENITY.accent }} />
                     <h3
                       className="text-xl font-bold mb-2"
@@ -178,21 +182,24 @@ export default function ContactPage() {
                       </a>
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="border rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105"
-                        style={{ borderColor: LENITY.accent, color: LENITY.accent }}
+                        className="rounded-full px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
+                        style={{ border: `2px solid ${LENITY.ink}`, color: LENITY.ink }}
                       >
                         Send Another
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-white rounded-3xl border p-6 sm:p-8 shadow-sm" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8 shadow-sm" style={{ borderColor: LENITY.line }}>
                     <h2
-                      className="text-xl font-bold mb-6"
+                      className="text-2xl font-bold mb-1"
                       style={{ fontFamily: SERIF, color: LENITY.ink }}
                     >
                       Send us a Message
                     </h2>
+                    <p className="text-sm italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted }}>
+                      Tell us how we can help — we read every word.
+                    </p>
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
@@ -205,7 +212,7 @@ export default function ContactPage() {
                             placeholder="Your name"
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
                             style={{ borderColor: LENITY.line }}
                           />
                         </div>
@@ -220,7 +227,7 @@ export default function ContactPage() {
                             placeholder="10-digit mobile"
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
                             style={{ borderColor: LENITY.line }}
                           />
                         </div>
@@ -235,7 +242,7 @@ export default function ContactPage() {
                           placeholder="Optional"
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
                           style={{ borderColor: LENITY.line }}
                         />
                       </div>
@@ -248,7 +255,7 @@ export default function ContactPage() {
                           onChange={(e) => setForm({ ...form, subject: e.target.value })}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-white"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff]"
                           style={{ borderColor: LENITY.line }}
                         >
                           <option value="">Select subject</option>
@@ -272,20 +279,23 @@ export default function ContactPage() {
                           rows={5}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none bg-[#111630] text-[#e8f4ff]"
                           style={{ borderColor: LENITY.line }}
                         />
                       </div>
 
+                      {error && (
+                        <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
+                      )}
                       <div className="flex flex-col sm:flex-row gap-3">
                         <button
                           type="submit"
                           disabled={loading}
-                          className="flex-1 disabled:opacity-50 text-white rounded-full py-3.5 font-bold transition-all hover:scale-105 flex items-center justify-center gap-2"
-                          style={{ background: LENITY.accent }}
+                          className="flex-1 disabled:opacity-50 rounded-full py-3.5 font-bold transition-all hover:scale-105 flex items-center justify-center gap-2"
+                          style={{ background: LENITY.accent, color: LENITY.ink }}
                         >
                           {loading ? (
-                            <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                            <span className="animate-spin border-2 border-t-transparent rounded-full w-5 h-5" style={{ borderColor: LENITY.ink, borderTopColor: "transparent" }} />
                           ) : (
                             <>
                               <Send className="w-4 h-4" /> Send Message

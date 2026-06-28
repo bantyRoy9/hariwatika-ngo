@@ -23,15 +23,16 @@ import {
 type AdminTab = "donations" | "members" | "greetings" | "invitations";
 
 /* ─────────────────────────────────────────────────────────────
-   LENITY THEME TOKENS (light charity look)
+   PAI EDITORIAL THEME TOKENS
 ───────────────────────────────────────────────────────────── */
 const LENITY = {
-  accent: "#F97316",
-  accentHover: "#ea670c",
-  ink: "#1b1c19",
-  muted: "#6b6b6b",
-  soft: "#f7f7f5",
-  line: "#ececea",
+  accent: "#F2C200",
+  accentHover: "#d9ae00",
+  ink: "#1d1d1b",
+  muted: "#5f5f5a",
+  soft: "#fbfaf6",
+  line: "#e7e5dd",
+  yellowSoft: "#FBE9A0",
 };
 
 const SERIF = "'Literata', serif";

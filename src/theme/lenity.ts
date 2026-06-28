@@ -3,19 +3,24 @@
  * Shared across all pages. Import from "@/theme/lenity".
  */
 export const LENITY = {
-  accent: "#F97316",
-  accentHover: "#ea670c",
-  accentSoft: "#F9731614", // ~8% accent for icon chips / fills
-  ink: "#1b1c19",
-  muted: "#6b6b6b",
-  bg: "#ffffff",
-  soft: "#f7f7f5",
-  line: "#ececea",
-  // reference charity theme additions
-  amber: "#f0a830",   // "Our Projects" band background
-  red: "#e8542a",     // feature card (Crowdfunding)
-  blue: "#3a7bd5",    // feature card (Scholarship)
-  dark: "#2b2b2b",    // top utility bar background
+  // CYBERPUNK dark theme — neon on near-black (token names unchanged so pages recolor for free)
+  accent: "#63d2ff",                    // neon cyan
+  accentHover: "#00b4d8",
+  accentSoft: "rgba(99,210,255,0.12)",  // cyan wash for chips/fills
+  ink: "#e8f4ff",                       // light text (was near-black; now flips on dark bg)
+  muted: "#7a8fad",
+  bg: "#050818",                        // near-black base
+  soft: "#090d1f",                      // slightly raised surface
+  line: "rgba(99,210,255,0.12)",        // translucent cyan border
+  // accent / wash tokens (re-themed)
+  yellow: "#63d2ff",                    // cyan (was brand yellow)
+  yellowSoft: "rgba(99,210,255,0.15)",  // cyan watercolor wash
+  pink: "#b57bff",                      // neon purple (was pink wash)
+  pinkSoft: "rgba(181,123,255,0.15)",
+  amber: "#ffcc44",
+  red: "#ff5555",
+  blue: "#63d2ff",
+  dark: "#050818",                      // top utility bar background
 } as const;
 
 /** NGO contact info for the top utility bar */
@@ -25,7 +30,7 @@ export const CONTACT = {
   hours: "Mon–Sat: 9:00–18:00",
 } as const;
 
-export const SERIF = "'Literata', serif";
+export const SERIF = "'Exo 2', sans-serif";
 
 /** Unsplash hotlinks — community / charity / India themed. Plain <img>, no next.config needed. */
 export const IMG = {

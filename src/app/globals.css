@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -7,37 +7,37 @@
      Change these values to instantly update the entire site
      ══════════════════════════════════════════════════════════════ */
   
-  /* ─── Primary Colors (Main Brand) ─── */
-  --color-primary: #8B5A2B;           /* Warm terracotta brown */
-  --color-primary-dark: #5D3A1A;      /* Rich dark brown */
-  --color-primary-light: #C69C6D;     /* Soft camel */
-  
+  /* ─── Primary Colors (Main Brand) — NEON ─── */
+  --color-primary: #63d2ff;           /* Neon cyan */
+  --color-primary-dark: #00b4d8;      /* Deep cyan */
+  --color-primary-light: #9ee4ff;     /* Light cyan */
+
   /* ─── Accent Colors (Highlights & CTAs) ─── */
-  --color-accent: #D4A574;            /* Warm gold */
-  --color-accent-bright: #E8C4A0;     /* Light cream */
-  --color-accent-green: #2D5F4E;      /* Forest green */
-  --color-accent-green-light: #4A8A70; /* Sage green */
-  
-  /* ─── Surface Colors (Backgrounds) ─── */
-  --color-surface: #FFFAF5;           /* Warm white */
-  --color-surface-soft: #FFF8F0;      /* Soft cream */
-  --color-surface-muted: #F5F1EB;     /* Muted beige */
-  --color-surface-elevated: #FFFFFF;  /* Pure white for cards */
-  
+  --color-accent: #b57bff;            /* Neon purple */
+  --color-accent-bright: #ff6eb4;     /* Neon pink */
+  --color-accent-green: #00e5a0;      /* Neon green */
+  --color-accent-green-light: #2effb8; /* Bright green */
+
+  /* ─── Surface Colors (Backgrounds) — DARK ─── */
+  --color-surface: #050818;           /* Near-black base */
+  --color-surface-soft: #090d1f;      /* Soft raised */
+  --color-surface-muted: #111630;     /* Muted panel */
+  --color-surface-elevated: #0d1229;  /* Card surface */
+
   /* ─── Text Colors ─── */
-  --color-on-surface: #1A1614;        /* Near black - primary text */
-  --color-on-surface-variant: #4A423A; /* Dark gray - secondary */
-  --color-secondary-text: #6B5F52;    /* Medium gray - tertiary */
-  --color-text-muted: #8F8377;        /* Light gray - captions */
-  
+  --color-on-surface: #e8f4ff;        /* Light - primary text */
+  --color-on-surface-variant: #b8cce0; /* Soft light - secondary */
+  --color-secondary-text: #94a8c4;    /* Muted - tertiary */
+  --color-text-muted: #7a8fad;        /* Dim - captions */
+
   /* ─── Border & Outline Colors ─── */
-  --color-outline: #D4C4B0;           /* Main border */
-  --color-outline-variant: #E8DFD3;   /* Light border */
-  --color-outline-subtle: #F2EDE5;    /* Subtle divider */
-  
+  --color-outline: rgba(99,210,255,0.20);   /* Main border */
+  --color-outline-variant: rgba(99,210,255,0.12); /* Light border */
+  --color-outline-subtle: rgba(99,210,255,0.07);  /* Subtle divider */
+
   /* ─── Shadow Colors (RGB for transparency) ─── */
-  --shadow-color-primary: 90, 60, 30;  /* Warm brown shadows */
-  --shadow-color-dark: 26, 22, 20;     /* Near black for depth */
+  --shadow-color-primary: 99, 210, 255;  /* Cyan glow shadows */
+  --shadow-color-dark: 2, 4, 12;         /* Deep black for depth */
   
   --color-shadow-xs: rgba(var(--shadow-color-primary), 0.04);
   --color-shadow-sm: rgba(var(--shadow-color-primary), 0.08);
@@ -46,21 +46,22 @@
   --color-shadow-xl: rgba(var(--shadow-color-primary), 0.24);
 
   /* ─── Utility Colors ─── */
-  --color-white: #FFFFFF;
-  --color-black: #0A0807;
-  --color-success: #2D5F4E;
-  --color-warning: #D4A574;
-  --color-error: #C14F3A;
-  --color-info: #4A8A70;
+  --color-white: #e8f4ff;
+  --color-black: #050818;
+  --color-success: #00e5a0;
+  --color-warning: #ffcc44;
+  --color-error: #ff5555;
+  --color-info: #63d2ff;
 
   /* ═══════════════════════════════════════════════════════════════
      📝 TYPOGRAPHY SYSTEM — Premium Font Sizing
      ══════════════════════════════════════════════════════════════ */
   
-  /* ─── Font Families ─── */
-  --font-serif: 'Literata', Georgia, serif;
-  --font-display: 'Cormorant', 'Literata', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* ─── Font Families — TECHY ─── */
+  --font-serif: 'Exo 2', system-ui, sans-serif;
+  --font-display: 'Exo 2', system-ui, sans-serif;
+  --font-sans: 'Rajdhani', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   
   /* ─── Font Sizes (Refined Scale) ─── */
   --font-size-xs: 0.6875rem;      /* 11px - tiny labels */
@@ -181,8 +182,9 @@ html {
   html { font-size: 15px; }
 }
 
+html { background: var(--color-surface); }
 body {
-  background: var(--color-surface);
+  background: transparent; /* .cyber-grid (fixed, z-index:-2) is the visible base layer */
   color: var(--color-on-surface);
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
@@ -935,13 +937,13 @@ p {
 
 /* ── Glassmorphism card ── */
 .glass-card {
-  background: rgba(255, 250, 245, 0.85);
+  background: rgba(13, 18, 41, 0.7);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 
-    0 12px 40px rgba(139, 90, 43, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(99, 210, 255, 0.18);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(99, 210, 255, 0.12);
 }
 
 /* ── Section divider ── */
@@ -1245,9 +1247,9 @@ p {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary: #6B4423;
-    --color-accent: #B8824D;
-    --color-on-surface: #000000;
+    --color-primary: #8fe0ff;
+    --color-accent: #cda0ff;
+    --color-on-surface: #ffffff;
   }
   
   .card-premium,
@@ -1278,3 +1280,172 @@ p {
   }
 }
 
+
+/* ─────────────────────────────────────────────────────────────
+   PAI EDITORIAL THEME — watercolor blobs + big section numbers
+───────────────────────────────────────────────────────────── */
+
+/* soft organic paint blob behind portraits; color set via --blob */
+.watercolor {
+  position: relative;
+}
+.watercolor::before {
+  content: "";
+  position: absolute;
+  inset: -12% -14%;
+  background: var(--blob, rgba(99,210,255,0.15));
+  border-radius: 42% 58% 63% 37% / 47% 42% 58% 53%;
+  filter: blur(40px);
+  z-index: 0;
+  animation: blob-morph 14s ease-in-out infinite;
+}
+.watercolor > * { position: relative; z-index: 1; }
+
+@keyframes blob-morph {
+  0%,100% { border-radius: 42% 58% 63% 37% / 47% 42% 58% 53%; }
+  50%     { border-radius: 60% 40% 38% 62% / 55% 58% 42% 45%; }
+}
+
+/* big outlined section number, e.g. "01" */
+.pai-number {
+  font-family: 'Literata', serif;
+  font-weight: 700;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px #63d2ff;
+  letter-spacing: -0.02em;
+}
+
+/* rotated vertical caption label */
+.pai-vlabel {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  color: #7a8fad;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CYBERPUNK EFFECT LAYER — ported from omiedutrack
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Animated neon grid background ── */
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-color: #050818;
+  background-image:
+    linear-gradient(rgba(99,210,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,210,255,0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: cyber-grid-move 20s linear infinite;
+}
+@keyframes cyber-grid-move {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 50px; }
+}
+
+/* ── Floating glow orbs ── */
+.cyber-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cyber-orbs .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orb-float 10s ease-in-out infinite;
+}
+.cyber-orbs .orb1 { width: 500px; height: 500px; background: radial-gradient(#63d2ff22, transparent 70%); top: -150px; left: -150px; animation-delay: 0s; }
+.cyber-orbs .orb2 { width: 400px; height: 400px; background: radial-gradient(#b57bff22, transparent 70%); bottom: -100px; right: -100px; animation-delay: 4s; }
+.cyber-orbs .orb3 { width: 300px; height: 300px; background: radial-gradient(#ff6eb422, transparent 70%); top: 30%; left: 60%; animation-delay: 7s; }
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -20px) scale(1.05); }
+  66%      { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* ── Clip-path neon buttons ── */
+.btn-future {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.85rem 2rem;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-future::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+}
+.btn-future:hover::before { transform: translateX(100%); }
+.btn-cyan { background: linear-gradient(135deg, #00b4d8, #63d2ff); color: #050818; box-shadow: 0 0 30px rgba(99,210,255,0.3); }
+.btn-cyan:hover { box-shadow: 0 0 50px rgba(99,210,255,0.5); transform: translateY(-2px); }
+.btn-purple { background: linear-gradient(135deg, #7b2ff7, #b57bff); color: #fff; box-shadow: 0 0 30px rgba(181,123,255,0.3); }
+.btn-purple:hover { box-shadow: 0 0 50px rgba(181,123,255,0.5); transform: translateY(-2px); }
+.btn-outline-cyber {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid rgba(99,210,255,0.4);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-outline-cyber:hover { background: rgba(99,210,255,0.1); border-color: var(--color-primary); }
+
+/* ── Glowing-border card ── */
+.glow-card {
+  position: relative;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+}
+.glow-card:hover {
+  border-color: rgba(99,210,255,0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(99,210,255,0.15);
+}
+
+/* ── Neon divider ── */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  margin: 1.2rem 0;
+  opacity: 0.3;
+  border: none;
+}
+
+/* ── Neon text glow utility ── */
+.neon-glow { text-shadow: 0 0 12px rgba(99,210,255,0.6), 0 0 30px rgba(99,210,255,0.3); }
+
+/* disable ambient bg motion for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .cyber-grid, .cyber-orbs .orb { animation: none !important; }
+}

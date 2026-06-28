@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { submitDonation } from "@/app/actions/submissions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
@@ -34,7 +35,8 @@ export default function DonatePage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [donorRef] = useState(`HW-${Date.now().toString().slice(-6)}`);
+  const [donorRef, setDonorRef] = useState("");
+  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
   const finalAmount = form.customAmount ? Number(form.customAmount) : selectedAmount;
@@ -42,9 +44,22 @@ export default function DonatePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    setError("");
+    const res = await submitDonation({
+      name: form.name,
+      mobile: form.mobile,
+      email: form.email,
+      address: form.address,
+      amount: finalAmount,
+      purpose: form.purpose,
+    });
     setLoading(false);
-    setSubmitted(true);
+    if (res.success) {
+      setDonorRef(res.data.ref);
+      setSubmitted(true);
+    } else {
+      setError(res.error);
+    }
   };
 
   const handleCopy = (text: string) => {
@@ -59,7 +74,7 @@ export default function DonatePage() {
 
   /* shared input styling — light theme, orange focus */
   const inputClass =
-    "w-full rounded-xl px-4 py-3 text-sm bg-white border transition-colors focus:outline-none";
+    "w-full rounded-xl px-4 py-3 text-sm bg-[#111630] text-[#e8f4ff] border transition-colors focus:outline-none";
   const inputStyle = { borderColor: LENITY.line, color: LENITY.ink } as React.CSSProperties;
   const onInputFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     e.currentTarget.style.borderColor = LENITY.accent;
@@ -73,13 +88,13 @@ export default function DonatePage() {
       <>
         <Navbar />
         <main className="min-h-screen flex items-center justify-center pt-20 pb-16 px-4" style={{ background: LENITY.soft }}>
-          <div className="max-w-md w-full bg-white rounded-3xl shadow-lg border overflow-hidden" style={{ borderColor: LENITY.line }}>
-            <div className="text-white p-8 text-center" style={{ background: LENITY.accent }}>
+          <div className="max-w-md w-full bg-[#0d1229] rounded-3xl shadow-lg border overflow-hidden" style={{ borderColor: LENITY.line }}>
+            <div className="p-8 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
               <CheckCircle className="w-16 h-16 mx-auto mb-3" />
               <h2 className="text-2xl font-bold" style={{ fontFamily: SERIF }}>
                 Donation Registered!
               </h2>
-              <p className="text-white/85 text-sm mt-1">Reference: {donorRef}</p>
+              <p className="text-sm mt-1" style={{ color: LENITY.ink, opacity: 0.75 }}>Reference: {donorRef}</p>
             </div>
             <div className="p-8">
               {/* Receipt */}
@@ -87,7 +102,7 @@ export default function DonatePage() {
                 <div className="text-center mb-4">
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <Heart className="w-4 h-4" style={{ color: LENITY.accent, fill: LENITY.accent }} />
-                    <span className="font-bold text-sm" style={{ color: LENITY.accent, fontFamily: SERIF }}>
+                    <span className="font-bold text-sm" style={{ color: LENITY.ink, fontFamily: SERIF }}>
                       Hariwatika Vivah Sewa Samiti
                     </span>
                   </div>
@@ -122,8 +137,8 @@ export default function DonatePage() {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={handlePrint}
-                  className="flex items-center justify-center gap-2 border rounded-full py-2.5 text-sm font-semibold transition-all hover:scale-105"
-                  style={{ borderColor: LENITY.accent, color: LENITY.accent }}
+                  className="flex items-center justify-center gap-2 border-2 rounded-full py-2.5 text-sm font-semibold transition-all hover:scale-105"
+                  style={{ borderColor: LENITY.ink, color: LENITY.ink }}
                 >
                   <Printer className="w-4 h-4" /> Print Receipt
                 </button>
@@ -170,7 +185,7 @@ export default function DonatePage() {
               {/* Form */}
               <div className="lg:col-span-3">
                 <Reveal animation="slide-right">
-                  <Card3D intensity={4} className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
+                  <Card3D intensity={4} className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                   <h2
                     className="text-xl font-bold mb-6"
                     style={{ color: LENITY.ink, fontFamily: SERIF }}
@@ -195,8 +210,8 @@ export default function DonatePage() {
                               className="py-2.5 rounded-xl text-sm font-semibold border transition-all hover:-translate-y-0.5"
                               style={
                                 active
-                                  ? { background: LENITY.accent, color: "#fff", borderColor: LENITY.accent }
-                                  : { borderColor: LENITY.line, color: LENITY.muted, background: "#fff" }
+                                  ? { background: LENITY.accent, color: LENITY.ink, borderColor: LENITY.accent }
+                                  : { borderColor: LENITY.line, color: LENITY.muted, background: "#111630" }
                               }
                             >
                               ₹{amt >= 1000 ? `${amt / 1000}K` : amt}
@@ -301,17 +316,20 @@ export default function DonatePage() {
                       </select>
                     </div>
 
+                    {error && (
+                      <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
+                    )}
                     <button
                       type="submit"
                       disabled={loading || (!finalAmount || finalAmount <= 0)}
-                      className="w-full text-white rounded-full py-4 font-bold text-base transition-all hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
-                      style={{ background: LENITY.accent }}
+                      className="w-full rounded-full py-4 font-bold text-base transition-all hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                      style={{ background: LENITY.accent, color: LENITY.ink }}
                     >
                       {loading ? (
-                        <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                        <span className="animate-spin border-2 border-[#1d1d1b] border-t-transparent rounded-full w-5 h-5" />
                       ) : (
                         <>
-                          <Heart className="w-4 h-4 fill-white" />
+                          <Heart className="w-4 h-4" style={{ fill: LENITY.ink }} />
                           Donate ₹{finalAmount > 0 ? finalAmount.toLocaleString("en-IN") : "—"}
                         </>
                       )}
@@ -324,7 +342,7 @@ export default function DonatePage() {
               {/* Sidebar */}
               <div className="lg:col-span-2 space-y-6">
                 {/* UPI */}
-                <div className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-center gap-2 mb-4">
                     <Smartphone className="w-5 h-5" style={{ color: LENITY.accent }} />
                     <h3 className="font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}>Pay via UPI</h3>
@@ -347,16 +365,16 @@ export default function DonatePage() {
                     <button
                       onClick={() => handleCopy("hariwatikaseva@upi")}
                       className="transition-colors hover:scale-110"
-                      style={{ color: LENITY.accent }}
+                      style={{ color: LENITY.ink }}
                     >
                       <Copy className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  {copied && <p className="text-center text-xs mt-1" style={{ color: LENITY.accent }}>Copied!</p>}
+                  {copied && <p className="text-center text-xs mt-1 font-semibold" style={{ color: LENITY.ink }}>Copied!</p>}
                 </div>
 
                 {/* Bank Details */}
-                <div className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-[#0d1229] rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-center gap-2 mb-4">
                     <Building2 className="w-5 h-5" style={{ color: LENITY.accent }} />
                     <h3 className="font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}>Bank Transfer</h3>
@@ -379,7 +397,7 @@ export default function DonatePage() {
 
                 {/* Tax Benefit */}
                 <div className="rounded-3xl border p-4" style={{ background: `${LENITY.accent}0d`, borderColor: `${LENITY.accent}33` }}>
-                  <p className="text-xs font-bold mb-1" style={{ color: LENITY.accent }}>🎉 Tax Benefit</p>
+                  <p className="text-xs font-bold mb-1" style={{ color: LENITY.ink }}>🎉 Tax Benefit</p>
                   <p className="text-xs" style={{ color: LENITY.muted }}>
                     Donations are eligible for 50% tax deduction under Section 80G of the Income Tax Act.
                   </p>

@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Users, Heart, CheckCircle, Printer, Award, Clock, MapPin } from "lucide-react";
+import { submitVolunteer } from "@/app/actions/submissions";
 
 interface VolunteerForm {
   name: string;
@@ -25,8 +26,6 @@ const skillOptions = [
   "Construction / Labour", "Music / Arts", "Other",
 ];
 
-let volunteerCounter = 1001;
-
 export default function VolunteerPage() {
   const [form, setForm] = useState<VolunteerForm>({
     name: "", age: "", gender: "", mobile: "",
@@ -34,7 +33,8 @@ export default function VolunteerPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [volunteerId] = useState(`HW-VOL-${volunteerCounter++}`);
+  const [error, setError] = useState("");
+  const [volunteerId, setVolunteerId] = useState("");
   const [joinYear] = useState(new Date().getFullYear());
 
   const toggleSkill = (skill: string) => {
@@ -49,9 +49,15 @@ export default function VolunteerPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    setError("");
+    const res = await submitVolunteer(form);
     setLoading(false);
-    setSubmitted(true);
+    if (res.success) {
+      setVolunteerId(res.data.volunteerId);
+      setSubmitted(true);
+    } else {
+      setError(res.error);
+    }
   };
 
   const handlePrintCard = () => {
@@ -67,18 +73,18 @@ export default function VolunteerPage() {
           <style>
             body { margin: 0; padding: 20px; background: white; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; }
             .card { width: 3.375in; height: 2.125in; border: 3px solid ${LENITY.accent}; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, ${LENITY.soft}, #ffffff); display: flex; flex-direction: column; }
-            .header { background: ${LENITY.accent}; color: white; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+            .header { background: ${LENITY.accent}; color: ${LENITY.ink}; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
             .org-name { font-family: 'Literata', serif; font-size: 11px; font-weight: 700; }
-            .org-sub { font-size: 8px; opacity: 0.8; }
+            .org-sub { font-size: 8px; opacity: 0.7; }
             .body { display: flex; padding: 10px 12px; flex: 1; gap: 10px; }
-            .avatar { width: 56px; height: 56px; border-radius: 50%; background: ${LENITY.accent}; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; border: 2px solid #ffffff; }
+            .avatar { width: 56px; height: 56px; border-radius: 50%; background: ${LENITY.accent}; color: ${LENITY.ink}; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; border: 2px solid #ffffff; }
             .info { flex: 1; }
             .name { font-family: 'Literata', serif; font-size: 14px; font-weight: 700; color: ${LENITY.ink}; line-height: 1.2; }
-            .role { font-size: 10px; font-weight: 600; color: ${LENITY.accent}; margin: 2px 0; }
+            .role { font-size: 10px; font-weight: 600; color: ${LENITY.muted}; margin: 2px 0; }
             .meta { font-size: 8px; color: ${LENITY.muted}; }
             .meta-item { margin: 1px 0; }
             .footer { background: ${LENITY.soft}; padding: 4px 12px; border-top: 1px solid ${LENITY.line}; display: flex; justify-content: space-between; align-items: center; }
-            .id-num { font-size: 9px; font-weight: 700; color: ${LENITY.accent}; font-family: monospace; }
+            .id-num { font-size: 9px; font-weight: 700; color: ${LENITY.ink}; font-family: monospace; }
             .validity { font-size: 8px; color: ${LENITY.muted}; }
           </style>
         </head>
@@ -107,23 +113,21 @@ export default function VolunteerPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span
               className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mx-auto mb-5"
-              style={{ background: LENITY.accentSoft }}
+              style={{ background: LENITY.yellowSoft }}
             >
-              <Users className="w-7 h-7" style={{ color: LENITY.accent }} />
+              <Users className="w-7 h-7" style={{ color: LENITY.ink }} />
             </span>
-            <p
-              className="text-xs font-bold uppercase tracking-[0.18em] mb-4"
-              style={{ color: LENITY.accent }}
-            >
+            <span className="inline-flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-4" style={{ color: LENITY.ink }}>
+              <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
               Get Involved
-            </p>
+            </span>
             <h1
               className="text-3xl sm:text-5xl font-bold mb-4"
               style={{ fontFamily: SERIF, color: LENITY.ink }}
             >
               स्वयंसेवक बनें
             </h1>
-            <p className="text-lg max-w-xl mx-auto" style={{ color: LENITY.muted }}>
+            <p className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
               Join our volunteer family and make a meaningful impact in your community.
             </p>
           </div>
@@ -134,15 +138,15 @@ export default function VolunteerPage() {
             {submitted ? (
               <div className="max-w-2xl mx-auto">
                 <div
-                  className="bg-white rounded-3xl border overflow-hidden shadow-lg"
+                  className="bg-[#0d1229] rounded-3xl border overflow-hidden shadow-lg"
                   style={{ borderColor: LENITY.line }}
                 >
-                  <div className="text-white p-6 text-center" style={{ background: LENITY.accent }}>
+                  <div className="p-6 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
                     <CheckCircle className="w-14 h-14 mx-auto mb-2" />
                     <h2 className="text-xl font-bold" style={{ fontFamily: SERIF }}>
                       Welcome to the Team!
                     </h2>
-                    <p className="text-white/85 text-sm mt-1">Your volunteer registration is confirmed.</p>
+                    <p className="text-sm mt-1" style={{ color: LENITY.muted }}>Your volunteer registration is confirmed.</p>
                   </div>
 
                   <div className="p-6">
@@ -160,23 +164,23 @@ export default function VolunteerPage() {
                       style={{ borderColor: LENITY.accent, background: `linear-gradient(135deg, ${LENITY.soft}, #ffffff)` }}
                     >
                       {/* Header */}
-                      <div className="text-white px-4 py-2 flex items-center gap-2" style={{ background: LENITY.accent }}>
-                        <Heart className="w-4 h-4 fill-white flex-shrink-0" />
+                      <div className="px-4 py-2 flex items-center gap-2" style={{ background: LENITY.accent, color: LENITY.ink }}>
+                        <Heart className="w-4 h-4 flex-shrink-0" style={{ fill: LENITY.ink }} />
                         <div>
                           <div className="text-[10px] font-bold" style={{ fontFamily: SERIF }}>
                             Hariwatika Shiv Mandir
                           </div>
-                          <div className="text-[8px] opacity-80">Vivah Sewa Samiti · Bettiah, Bihar</div>
+                          <div className="text-[8px] opacity-70">Vivah Sewa Samiti · Bettiah, Bihar</div>
                         </div>
-                        <span className="ml-auto text-[9px] bg-white/20 rounded px-1.5 py-0.5">VOLUNTEER</span>
+                        <span className="ml-auto text-[9px] rounded px-1.5 py-0.5 font-bold" style={{ background: "rgba(29,29,27,0.12)" }}>VOLUNTEER</span>
                       </div>
 
                       {/* Body */}
                       <div className="flex gap-3 p-4">
                         {/* Avatar */}
                         <div
-                          className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0 border-2 border-white"
-                          style={{ background: LENITY.accent }}
+                          className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0 border-2 border-white"
+                          style={{ background: LENITY.accent, color: LENITY.ink }}
                         >
                           {initials}
                         </div>
@@ -187,7 +191,7 @@ export default function VolunteerPage() {
                           >
                             {form.name}
                           </div>
-                          <div className="text-[10px] font-semibold mt-0.5" style={{ color: LENITY.accent }}>
+                          <div className="text-[10px] font-semibold mt-0.5" style={{ color: LENITY.muted }}>
                             Community Volunteer
                           </div>
                           <div className="mt-1 space-y-0.5">
@@ -208,7 +212,7 @@ export default function VolunteerPage() {
                         className="px-4 py-2 flex items-center justify-between border-t"
                         style={{ background: LENITY.soft, borderColor: LENITY.line }}
                       >
-                        <span className="font-mono text-xs font-bold" style={{ color: LENITY.accent }}>{volunteerId}</span>
+                        <span className="font-mono text-xs font-bold" style={{ color: LENITY.ink }}>{volunteerId}</span>
                         <span className="text-[9px]" style={{ color: LENITY.muted }}>
                           Valid: {joinYear}–{joinYear + 1}
                         </span>
@@ -218,8 +222,8 @@ export default function VolunteerPage() {
                     <div className="flex gap-3 justify-center mt-6">
                       <button
                         onClick={handlePrintCard}
-                        className="flex items-center gap-2 text-white rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105"
-                        style={{ background: LENITY.accent }}
+                        className="flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
+                        style={{ background: LENITY.accent, color: LENITY.ink }}
                       >
                         <Printer className="w-4 h-4" />
                         Print ID Card
@@ -254,14 +258,14 @@ export default function VolunteerPage() {
                   ].map((b) => (
                     <div
                       key={b.title}
-                      className="bg-white rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
+                      className="bg-[#0d1229] rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
                       style={{ borderColor: LENITY.line }}
                     >
                       <div
                         className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: LENITY.accentSoft }}
+                        style={{ background: LENITY.yellowSoft }}
                       >
-                        <b.icon className="w-5 h-5" style={{ color: LENITY.accent }} />
+                        <b.icon className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
                         <h4 className="font-semibold text-sm" style={{ color: LENITY.ink }}>{b.title}</h4>
@@ -273,7 +277,7 @@ export default function VolunteerPage() {
 
                 {/* Form */}
                 <div className="lg:col-span-2">
-                  <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
+                  <div className="bg-[#0d1229] rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                     <h2
                       className="text-xl font-bold mb-6"
                       style={{ fontFamily: SERIF, color: LENITY.ink }}
@@ -321,7 +325,7 @@ export default function VolunteerPage() {
                             required
                             value={form.gender}
                             onChange={(e) => setForm({ ...form, gender: e.target.value })}
-                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-white transition-colors"
+                            className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff] transition-colors"
                             style={{ borderColor: LENITY.line }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
@@ -392,7 +396,7 @@ export default function VolunteerPage() {
                                 className="px-3 py-1.5 rounded-full text-xs font-medium border transition-all hover:scale-105"
                                 style={
                                   active
-                                    ? { background: LENITY.accent, color: "#ffffff", borderColor: LENITY.accent }
+                                    ? { background: LENITY.accent, color: LENITY.ink, borderColor: LENITY.accent }
                                     : { background: "transparent", color: LENITY.muted, borderColor: LENITY.line }
                                 }
                               >
@@ -409,7 +413,7 @@ export default function VolunteerPage() {
                           required
                           value={form.availability}
                           onChange={(e) => setForm({ ...form, availability: e.target.value })}
-                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-white transition-colors"
+                          className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none bg-[#111630] text-[#e8f4ff] transition-colors"
                           style={{ borderColor: LENITY.line }}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
@@ -437,14 +441,17 @@ export default function VolunteerPage() {
                         />
                       </div>
 
+                      {error && (
+                        <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
+                      )}
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full text-white rounded-full py-4 font-semibold text-base transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
-                        style={{ background: LENITY.accent }}
+                        className="w-full rounded-full py-4 font-bold text-base transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                        style={{ background: LENITY.accent, color: LENITY.ink }}
                       >
                         {loading ? (
-                          <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                          <span className="animate-spin border-2 rounded-full w-5 h-5" style={{ borderColor: LENITY.ink, borderTopColor: "transparent" }} />
                         ) : (
                           <>
                             <Users className="w-4 h-4" />

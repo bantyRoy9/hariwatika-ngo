@@ -51,19 +51,19 @@ export default function Navbar() {
 
   /* Decide text colour based on scroll state */
   const linkColour = scrolled || mobileOpen
-    ? "text-[#1b1c19] hover:text-[#F97316] hover:bg-orange-50"
-    : "text-white hover:text-[#F97316] hover:bg-white/10";
+    ? "text-[#e8f4ff] hover:text-[#63d2ff] hover:bg-[#63d2ff]/10"
+    : "text-white hover:text-[#63d2ff] hover:bg-white/10";
 
   const activeLinkColour = scrolled || mobileOpen
-    ? "text-[#F97316] bg-orange-50"
-    : "text-[#F97316] bg-white/10";
+    ? "text-[#63d2ff] bg-[#63d2ff]/10"
+    : "text-[#63d2ff] bg-white/10";
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled || mobileOpen
-            ? "bg-white/95 backdrop-blur-md shadow-lg"
+            ? "bg-[#0d1229]/95 backdrop-blur-md shadow-lg border-b border-[#63d2ff]/15"
             : "bg-transparent"
         }`}
       >
@@ -83,9 +83,9 @@ export default function Navbar() {
               <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />{CONTACT.hours}</span>
             </div>
             <div className="flex items-center gap-4 font-semibold">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">Facebook</a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">Instagram</a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F97316] transition-colors">YouTube</a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">Facebook</a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">Instagram</a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">YouTube</a>
             </div>
           </div>
         </div>
@@ -95,21 +95,21 @@ export default function Navbar() {
 
             {/* ── Logo ── */}
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F97316] shadow-md">
-                <Heart className="w-5 h-5 text-white fill-white" />
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F2C200] shadow-md">
+                <Heart className="w-5 h-5 text-[#1d1d1b] fill-[#1d1d1b]" />
               </span>
               <div className="flex flex-col leading-tight">
                 <span
                   className={`text-lg font-bold transition-colors duration-300 ${
-                    scrolled ? "text-[#F97316]" : "text-white"
+                    scrolled ? "text-[#F2C200]" : "text-white"
                   }`}
-                  style={{ fontFamily: "'Literata', Georgia, serif" }}
+                  style={{ fontFamily: "'Exo 2', system-ui, sans-serif" }}
                 >
                   Hariwatika
                 </span>
                 <span
                   className={`text-[10px] font-medium hidden sm:block transition-colors duration-300 ${
-                    scrolled ? "text-[#6b6b6b]" : "text-white/70"
+                    scrolled ? "text-[#7a8fad]" : "text-white/70"
                   }`}
                 >
                   Shiv Mandir Vivah Sewa Samiti
@@ -141,7 +141,7 @@ export default function Navbar() {
                 aria-label="Switch language"
                 className={`hidden sm:flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-all duration-200 border ${
                   scrolled
-                    ? "border-[#ececea] text-[#F97316] hover:bg-orange-50"
+                    ? "border-[#63d2ff]/15 text-[#F2C200] hover:bg-[#63d2ff]/10"
                     : "border-white/30 text-white hover:bg-white/10"
                 }`}
               >
@@ -152,9 +152,9 @@ export default function Navbar() {
               {/* Donate CTA */}
               <Link
                 href="/donate"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea670c] text-white rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#F2C200] hover:bg-[#d9ae00] text-[#1d1d1b] rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
               >
-                <Heart className="w-4 h-4 fill-white" />
+                <Heart className="w-4 h-4 fill-[#1d1d1b]" />
                 {t("Donate Now", "दान करें")}
               </Link>
 
@@ -163,7 +163,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className={`lg:hidden p-2 rounded-lg transition-colors ${
                   scrolled || mobileOpen
-                    ? "text-[#1b1c19] hover:bg-orange-50"
+                    ? "text-[#e8f4ff] hover:bg-[#63d2ff]/10"
                     : "text-white hover:bg-white/10"
                 }`}
                 aria-label="Toggle menu"
@@ -176,7 +176,7 @@ export default function Navbar() {
 
         {/* ── Mobile Drawer ── */}
         <div
-          className={`lg:hidden bg-white border-t border-[#ececea] shadow-xl overflow-hidden transition-all duration-300 ${
+          className={`lg:hidden bg-[#0d1229] border-t border-[#63d2ff]/15 shadow-xl overflow-hidden transition-all duration-300 ${
             mobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
@@ -187,32 +187,32 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "text-[#F97316] bg-orange-50 font-semibold"
-                    : "text-[#1b1c19] hover:text-[#F97316] hover:bg-orange-50"
+                    ? "text-[#F2C200] bg-[#63d2ff]/10 font-semibold"
+                    : "text-[#e8f4ff] hover:text-[#F2C200] hover:bg-[#63d2ff]/10"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="pt-3 mt-2 border-t border-[#ececea] space-y-2">
+            <div className="pt-3 mt-2 border-t border-[#63d2ff]/15 space-y-2">
               <Link
                 href="/donate"
-                className="flex items-center justify-center gap-2 w-full bg-[#F97316] hover:bg-[#ea670c] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-[#F2C200] hover:bg-[#d9ae00] text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 {t("Donate Now", "दान करें")}
               </Link>
               <Link
                 href="/registration"
-                className="flex items-center justify-center w-full border border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center w-full border border-[#F2C200] text-[#F2C200] hover:bg-[#F2C200] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 {t("Marriage Registration", "विवाह पंजीकरण")}
               </Link>
               {/* Language toggle in drawer */}
               <button
                 onClick={toggle}
-                className="flex items-center justify-center gap-2 w-full border border-[#ececea] text-[#6b6b6b] hover:bg-orange-50 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center gap-2 w-full border border-[#63d2ff]/15 text-[#7a8fad] hover:bg-[#63d2ff]/10 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
                 <Globe className="w-4 h-4" />
                 {lang === "hi" ? "Switch to English" : "हिंदी में बदलें"}

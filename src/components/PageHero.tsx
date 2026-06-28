@@ -37,7 +37,7 @@ export default function PageHero({ tag, title, subtitle, icon, image = IMG.commu
         {icon && (
           <div className="hero-enter-0 flex justify-center mb-5">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ background: LENITY.accent, boxShadow: "0 10px 30px rgba(249,115,22,0.4)" }}>
+              style={{ background: LENITY.accent, boxShadow: "0 10px 30px rgba(99,210,255,0.4)" }}>
               {icon}
             </div>
           </div>
