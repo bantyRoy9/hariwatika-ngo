@@ -14,7 +14,7 @@ import {
 import { LENITY, SERIF } from "@/theme/lenity";
 
 const IMG = {
-  hero:     "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80&auto=format&fit=crop",
+  hero:     "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80&auto=format&fit=crop",
   portrait1:"https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=700&q=80&auto=format&fit=crop",
   portrait2:"https://images.unsplash.com/photo-1606800052052-a08af7148866?w=700&q=80&auto=format&fit=crop",
   portrait3:"https://images.unsplash.com/photo-1604608672516-f1b9b1d37076?w=700&q=80&auto=format&fit=crop",
