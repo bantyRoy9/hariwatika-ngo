@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+import { useRouter } from "next/navigation";
 import StatusBadge from "./StatusBadge";
 import { LENITY } from "@/theme/lenity";
 
@@ -29,6 +30,7 @@ const TYPE_COLORS: Record<RecentRow["type"], string> = {
 };
 
 export default function RecentSubmissionsTable({ rows }: { rows: RecentRow[] }) {
+  const router = useRouter();
   if (!rows.length) {
     return (
       <div className="rounded-xl p-6 text-center"
@@ -53,27 +55,27 @@ export default function RecentSubmissionsTable({ rows }: { rows: RecentRow[] }) 
           </thead>
           <tbody style={{ background: LENITY.adminSoft }}>
             {rows.map((row) => (
-              <Link key={`${row.type}-${row.id}`} href={row.href} legacyBehavior>
-                <tr
-                  className="cursor-pointer transition-colors hover:bg-white/5"
-                  style={{ borderTop: `1px solid ${LENITY.adminLine}` }}
-                >
-                  <td className="px-4 py-3">
-                    <span className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
-                      style={{ background: `${TYPE_COLORS[row.type]}18`, color: TYPE_COLORS[row.type] }}>
-                      {TYPE_LABELS[row.type]}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 font-medium truncate max-w-[120px]" style={{ color: LENITY.adminInk }}>{row.name}</td>
-                  <td className="px-4 py-3 hidden sm:table-cell" style={{ color: LENITY.adminMuted }}>{row.mobile ?? "—"}</td>
-                  <td className="px-4 py-3 whitespace-nowrap" style={{ color: LENITY.adminMuted }}>
-                    {new Date(row.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short" })}
-                  </td>
-                  <td className="px-4 py-3">
-                    {row.status ? <StatusBadge status={row.status} /> : <span style={{ color: LENITY.adminMuted }}>—</span>}
-                  </td>
-                </tr>
-              </Link>
+              <tr
+                key={`${row.type}-${row.id}`}
+                className="cursor-pointer transition-colors hover:bg-white/5"
+                style={{ borderTop: `1px solid ${LENITY.adminLine}` }}
+                onClick={() => router.push(row.href)}
+              >
+                <td className="px-4 py-3">
+                  <span className="inline-block rounded-full px-2 py-0.5 text-[10px] font-bold"
+                    style={{ background: `${TYPE_COLORS[row.type]}18`, color: TYPE_COLORS[row.type] }}>
+                    {TYPE_LABELS[row.type]}
+                  </span>
+                </td>
+                <td className="px-4 py-3 font-medium truncate max-w-[120px]" style={{ color: LENITY.adminInk }}>{row.name}</td>
+                <td className="px-4 py-3 hidden sm:table-cell" style={{ color: LENITY.adminMuted }}>{row.mobile ?? "—"}</td>
+                <td className="px-4 py-3 whitespace-nowrap" style={{ color: LENITY.adminMuted }}>
+                  {new Date(row.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short" })}
+                </td>
+                <td className="px-4 py-3">
+                  {row.status ? <StatusBadge status={row.status} /> : <span style={{ color: LENITY.adminMuted }}>—</span>}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>

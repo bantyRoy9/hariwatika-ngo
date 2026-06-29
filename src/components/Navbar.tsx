@@ -98,7 +98,7 @@ export default function Navbar() {
                   Hariwatika
                 </span>
                 <span className="text-[10px] font-medium hidden sm:block text-gray-500">
-                  Shiv Mandir Vivah Sewa Samiti
+                  Shiv Mandir Sewa Samiti
                 </span>
               </div>
             </Link>
@@ -182,10 +182,10 @@ export default function Navbar() {
                 {t("Donate Now", "दान करें")}
               </Link>
               <Link
-                href="/registration"
+                href="/volunteer"
                 className="flex items-center justify-center w-full border border-[#E84523] text-[#E84523] hover:bg-[#E84523] hover:text-white rounded-full px-6 py-3 text-sm font-semibold transition-colors"
               >
-                {t("Marriage Registration", "विवाह पंजीकरण")}
+                {t("Volunteer", "स्वयंसेवक बनें")}
               </Link>
               {/* Language toggle in drawer */}
               <button

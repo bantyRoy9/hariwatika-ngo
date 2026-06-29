@@ -7,20 +7,20 @@ import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
 import { useLang } from "@/context/LanguageContext";
 import {
-  Heart, TreePine, Users, Stethoscope,
+  TreePine, Users, Stethoscope,
   BookOpen, Droplets, Wheat, ArrowRight,
   Quote,
 } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 
 const IMG = {
-  hero:     "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80&auto=format&fit=crop",
-  portrait1:"https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=700&q=80&auto=format&fit=crop",
-  portrait2:"https://images.unsplash.com/photo-1606800052052-a08af7148866?w=700&q=80&auto=format&fit=crop",
-  portrait3:"https://images.unsplash.com/photo-1604608672516-f1b9b1d37076?w=700&q=80&auto=format&fit=crop",
-  quote:    "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80&auto=format&fit=crop",
+  hero:     "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80&auto=format&fit=crop",
+  portrait1:"https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&q=80&auto=format&fit=crop",
+  portrait2:"https://images.unsplash.com/photo-1516549655169-df83a0774514?w=700&q=80&auto=format&fit=crop",
+  portrait3:"https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=700&q=80&auto=format&fit=crop",
+  quote:    "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&q=80&auto=format&fit=crop",
   svc: [
-    "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80&auto=format&fit=crop",
   ],
@@ -31,13 +31,13 @@ const IMG = {
 ───────────────────────────────────────────────────────────── */
 const content = {
   hero: {
-    eyebrow: { en: "Hariwatika Vivah Sewa Samiti", hi: "हरिवाटिका विवाह सेवा समिति" },
+    eyebrow: { en: "Hariwatika Sewa Samiti", hi: "हरिवाटिका सेवा समिति" },
     line1:   { en: "A Relentless", hi: "अटूट" },
     line2:   { en: "Pursuit.", hi: "सेवा।" },
-    tagline: { en: "To bring dignity, marriage, and lasting change to families across Bihar.", hi: "बिहार के परिवारों को सम्मान, विवाह और स्थायी बदलाव देने का संकल्प।" },
+    tagline: { en: "Bringing dignity, healthcare, and lasting change to families across Bihar.", hi: "बिहार के परिवारों को सम्मान, स्वास्थ्य और स्थायी बदलाव देने का संकल्प।" },
     sub: {
-      en: "For over 25 years Hariwatika Shiv Mandir Vivah Sewa Samiti has facilitated marriages, planted forests, and stood with the poor across West Champaran — funded by a network of donors and volunteers who believe in this work.",
-      hi: "25 वर्षों से हरिवाटिका शिव मंदिर विवाह सेवा समिति ने पश्चिम चम्पारण में विवाह, वृक्षारोपण और गरीब सहायता की है — दानदाताओं और स्वयंसेवकों के सहयोग से।",
+      en: "For over 25 years Hariwatika has planted forests, provided healthcare, and stood with the poor across West Champaran — funded by a network of donors and volunteers who believe in this work.",
+      hi: "25 वर्षों से हरिवाटिका ने पश्चिम चम्पारण में वृक्षारोपण, स्वास्थ्य सेवा और गरीब सहायता की है — दानदाताओं और स्वयंसेवकों के सहयोग से।",
     },
     cta1: { en: "Donate Now", hi: "दान करें" },
     cta2: { en: "Our Work", hi: "हमारा काम" },
@@ -51,13 +51,13 @@ const content = {
       hi: "25 वर्षों से हरिवाटिका उन परिवारों तक सम्मान और अवसर पहुँचाने में दृढ़ रहा है जिन्हें इसकी सबसे अधिक आवश्यकता है। सेवा में निहित समुदाय के रूप में, हमने हर कदम साथ चलकर बहुत कुछ हासिल किया है।",
     },
     p2: {
-      en: "That means more families than ever have access to marriage assistance, healthcare, and relief. We know that access to dignity is critically important — but too often it is not enough. What about the quality of that care?",
-      hi: "इसका अर्थ है कि पहले से कहीं अधिक परिवारों को विवाह सहायता, स्वास्थ्य और राहत तक पहुँच है। हम जानते हैं कि सम्मान तक पहुँच महत्वपूर्ण है — पर अक्सर पर्याप्त नहीं। उस सेवा की गुणवत्ता का क्या?",
+      en: "That means more families than ever have access to healthcare, education, and relief. We know that access to dignity is critically important — but too often it is not enough. What about the quality of that care?",
+      hi: "इसका अर्थ है कि पहले से कहीं अधिक परिवारों को स्वास्थ्य, शिक्षा और राहत तक पहुँच है। हम जानते हैं कि सम्मान तक पहुँच महत्वपूर्ण है — पर अक्सर पर्याप्त नहीं। उस सेवा की गुणवत्ता का क्या?",
     },
     more: { en: "Read More", hi: "और पढ़ें" },
   },
   quote: {
-    text: { en: "“Together with our partners, we are working toward a community where no family is denied a dignified marriage, and where high-quality, effective and affordable care reaches everyone.”", hi: "“अपने सहयोगियों के साथ, हम ऐसे समाज की ओर काम कर रहे हैं जहाँ किसी परिवार को सम्मानजनक विवाह से वंचित न किया जाए।”" },
+    text: { en: "Together with our partners, we are working toward a community where every child gets an education, every family has clean water, and high-quality, effective and affordable care reaches everyone.", hi: "अपने सहयोगियों के साथ, हम ऐसे समाज की ओर काम कर रहे हैं जहाँ हर बच्चे को शिक्षा, हर परिवार को स्वच्छ जल और उत्तम स्वास्थ्य सेवा मिले।" },
     who:  { en: "— Samiti Patron, Hariwatika Shiv Mandir", hi: "— संरक्षक, हरिवाटिका शिव मंदिर समिति" },
     donate: { en: "Donate Today", hi: "आज दान करें" },
   },
@@ -74,7 +74,7 @@ const content = {
     { value: "25+",    en: "Years of Service",      hi: "सेवा के वर्ष" },
     { value: "5000+",  en: "Families Helped",       hi: "परिवारों की मदद" },
     { value: "10000+", en: "Trees Planted",         hi: "वृक्ष लगाए" },
-    { value: "200+",   en: "Marriages Facilitated", hi: "विवाह सम्पन्न" },
+    { value: "200+",   en: "Volunteers Trained",     hi: "स्वयंसेवक प्रशिक्षित" },
   ],
   campaigns: {
     h2:  { en: "Active Campaigns", hi: "सक्रिय अभियान" },
@@ -90,7 +90,7 @@ const content = {
 };
 
 const services = [
-  { icon: Heart,       titleEn: "Vivah Seva",     titleHi: "विवाह सेवा",    descEn: "Facilitating marriages for underprivileged families with complete ceremony arrangements.", descHi: "गरीब परिवारों के लिए पूर्ण विवाह व्यवस्था।" },
+  { icon: BookOpen,    titleEn: "Shiksha Seva",   titleHi: "शिक्षा सेवा",   descEn: "Supporting education for underprivileged children through scholarships and learning materials.", descHi: "जरूरतमंद बच्चों की शिक्षा में सहयोग — छात्रवृत्ति और सामग्री।" },
   { icon: TreePine,    titleEn: "Vrikshaaropan",  titleHi: "वृक्षारोपण",   descEn: "Large-scale tree plantation drives to green the region across West Champaran.", descHi: "क्षेत्र को हरा-भरा बनाने हेतु वृक्षारोपण अभियान।" },
   { icon: Users,       titleEn: "Garib Sahayata", titleHi: "गरीब सहायता",   descEn: "Food, clothing, and essentials to underprivileged and disaster-affected families.", descHi: "जरूरतमंद परिवारों को भोजन, वस्त्र और आवश्यक सामान।" },
   { icon: Stethoscope, titleEn: "Swasthya Seva",  titleHi: "स्वास्थ्य सेवा", descEn: "Free health camps and medical assistance for rural low-income communities.", descHi: "ग्रामीण समुदायों हेतु नि:शुल्क स्वास्थ्य शिविर।" },
@@ -104,17 +104,17 @@ const pillars = [
 ];
 
 const campaigns = [
-  { titleEn: "Mass Marriage Ceremony 2025", titleHi: "सामूहिक विवाह समारोह 2025", raised: 85000, goal: 100000, backers: 42 },
+  { titleEn: "Clean Water for 50 Villages", titleHi: "50 गांवों में स्वच्छ जल", raised: 85000, goal: 100000, backers: 42 },
   { titleEn: "10,000 Trees This Monsoon",   titleHi: "इस मानसून 10,000 पेड़",       raised: 32000, goal: 50000,  backers: 118 },
   { titleEn: "Winter Relief Drive",          titleHi: "शीतकालीन राहत अभियान",       raised: 18500, goal: 30000,  backers: 67 },
 ];
 
 const blogPosts = [
-  { date: "15 Dec 2024", catEn: "Event",       catHi: "कार्यक्रम", img: IMG.svc[0],
-    titleEn: "Successful Saptapadi Vivah Mahotsav — 12 Couples Blessed",
-    titleHi: "सफल सप्तपदी विवाह महोत्सव — 12 जोड़ों को आशीर्वाद",
-    excerptEn: "This year's mass marriage ceremony witnessed 12 families unite under Shiv Mandir's blessings.",
-    excerptHi: "इस वर्ष शिव मंदिर के आशीर्वाद से 12 परिवार एक छत के नीचे मिले।" },
+  { date: "15 Dec 2024", catEn: "Education",    catHi: "शिक्षा", img: IMG.svc[0],
+    titleEn: "150 Children Receive School Scholarships This Year",
+    titleHi: "इस वर्ष 150 बच्चों को स्कूल छात्रवृत्ति मिली",
+    excerptEn: "Hariwatika's education drive reached 150 underprivileged children with scholarships and learning kits.",
+    excerptHi: "हरिवाटिका के शिक्षा अभियान ने 150 जरूरतमंद बच्चों को छात्रवृत्ति और शिक्षण सामग्री दी।" },
   { date: "05 Nov 2024", catEn: "Environment", catHi: "पर्यावरण", img: IMG.svc[1],
     titleEn: "Van Mahotsav: 2000 Saplings Planted in West Champaran",
     titleHi: "वन महोत्सव: पश्चिम चम्पारण में 2000 पौधे लगाए",
@@ -228,7 +228,7 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 lg:pt-44 pb-20 grid lg:grid-cols-2 gap-12 items-center">
           {/* left: watercolor portrait */}
           <Fade className="relative">
-            <WaterPortrait src={IMG.hero} alt={t("Wedding facilitated by the Samiti", "समिति द्वारा सम्पन्न विवाह")}
+            <WaterPortrait src={IMG.hero} alt={t("Community service by the Samiti", "समिति द्वारा सामुदायिक सेवा")}
               blob={LENITY.yellowSoft} className="w-full h-[420px] sm:h-[520px]" />
           </Fade>
 
@@ -252,7 +252,7 @@ export default function HomePage() {
                 {t(content.hero.cta1.en, content.hero.cta1.hi)} <ArrowRight className="w-4 h-4" />
               </button>
               <Link href="/projects"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm border-2 transition-all hover:bg-[#0d1229]"
+                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm border-2 transition-all hover:bg-white"
                 style={{ borderColor: LENITY.ink, color: LENITY.ink }}>
                 {t(content.hero.cta2.en, content.hero.cta2.hi)}
               </Link>
@@ -324,7 +324,7 @@ export default function HomePage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
           {services.map((svc) => (
             <Fade key={svc.titleEn}>
-              <div className="bg-[#0d1229] rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+              <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                 <span className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: LENITY.yellowSoft }}>
                   <svc.icon className="w-6 h-6" style={{ color: LENITY.ink }} />
                 </span>
@@ -363,7 +363,7 @@ export default function HomePage() {
             const pct = Math.round((c.raised / c.goal) * 100);
             return (
               <Fade key={c.titleEn}>
-                <div className="bg-[#0d1229] rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="bg-white rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <div className="flex items-start justify-between mb-5">
                     <h3 className="font-bold text-base leading-snug flex-1 pr-2" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(c.titleEn, c.titleHi)}</h3>
                     <span className="text-xs font-bold rounded-full px-2.5 py-1" style={{ color: LENITY.ink, background: LENITY.yellowSoft }}>{pct}%</span>
@@ -418,7 +418,7 @@ export default function HomePage() {
         <div className="grid md:grid-cols-3 gap-7">
           {blogPosts.map((post) => (
             <Fade key={post.titleEn}>
-              <div className="bg-[#0d1229] rounded-2xl border overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+              <div className="bg-white rounded-2xl border overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                 <div className="h-48 relative overflow-hidden">
                   <img src={post.img} alt={t(post.titleEn, post.titleHi)} className="w-full h-full object-cover" loading="lazy" />
                   <span className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1" style={{ background: LENITY.yellow, color: LENITY.ink }}>
