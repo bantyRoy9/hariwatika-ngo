@@ -1,21 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef, Suspense, lazy } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
+import HeroSlider from "@/components/HeroSlider";
+import StickyQRDonate from "@/components/StickyQRDonate";
 import { useLang } from "@/context/LanguageContext";
-import { useMouseParallax } from "@/hooks/useMouseParallax";
-import { useTyped } from "@/hooks/useTyped";
 import {
   Heart, TreePine, Users, Stethoscope,
   BookOpen, Droplets, Wheat, ArrowRight,
-  ChevronDown, MessageCircle, Star,
 } from "lucide-react";
 
-/* lazy-load heavy 3D canvas */
-const Hero3DCanvas = lazy(() => import("@/components/Hero3DCanvas"));
+/* Remove unused lazy imports since we're using HeroSlider now */
 
 /* ─────────────────────────────────────────────────────────────
    BILINGUAL CONTENT
@@ -395,8 +393,9 @@ export default function HomePage() {
     <>
       <Navbar />
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
+      <StickyQRDonate />
 
-      <HeroSection onDonate={() => setDonateOpen(true)} lang={lang} t={t} />
+      <HeroSlider onDonate={() => setDonateOpen(true)} />
 
       {/* ── WHAT WE DO ── */}
       <section className="py-20 bg-[#fbf9f4]">
