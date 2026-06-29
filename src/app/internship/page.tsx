@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { BookOpen, Award, Clock, CheckCircle, Users, Briefcase } from "lucide-react";
+import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
+import { LENITY, SERIF, IMG } from "@/theme/lenity";
+import { submitInternship } from "@/app/actions/submissions";
 
 const internships = [
   {
@@ -72,14 +74,21 @@ export default function InternshipPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [certId] = useState(`HW-CERT-${Date.now().toString().slice(-5)}`);
+  const [error, setError] = useState("");
+  const [certId, setCertId] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    setError("");
+    const res = await submitInternship(form);
     setLoading(false);
-    setSubmitted(true);
+    if (res.success) {
+      setCertId(res.data.certId);
+      setSubmitted(true);
+    } else {
+      setError(res.error);
+    }
   };
 
   const handlePrintCert = () => {
@@ -92,26 +101,26 @@ export default function InternshipPage() {
           <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
           <style>
             body { margin: 0; background: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-            .cert { width: 8.5in; height: 6in; border: 8px double #855300; padding: 48px 60px; box-sizing: border-box; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%); text-align: center; position: relative; }
-            .corner { position: absolute; width: 40px; height: 40px; border-color: #F4A433; border-style: solid; }
+            .cert { width: 8.5in; height: 6in; border: 8px double #F2C200; padding: 48px 60px; box-sizing: border-box; background: linear-gradient(135deg, #fbfaf6 0%, #ffffff 100%); text-align: center; position: relative; }
+            .corner { position: absolute; width: 40px; height: 40px; border-color: #F2C200; border-style: solid; }
             .tl { top: 16px; left: 16px; border-width: 3px 0 0 3px; }
             .tr { top: 16px; right: 16px; border-width: 3px 3px 0 0; }
             .bl { bottom: 16px; left: 16px; border-width: 0 0 3px 3px; }
             .br { bottom: 16px; right: 16px; border-width: 0 3px 3px 0; }
-            h1 { font-family: 'Literata', serif; color: #855300; font-size: 36px; margin: 0 0 4px; }
-            .sub { color: #524435; font-size: 14px; margin-bottom: 24px; }
-            .divider { height: 2px; background: linear-gradient(to right, transparent, #855300, transparent); margin: 16px auto; width: 60%; }
-            .certify { color: #524435; font-size: 14px; margin-bottom: 16px; }
-            .name { font-family: 'Literata', serif; font-size: 28px; color: #1b1c19; font-weight: 700; margin: 8px 0; }
-            .desc { color: #524435; font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto 24px; }
+            h1 { font-family: 'Literata', serif; color: #1d1d1b; font-size: 36px; margin: 0 0 4px; }
+            .sub { color: #5f5f5a; font-size: 14px; margin-bottom: 24px; }
+            .divider { height: 2px; background: linear-gradient(to right, transparent, #F2C200, transparent); margin: 16px auto; width: 60%; }
+            .certify { color: #5f5f5a; font-size: 14px; margin-bottom: 16px; }
+            .name { font-family: 'Literata', serif; font-size: 28px; color: #1d1d1b; font-weight: 700; margin: 8px 0; }
+            .desc { color: #5f5f5a; font-size: 13px; line-height: 1.6; max-width: 500px; margin: 0 auto 24px; }
             .meta { display: flex; justify-content: center; gap: 40px; margin-bottom: 32px; }
-            .meta-item label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #857463; margin-bottom: 4px; }
-            .meta-item span { font-weight: 600; color: #1b1c19; font-size: 13px; }
+            .meta-item label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #5f5f5a; margin-bottom: 4px; }
+            .meta-item span { font-weight: 600; color: #1d1d1b; font-size: 13px; }
             .sig-area { display: flex; justify-content: space-around; margin-top: 32px; }
             .sig-block { text-align: center; }
-            .sig-line { width: 120px; height: 1px; background: #857463; margin: 0 auto 4px; }
-            .sig-name { font-size: 11px; color: #524435; }
-            .org-footer { margin-top: 20px; font-size: 10px; color: #857463; }
+            .sig-line { width: 120px; height: 1px; background: #5f5f5a; margin: 0 auto 4px; }
+            .sig-name { font-size: 11px; color: #5f5f5a; }
+            .org-footer { margin-top: 20px; font-size: 10px; color: #5f5f5a; }
           </style>
         </head>
         <body>
@@ -151,72 +160,87 @@ export default function InternshipPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <BookOpen className="w-12 h-12 text-[#F4A433] mx-auto mb-4" />
+        <section className="relative pt-28 pb-20 overflow-hidden" style={{ background: LENITY.bg }}>
+          {/* watercolor washes */}
+          <div className="absolute -top-32 -left-32 w-[560px] h-[560px] rounded-full pointer-events-none"
+            style={{ background: LENITY.yellowSoft, filter: "blur(8px)", opacity: 0.6 }} />
+          <div className="absolute top-24 right-0 w-[380px] h-[380px] rounded-full pointer-events-none"
+            style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-5" style={{ color: LENITY.ink }}>
+              <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
+              <BookOpen className="w-4 h-4" style={{ color: LENITY.ink }} /> Internship Program
+            </span>
             <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
+              className="text-3xl sm:text-5xl font-bold mb-4"
+              style={{ fontFamily: SERIF, color: LENITY.ink }}
             >
               Internship Program
             </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <p className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
               Gain real-world social work experience and receive an official certificate upon completion.
             </p>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
           </div>
         </section>
 
         {/* Opportunities */}
-        <section className="py-16 bg-[#fbf9f4]">
+        <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: LENITY.ink }}>
+                <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
+                Opportunities
+              </span>
               <h2
-                className="text-2xl font-bold text-[#1b1c19]"
-                style={{ fontFamily: "'Literata', serif" }}
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ fontFamily: SERIF, color: LENITY.ink }}
               >
                 Current Openings
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {internships.map((intern) => (
-                <div key={intern.id} className="bg-white rounded-2xl border border-[#e4e2dd] p-6 hover:shadow-md transition-shadow">
+                <div
+                  key={intern.id}
+                  className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1"
+                  style={{ borderColor: LENITY.line }}
+                >
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3
-                        className="font-semibold text-[#1b1c19] text-base"
-                        style={{ fontFamily: "'Literata', serif" }}
+                        className="font-bold text-base"
+                        style={{ fontFamily: SERIF, color: LENITY.ink }}
                       >
                         {intern.title}
                       </h3>
-                      <p className="text-xs text-[#855300] font-medium">{intern.department}</p>
+                      <p className="text-xs font-semibold" style={{ color: LENITY.muted }}>{intern.department}</p>
                     </div>
-                    <span className="text-xs bg-green-50 text-[#006d3e] font-semibold rounded-full px-2.5 py-1">
+                    <span
+                      className="text-xs font-bold rounded-full px-2.5 py-1"
+                      style={{ color: LENITY.ink, background: LENITY.yellowSoft }}
+                    >
                       {intern.seats} seats
                     </span>
                   </div>
-                  <p className="text-[#524435] text-sm leading-relaxed mb-4">{intern.description}</p>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: LENITY.muted }}>{intern.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {intern.skills.map((s) => (
-                      <span key={s} className="bg-orange-50 text-[#855300] text-xs rounded-full px-2.5 py-1 font-medium">
+                      <span
+                        key={s}
+                        className="text-xs rounded-full px-2.5 py-1 font-semibold"
+                        style={{ color: LENITY.ink, background: LENITY.yellowSoft }}
+                      >
                         {s}
                       </span>
                     ))}
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-xs text-[#524435]">
+                  <div className="grid grid-cols-2 gap-3 text-xs" style={{ color: LENITY.muted }}>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-[#855300]" />
+                      <Clock className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />
                       Duration: {intern.duration}
                     </div>
                     <div className="flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5 text-[#855300]" />
+                      <Award className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />
                       {intern.stipend}
                     </div>
                   </div>
@@ -227,22 +251,24 @@ export default function InternshipPage() {
             {/* Application Form */}
             <div className="max-w-2xl mx-auto">
               {submitted ? (
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] shadow-lg overflow-hidden">
-                  <div className="bg-[#006d3e] text-white p-6 text-center">
+                <div className="bg-white rounded-3xl border shadow-lg overflow-hidden" style={{ borderColor: LENITY.line }}>
+                  <div className="p-6 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
                     <CheckCircle className="w-12 h-12 mx-auto mb-2" />
-                    <h3 className="text-lg font-bold" style={{ fontFamily: "'Literata', serif" }}>
+                    <h3 className="text-lg font-bold" style={{ fontFamily: SERIF }}>
                       Application Submitted!
                     </h3>
-                    <p className="text-white/80 text-sm">We will contact you within 3–5 working days.</p>
+                    <p className="text-sm" style={{ color: LENITY.ink, opacity: 0.8 }}>We will contact you within 3–5 working days.</p>
                   </div>
                   <div className="p-6 text-center">
-                    <p className="text-[#524435] text-sm mb-4">
-                      A certificate preview is ready for your role: <strong>{form.role}</strong>
+                    <p className="text-sm mb-4" style={{ color: LENITY.muted }}>
+                      A certificate preview is ready for your role:{" "}
+                      <strong style={{ color: LENITY.ink }}>{form.role}</strong>
                     </p>
                     <div className="flex gap-3 justify-center flex-wrap">
                       <button
                         onClick={handlePrintCert}
-                        className="flex items-center gap-2 bg-[#855300] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#653e00] transition-colors"
+                        className="flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
+                        style={{ background: LENITY.accent, color: LENITY.ink }}
                       >
                         <Award className="w-4 h-4" /> Preview Certificate
                       </button>
@@ -258,10 +284,10 @@ export default function InternshipPage() {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-2xl border border-[#e4e2dd] p-6 sm:p-8">
+                <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
                   <h3
-                    className="text-xl font-bold text-[#1b1c19] mb-6"
-                    style={{ fontFamily: "'Literata', serif" }}
+                    className="text-xl font-bold mb-6"
+                    style={{ fontFamily: SERIF, color: LENITY.ink }}
                   >
                     Apply for Internship
                   </h3>
@@ -276,26 +302,28 @@ export default function InternshipPage() {
                         { key: "email", label: "Email *", type: "email", placeholder: "your@email.com", required: true },
                       ].map(({ key, label, type, placeholder, required }) => (
                         <div key={key}>
-                          <label className="block text-sm font-medium text-[#1b1c19] mb-1">{label}</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{label}</label>
                           <input
                             required={required}
                             type={type}
                             value={form[key as keyof AppForm]}
                             onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                             placeholder={placeholder}
-                            className="w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300]"
+                            className="w-full rounded-xl px-4 py-2.5 text-sm border focus:outline-none focus:ring-2"
+                            style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                           />
                         </div>
                       ))}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Role Applying For *</label>
+                      <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Role Applying For *</label>
                       <select
                         required
                         value={form.role}
                         onChange={(e) => setForm({ ...form, role: e.target.value })}
-                        className="w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300] bg-white"
+                        className="w-full rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 border focus:outline-none focus:ring-2"
+                        style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                       >
                         <option value="">Select a role</option>
                         {internships.map((i) => <option key={i.id}>{i.title}</option>)}
@@ -304,22 +332,24 @@ export default function InternshipPage() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Preferred Start Date *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Preferred Start Date *</label>
                         <input
                           required
                           type="date"
                           value={form.startDate}
                           onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300]"
+                          className="w-full rounded-xl px-4 py-2.5 text-sm border focus:outline-none focus:ring-2"
+                          style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-[#1b1c19] mb-1">Duration *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Duration *</label>
                         <select
                           required
                           value={form.duration}
                           onChange={(e) => setForm({ ...form, duration: e.target.value })}
-                          className="w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300] bg-white"
+                          className="w-full rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 border focus:outline-none focus:ring-2"
+                          style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                         >
                           <option value="">Select duration</option>
                           <option>1 month</option>
@@ -331,23 +361,28 @@ export default function InternshipPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Motivation / Statement</label>
+                      <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Motivation / Statement</label>
                       <textarea
                         value={form.motivation}
                         onChange={(e) => setForm({ ...form, motivation: e.target.value })}
                         placeholder="Tell us why you want to intern with us..."
                         rows={3}
-                        className="w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300] resize-none"
+                        className="w-full rounded-xl px-4 py-2.5 text-sm resize-none border focus:outline-none focus:ring-2"
+                        style={{ borderColor: LENITY.line, color: LENITY.ink, ["--tw-ring-color" as string]: LENITY.accent }}
                       />
                     </div>
 
+                    {error && (
+                      <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
+                    )}
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-[#855300] hover:bg-[#653e00] disabled:bg-gray-300 text-white rounded-full py-3.5 font-semibold transition-colors flex items-center justify-center gap-2"
+                      className="w-full rounded-full py-3.5 font-bold transition-all hover:scale-[1.02] disabled:opacity-60 flex items-center justify-center gap-2"
+                      style={{ background: LENITY.accent, color: LENITY.ink }}
                     >
                       {loading ? (
-                        <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                        <span className="animate-spin border-2 border-t-transparent rounded-full w-5 h-5" style={{ borderColor: LENITY.ink, borderTopColor: "transparent" }} />
                       ) : (
                         <>
                           <Briefcase className="w-4 h-4" /> Submit Application

@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LENITY, SERIF } from "@/theme/lenity";
 import { Heart, User, CheckCircle, Printer } from "lucide-react";
+import { submitRegistration } from "@/app/actions/submissions";
 
 type TabType = "boy" | "girl";
 
@@ -38,18 +40,14 @@ const defaultForm: RegistrationForm = {
   fatherName: "", motherName: "", siblings: "", hobbies: "",
 };
 
-let regCounter = 1001;
-
 export default function RegistrationPage() {
   const [tab, setTab] = useState<TabType>("boy");
   const [boyForm, setBoyForm] = useState<RegistrationForm>({ ...defaultForm });
   const [girlForm, setGirlForm] = useState<RegistrationForm>({ ...defaultForm });
   const [submitted, setSubmitted] = useState<Record<TabType, boolean>>({ boy: false, girl: false });
   const [loading, setLoading] = useState(false);
-  const [regId] = useState<Record<TabType, string>>({
-    boy: `HW-B-${regCounter++}`,
-    girl: `HW-G-${regCounter++}`,
-  });
+  const [error, setError] = useState("");
+  const [regId, setRegId] = useState<Record<TabType, string>>({ boy: "", girl: "" });
 
   const form = tab === "boy" ? boyForm : girlForm;
   const setForm = tab === "boy" ? setBoyForm : setGirlForm;
@@ -57,9 +55,17 @@ export default function RegistrationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    setError("");
+    const { hobbies, ...rest } = form as RegistrationForm & { hobbies?: string };
+    void hobbies;
+    const res = await submitRegistration({ ...rest, side: tab });
     setLoading(false);
-    setSubmitted((prev) => ({ ...prev, [tab]: true }));
+    if (res.success) {
+      setRegId((prev) => ({ ...prev, [tab]: res.data.regId }));
+      setSubmitted((prev) => ({ ...prev, [tab]: true }));
+    } else {
+      setError(res.error);
+    }
   };
 
   const handlePrint = () => {
@@ -73,17 +79,17 @@ export default function RegistrationPage() {
           <title>Registration Form - ${form.fullName}</title>
           <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
           <style>
-            body { margin: 0; padding: 20px; font-family: 'Plus Jakarta Sans', sans-serif; background: white; color: #1b1c19; }
-            .header { text-align: center; border-bottom: 2px solid #855300; padding-bottom: 12px; margin-bottom: 20px; }
-            h1 { font-family: 'Literata', serif; color: #855300; margin: 0 0 4px; font-size: 22px; }
-            .sub { color: #524435; font-size: 12px; }
+            body { margin: 0; padding: 20px; font-family: 'Plus Jakarta Sans', sans-serif; background: white; color: ${LENITY.ink}; }
+            .header { text-align: center; border-bottom: 2px solid ${LENITY.accent}; padding-bottom: 12px; margin-bottom: 20px; }
+            h1 { font-family: 'Literata', serif; color: ${LENITY.ink}; margin: 0 0 4px; font-size: 22px; }
+            .sub { color: ${LENITY.muted}; font-size: 12px; }
             .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-            .field { border: 1px solid #e4e2dd; border-radius: 8px; padding: 8px; }
-            .label { font-size: 9px; text-transform: uppercase; color: #857463; letter-spacing: 0.5px; }
+            .field { border: 1px solid ${LENITY.line}; border-radius: 8px; padding: 8px; }
+            .label { font-size: 9px; text-transform: uppercase; color: ${LENITY.muted}; letter-spacing: 0.5px; }
             .value { font-size: 13px; font-weight: 600; margin-top: 2px; }
-            .avatar { width: 80px; height: 80px; border: 2px solid #855300; border-radius: 8px; background: #fff8f0; display: flex; align-items: center; justify-content: center; color: #855300; font-size: 24px; font-weight: bold; float: right; margin-left: 12px; font-family: 'Literata', serif; }
-            .section-title { font-family: 'Literata', serif; font-size: 14px; font-weight: 700; color: #855300; margin: 14px 0 8px; border-left: 3px solid #855300; padding-left: 8px; }
-            .reg-id { font-size: 10px; font-weight: bold; color: #855300; }
+            .avatar { width: 80px; height: 80px; border: 2px solid ${LENITY.accent}; border-radius: 8px; background: ${LENITY.yellowSoft}; display: flex; align-items: center; justify-content: center; color: ${LENITY.ink}; font-size: 24px; font-weight: bold; float: right; margin-left: 12px; font-family: 'Literata', serif; }
+            .section-title { font-family: 'Literata', serif; font-size: 14px; font-weight: 700; color: ${LENITY.ink}; margin: 14px 0 8px; border-left: 3px solid ${LENITY.accent}; padding-left: 8px; }
+            .reg-id { font-size: 10px; font-weight: bold; color: ${LENITY.ink}; }
           </style>
         </head>
         <body>
@@ -100,49 +106,60 @@ export default function RegistrationPage() {
     win.print();
   };
 
-  const inputClass = "w-full border border-[#e4e2dd] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#855300] bg-white";
+  const inputClass = "w-full border rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E84523] transition-colors";
+  const inputStyle = { borderColor: LENITY.line, color: LENITY.ink } as React.CSSProperties;
+  const labelClass = "block text-sm font-medium mb-1";
+  const labelStyle = { color: LENITY.ink } as React.CSSProperties;
+  const sectionHeadingClass = "font-bold text-xs uppercase tracking-[0.18em] pb-2 border-b";
 
   return (
     <>
       <Navbar />
       <main>
-        <section
-          className="pt-28 pb-16 relative"
-          style={{ background: "linear-gradient(135deg, #1b0d00 0%, #3d1f00 100%)" }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Heart className="w-12 h-12 text-[#F4A433] fill-[#F4A433] mx-auto mb-4" />
+        {/* ════════════ HERO — white editorial + watercolor wash ════════════ */}
+        <section className="relative pt-36 pb-16 overflow-hidden" style={{ background: LENITY.bg }}>
+          <div className="absolute -top-32 -left-32 w-[560px] h-[560px] rounded-full pointer-events-none"
+            style={{ background: LENITY.yellowSoft, filter: "blur(10px)", opacity: 0.6 }} />
+          <div className="absolute top-24 right-0 w-[380px] h-[380px] rounded-full pointer-events-none"
+            style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span
+              className="inline-flex items-center justify-center w-14 h-14 rounded-full mx-auto mb-5"
+              style={{ background: LENITY.yellow }}
+            >
+              <Heart className="w-7 h-7" style={{ color: LENITY.ink }} />
+            </span>
             <h1
-              className="text-3xl sm:text-5xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Literata', serif" }}
+              className="text-3xl sm:text-5xl font-bold mb-4"
+              style={{ fontFamily: SERIF, color: LENITY.ink }}
             >
               विवाह पंजीकरण
             </h1>
-            <p className="text-white/80 text-lg max-w-xl mx-auto">
+            <p className="text-lg italic max-w-xl mx-auto leading-relaxed" style={{ fontFamily: SERIF, color: LENITY.muted }}>
               Register for marriage assistance from Hariwatika Shiv Mandir Vivah Sewa Samiti.
             </p>
           </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 60" className="w-full" style={{ display: "block" }}>
-              <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#fbf9f4" />
-            </svg>
-          </div>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10"><div className="h-1 w-full" style={{ background: LENITY.yellow }} /></div>
         </section>
 
-        <section className="py-16 bg-[#fbf9f4]">
+        <section className="py-16" style={{ background: LENITY.soft }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             {/* Tabs */}
-            <div className="flex gap-2 mb-8 bg-white rounded-xl border border-[#e4e2dd] p-1.5">
+            <div
+              className="flex gap-2 mb-8 bg-white rounded-2xl border p-1.5"
+              style={{ borderColor: LENITY.line }}
+            >
               {([["boy", "वर पंजीकरण (Boy)"], ["girl", "कन्या पंजीकरण (Girl)"]] as [TabType, string][]).map(
                 ([value, label]) => (
                   <button
                     key={value}
                     onClick={() => setTab(value)}
-                    className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+                    className="flex-1 rounded-full py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2"
+                    style={
                       tab === value
-                        ? "bg-[#855300] text-white"
-                        : "text-[#524435] hover:text-[#855300]"
-                    }`}
+                        ? { background: LENITY.yellow, color: LENITY.ink }
+                        : { color: LENITY.muted, background: "transparent" }
+                    }
                   >
                     <User className="w-4 h-4" />
                     {label}
@@ -152,13 +169,16 @@ export default function RegistrationPage() {
             </div>
 
             {submitted[tab] ? (
-              <div className="bg-white rounded-2xl border border-[#e4e2dd] shadow-lg overflow-hidden">
-                <div className="bg-[#006d3e] text-white p-6 text-center">
+              <div
+                className="bg-white rounded-3xl border shadow-lg overflow-hidden"
+                style={{ borderColor: LENITY.line }}
+              >
+                <div className="p-6 text-center" style={{ background: LENITY.yellow, color: LENITY.ink }}>
                   <CheckCircle className="w-12 h-12 mx-auto mb-2" />
-                  <h2 className="text-xl font-bold" style={{ fontFamily: "'Literata', serif" }}>
+                  <h2 className="text-xl font-bold" style={{ fontFamily: SERIF }}>
                     Registration Successful!
                   </h2>
-                  <p className="text-white/80 text-sm">ID: {regId[tab]}</p>
+                  <p className="text-sm" style={{ color: LENITY.ink }}>ID: {regId[tab]}</p>
                 </div>
                 <div className="p-6">
                   {/* Print-ready content */}
@@ -177,17 +197,18 @@ export default function RegistrationPage() {
                       ["Contact Mobile", form.contactMobile],
                       ["Address", form.address],
                     ].map(([label, val]) => (
-                      <div key={label} className="border border-[#e4e2dd] rounded-lg p-2.5">
-                        <p className="text-[9px] uppercase tracking-wide text-[#857463]">{label}</p>
-                        <p className="font-semibold text-[#1b1c19] mt-0.5">{val || "—"}</p>
+                      <div key={label} className="border rounded-xl p-2.5" style={{ borderColor: LENITY.line }}>
+                        <p className="text-[9px] uppercase tracking-wide" style={{ color: LENITY.muted }}>{label}</p>
+                        <p className="font-semibold mt-0.5" style={{ color: LENITY.ink }}>{val || "—"}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="flex gap-3 flex-wrap justify-center">
+                  <div className="flex gap-3 flex-wrap justify-center items-center">
                     <button
                       onClick={handlePrint}
-                      className="flex items-center gap-2 bg-[#855300] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#653e00] transition-colors"
+                      className="flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
+                      style={{ background: LENITY.yellow, color: LENITY.ink }}
                     >
                       <Printer className="w-4 h-4" /> Print Form
                     </button>
@@ -195,13 +216,15 @@ export default function RegistrationPage() {
                       href={`https://wa.me/919473331919?text=नमस्ते%2C%20${encodeURIComponent(form.fullName)}%20का%20विवाह%20पंजीकरण%20ID%20${regId[tab]}%20से%20हुआ%20है।%20कृपया%20आगे%20की%20जानकारी%20दें।`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-[#25D366] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#1da851] transition-colors"
+                      className="flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all hover:scale-105 text-white"
+                      style={{ background: "#25D366" }}
                     >
                       WhatsApp Confirm
                     </a>
                     <button
                       onClick={() => setSubmitted((p) => ({ ...p, [tab]: false }))}
-                      className="text-xs text-[#524435] hover:text-[#855300] transition-colors"
+                      className="text-xs font-semibold transition-colors"
+                      style={{ color: LENITY.muted }}
                     >
                       Edit Registration
                     </button>
@@ -209,104 +232,120 @@ export default function RegistrationPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-2xl border border-[#e4e2dd] p-6 sm:p-8">
+              <div
+                className="bg-white rounded-3xl border p-6 sm:p-8"
+                style={{ borderColor: LENITY.line }}
+              >
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <h3
-                    className="font-semibold text-[#855300] text-xs uppercase tracking-wider pb-2 border-b border-[#e4e2dd]"
-                  >
+                  <h3 className={sectionHeadingClass} style={{ color: LENITY.ink, borderColor: LENITY.line }}>
+                    <span className="inline-block w-8 h-0.5 mr-3 align-middle" style={{ background: LENITY.yellow }} />
                     Personal Information
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Full Name *</label>
-                      <input required type="text" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} placeholder="Full name as per documents" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Full Name *</label>
+                      <input required type="text" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} placeholder="Full name as per documents" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Date of Birth *</label>
-                      <input required type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Date of Birth *</label>
+                      <input required type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Gotra *</label>
-                      <input required type="text" value={form.gotra} onChange={(e) => setForm({ ...form, gotra: e.target.value })} placeholder="Family gotra" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Gotra *</label>
+                      <input required type="text" value={form.gotra} onChange={(e) => setForm({ ...form, gotra: e.target.value })} placeholder="Family gotra" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Caste *</label>
-                      <input required type="text" value={form.caste} onChange={(e) => setForm({ ...form, caste: e.target.value })} placeholder="Caste / sub-caste" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Caste *</label>
+                      <input required type="text" value={form.caste} onChange={(e) => setForm({ ...form, caste: e.target.value })} placeholder="Caste / sub-caste" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Education *</label>
-                      <input required type="text" value={form.education} onChange={(e) => setForm({ ...form, education: e.target.value })} placeholder="e.g. B.A., 10th, M.Sc." className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Education *</label>
+                      <input required type="text" value={form.education} onChange={(e) => setForm({ ...form, education: e.target.value })} placeholder="e.g. B.A., 10th, M.Sc." className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Occupation *</label>
-                      <input required type="text" value={form.occupation} onChange={(e) => setForm({ ...form, occupation: e.target.value })} placeholder="Job / Business / Student" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Occupation *</label>
+                      <input required type="text" value={form.occupation} onChange={(e) => setForm({ ...form, occupation: e.target.value })} placeholder="Job / Business / Student" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Annual Income (₹)</label>
-                      <input type="text" value={form.income} onChange={(e) => setForm({ ...form, income: e.target.value })} placeholder="Approx. annual income" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Annual Income (₹)</label>
+                      <input type="text" value={form.income} onChange={(e) => setForm({ ...form, income: e.target.value })} placeholder="Approx. annual income" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Height</label>
-                      <input type="text" value={form.height} onChange={(e) => setForm({ ...form, height: e.target.value })} placeholder="e.g. 5&apos;6&quot;" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Height</label>
+                      <input type="text" value={form.height} onChange={(e) => setForm({ ...form, height: e.target.value })} placeholder="e.g. 5&apos;6&quot;" className={inputClass} style={inputStyle} />
                     </div>
                   </div>
 
-                  <h3 className="font-semibold text-[#855300] text-xs uppercase tracking-wider pb-2 border-b border-[#e4e2dd] pt-2">
+                  <h3 className={`${sectionHeadingClass} pt-2`} style={{ color: LENITY.ink, borderColor: LENITY.line }}>
+                    <span className="inline-block w-8 h-0.5 mr-3 align-middle" style={{ background: LENITY.yellow }} />
                     Family Information
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Father's Name *</label>
-                      <input required type="text" value={form.fatherName} onChange={(e) => setForm({ ...form, fatherName: e.target.value })} placeholder="Father's full name" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Father's Name *</label>
+                      <input required type="text" value={form.fatherName} onChange={(e) => setForm({ ...form, fatherName: e.target.value })} placeholder="Father's full name" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Mother's Name *</label>
-                      <input required type="text" value={form.motherName} onChange={(e) => setForm({ ...form, motherName: e.target.value })} placeholder="Mother's full name" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Mother's Name *</label>
+                      <input required type="text" value={form.motherName} onChange={(e) => setForm({ ...form, motherName: e.target.value })} placeholder="Mother's full name" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Siblings</label>
-                      <input type="text" value={form.siblings} onChange={(e) => setForm({ ...form, siblings: e.target.value })} placeholder="e.g. 2 brothers, 1 sister" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Siblings</label>
+                      <input type="text" value={form.siblings} onChange={(e) => setForm({ ...form, siblings: e.target.value })} placeholder="e.g. 2 brothers, 1 sister" className={inputClass} style={inputStyle} />
                     </div>
                   </div>
 
-                  <h3 className="font-semibold text-[#855300] text-xs uppercase tracking-wider pb-2 border-b border-[#e4e2dd] pt-2">
+                  <h3 className={`${sectionHeadingClass} pt-2`} style={{ color: LENITY.ink, borderColor: LENITY.line }}>
+                    <span className="inline-block w-8 h-0.5 mr-3 align-middle" style={{ background: LENITY.yellow }} />
                     Contact Information
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Full Address *</label>
-                      <textarea required rows={2} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Village/Town, Block" className={`${inputClass} resize-none`} />
+                      <label className={labelClass} style={labelStyle}>Full Address *</label>
+                      <textarea required rows={2} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Village/Town, Block" className={`${inputClass} resize-none`} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Contact Person Name *</label>
-                      <input required type="text" value={form.contactName} onChange={(e) => setForm({ ...form, contactName: e.target.value })} placeholder="Parent/Guardian name" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Contact Person Name *</label>
+                      <input required type="text" value={form.contactName} onChange={(e) => setForm({ ...form, contactName: e.target.value })} placeholder="Parent/Guardian name" className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#1b1c19] mb-1">Contact Mobile *</label>
-                      <input required type="tel" pattern="[0-9]{10}" value={form.contactMobile} onChange={(e) => setForm({ ...form, contactMobile: e.target.value })} placeholder="10-digit mobile" className={inputClass} />
+                      <label className={labelClass} style={labelStyle}>Contact Mobile *</label>
+                      <input required type="tel" pattern="[0-9]{10}" value={form.contactMobile} onChange={(e) => setForm({ ...form, contactMobile: e.target.value })} placeholder="10-digit mobile" className={inputClass} style={inputStyle} />
                     </div>
                   </div>
 
                   {/* Photo Placeholder */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1b1c19] mb-1">Photo (Optional)</label>
-                    <div className="border-2 border-dashed border-[#e4e2dd] rounded-xl p-6 text-center">
-                      <User className="w-8 h-8 text-[#857463] mx-auto mb-2" />
-                      <p className="text-xs text-[#524435]">Upload photo (JPG, PNG up to 2MB)</p>
-                      <p className="text-[10px] text-[#857463] mt-1">Feature coming soon</p>
+                    <label className={labelClass} style={labelStyle}>Photo (Optional)</label>
+                    <div
+                      className="border-2 border-dashed rounded-2xl p-6 text-center"
+                      style={{ borderColor: LENITY.line }}
+                    >
+                      <span
+                        className="inline-flex items-center justify-center w-10 h-10 rounded-full mb-2"
+                        style={{ background: LENITY.yellowSoft }}
+                      >
+                        <User className="w-5 h-5" style={{ color: LENITY.ink }} />
+                      </span>
+                      <p className="text-xs" style={{ color: LENITY.ink }}>Upload photo (JPG, PNG up to 2MB)</p>
+                      <p className="text-[10px] mt-1" style={{ color: LENITY.muted }}>Feature coming soon</p>
                     </div>
                   </div>
 
+                  {error && (
+                    <p className="text-sm font-medium mb-3" style={{ color: LENITY.red }}>{error}</p>
+                  )}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#855300] hover:bg-[#653e00] disabled:bg-gray-300 text-white rounded-full py-4 font-semibold transition-colors flex items-center justify-center gap-2"
+                    className="w-full rounded-full py-4 font-bold transition-all hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                    style={{ background: LENITY.yellow, color: LENITY.ink }}
                   >
                     {loading ? (
-                      <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                      <span className="animate-spin border-2 rounded-full w-5 h-5" style={{ borderColor: LENITY.ink, borderTopColor: "transparent" }} />
                     ) : (
                       <>
-                        <Heart className="w-4 h-4 fill-white" />
+                        <Heart className="w-4 h-4" style={{ color: LENITY.ink }} />
                         Submit {tab === "boy" ? "Varaniya" : "Kanya"} Registration
                       </>
                     )}

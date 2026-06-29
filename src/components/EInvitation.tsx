@@ -148,8 +148,8 @@ export default function EInvitation({
 
       {/* Edit Form */}
       {editing && (
-        <div className="bg-white rounded-xl border border-[#e4e2dd] p-4 space-y-3">
-          <h4 className="font-semibold text-[#1b1c19] text-sm">Edit Invitation Details</h4>
+        <div className="bg-[#0d1229] rounded-xl border border-[#63d2ff]/20 p-4 space-y-3">
+          <h4 className="font-semibold text-[#e8f4ff] text-sm">Edit Invitation Details</h4>
           {[
             { key: "groomName", label: "Groom Name" },
             { key: "brideName", label: "Bride Name" },
@@ -159,12 +159,12 @@ export default function EInvitation({
             { key: "hostFamily", label: "Host Family" },
           ].map(({ key, label }) => (
             <div key={key}>
-              <label className="block text-xs text-[#524435] mb-1">{label}</label>
+              <label className="block text-xs text-[#7a8fad] mb-1">{label}</label>
               <input
                 type="text"
                 value={fields[key as keyof typeof fields]}
                 onChange={(e) => setFields({ ...fields, [key]: e.target.value })}
-                className="w-full border border-[#e4e2dd] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#855300]"
+                className="w-full border border-[#63d2ff]/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#63d2ff] bg-[#111630] text-[#e8f4ff]"
               />
             </div>
           ))}

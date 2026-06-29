@@ -3,6 +3,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import ParallaxProvider from "@/components/ParallaxProvider";
 import ScrollProgress from "@/components/ScrollProgress";
+import { getTranslations } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Hariwatika Shiv Mandir Vivah Sewa Samiti | हरिवाटिका शिव मंदिर विवाह सेवा समिति",
@@ -26,22 +27,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const translations = await getTranslations();
   return (
     <html lang="hi" className="h-full scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </head>
       <body
-        className="min-h-full flex flex-col noise-texture"
-        style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+        className="min-h-full flex flex-col"
+        style={{ fontFamily: "'Rajdhani', system-ui, sans-serif" }}
       >
-        <LanguageProvider>
+        {/* Warm ambient background — soft dot grid + glow orbs (behind everything) */}
+        <div className="cyber-grid" aria-hidden />
+        <div className="cyber-orbs" aria-hidden>
+          <div className="orb orb1" />
+          <div className="orb orb2" />
+          <div className="orb orb3" />
+        </div>
+        <LanguageProvider translations={translations}>
           {/* Thin gradient progress bar at the very top */}
           <ScrollProgress />
           {/* Global ambient canvas + mouse/scroll CSS vars */}
