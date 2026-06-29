@@ -1,0 +1,330 @@
+// Hariwatika NGO CRM — SQLite + Prisma
+// Every user-facing string is bilingual (paired *En/*Hi columns or en/hi rows).
+// Images stored as path/URL strings, managed via MediaAsset (Media Library).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────────────────
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique @default("admin")
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────
+// FORM SUBMISSIONS (captured from public forms)
+// ─────────────────────────────────────────────────────────
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  name      String
+  mobile    String
+  email     String?
+  subject   String
+  message   String
+  status    String   @default("new") // new | read | replied
+  createdAt DateTime @default(now())
+}
+
+model DonationSubmission {
+  id        Int      @id @default(autoincrement())
+  ref       String   @unique
+  name      String
+  mobile    String
+  email     String?
+  address   String
+  amount    Int
+  purpose   String
+  status    String   @default("pending") // pending | confirmed
+  createdAt DateTime @default(now())
+}
+
+model VolunteerSubmission {
+  id           Int      @id @default(autoincrement())
+  volunteerId  String   @unique
+  name         String
+  age          String
+  gender       String
+  mobile       String
+  email        String?
+  address      String
+  skills       String   // JSON array
+  availability String
+  motivation   String?
+  createdAt    DateTime @default(now())
+}
+
+model InternshipSubmission {
+  id            Int      @id @default(autoincrement())
+  name          String
+  age           String
+  qualification String
+  institute     String
+  mobile        String
+  email         String
+  role          String
+  startDate     String
+  duration      String
+  motivation    String?
+  createdAt     DateTime @default(now())
+}
+
+model MarriageRegistration {
+  id              Int      @id @default(autoincrement())
+  regId           String   @unique
+  side            String   // boy | girl
+  fullName        String
+  dob             String
+  gotra           String
+  caste           String
+  religion        String   @default("Hindu")
+  education       String
+  occupation      String
+  income          String?
+  height          String?
+  complexion      String?
+  fatherName      String
+  motherName      String
+  siblings        String?
+  address         String
+  district        String   @default("West Champaran")
+  state           String   @default("Bihar")
+  contactName     String
+  contactMobile   String
+  contactRelation String?
+  photo           String?
+  createdAt       DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────
+// CONTENT — repeatable lists (CRUD + reorder)
+// ─────────────────────────────────────────────────────────
+model BlogPost {
+  id        Int      @id @default(autoincrement())
+  category  String
+  date      String
+  titleEn   String
+  titleHi   String
+  excerptEn String
+  excerptHi String
+  tags      String   @default("[]") // JSON array
+  img       String?
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id            Int     @id @default(autoincrement())
+  category      String
+  iconName      String  @default("Heart")
+  status        String  @default("ongoing") // ongoing | completed
+  titleEn       String
+  titleHi       String
+  descEn        String
+  descHi        String
+  raised        Int     @default(0)
+  goal          Int     @default(0)
+  location      String
+  date          String
+  beneficiaries String
+  sortOrder     Int     @default(0)
+}
+
+model FuturePlan {
+  id        Int    @id @default(autoincrement())
+  titleEn   String
+  titleHi   String
+  year      String
+  descEn    String
+  descHi    String
+  sortOrder Int    @default(0)
+}
+
+model TeamMember {
+  id          Int     @id @default(autoincrement())
+  name        String
+  designation String
+  initials    String
+  phone       String?
+  photo       String?
+  sortOrder   Int     @default(0)
+}
+
+model TimelineItem {
+  id        Int    @id @default(autoincrement())
+  year      String
+  eventEn   String
+  eventHi   String
+  sortOrder Int    @default(0)
+}
+
+model LegalDoc {
+  id        Int    @id @default(autoincrement())
+  iconName  String @default("FileText")
+  titleEn   String
+  titleHi   String
+  number    String
+  descEn    String
+  descHi    String
+  sortOrder Int    @default(0)
+}
+
+model FinancialReport {
+  id            Int @id @default(autoincrement())
+  year          String
+  totalIncome   Int
+  totalExpense  Int
+  beneficiaries Int
+  surplus       Int
+  sortOrder     Int @default(0)
+}
+
+model ExpenseCategory {
+  id        Int    @id @default(autoincrement())
+  labelEn   String
+  labelHi   String
+  percent   Int
+  color     String
+  sortOrder Int    @default(0)
+}
+
+model ReportDocument {
+  id        Int    @id @default(autoincrement())
+  titleEn   String
+  titleHi   String
+  fileType  String @default("PDF")
+  size      String @default("")
+  fileUrl   String?
+  sortOrder Int    @default(0)
+}
+
+model InternshipListing {
+  id         Int    @id @default(autoincrement())
+  titleEn    String
+  titleHi    String
+  department String
+  duration   String
+  stipend    String
+  seats      String
+  skills     String @default("[]") // JSON array
+  descEn     String
+  descHi     String
+  sortOrder  Int    @default(0)
+}
+
+model HomeService {
+  id        Int     @id @default(autoincrement())
+  iconName  String  @default("Heart")
+  img       String?
+  titleEn   String
+  titleHi   String
+  descEn    String
+  descHi    String
+  sortOrder Int     @default(0)
+}
+
+model HomeStat {
+  id        Int    @id @default(autoincrement())
+  value     String
+  labelEn   String
+  labelHi   String
+  sortOrder Int    @default(0)
+}
+
+model HomeCampaign {
+  id        Int     @id @default(autoincrement())
+  titleEn   String
+  titleHi   String
+  raised    Int     @default(0)
+  goal      Int     @default(0)
+  backers   Int     @default(0)
+  img       String?
+  sortOrder Int     @default(0)
+}
+
+model HomePillar {
+  id        Int    @id @default(autoincrement())
+  iconName  String @default("BookOpen")
+  titleEn   String
+  titleHi   String
+  descEn    String
+  descHi    String
+  sortOrder Int    @default(0)
+}
+
+model NavLink {
+  id        Int    @id @default(autoincrement())
+  labelEn   String
+  labelHi   String
+  href      String
+  location  String // navbar | footer-quick | footer-legal
+  sortOrder Int    @default(0)
+}
+
+model SocialLink {
+  id        Int    @id @default(autoincrement())
+  platform  String
+  url       String
+  sortOrder Int    @default(0)
+}
+
+model VolunteerBenefit {
+  id        Int    @id @default(autoincrement())
+  iconName  String @default("Award")
+  titleEn   String
+  titleHi   String
+  descEn    String
+  descHi    String
+  sortOrder Int    @default(0)
+}
+
+// All dropdown / filter / button option lists
+model OptionItem {
+  id        Int    @id @default(autoincrement())
+  group     String // donation_purpose | contact_subject | volunteer_skill | availability | blog_category | project_category | ...
+  labelEn   String
+  labelHi   String
+  value     String
+  sortOrder Int    @default(0)
+}
+
+// ─────────────────────────────────────────────────────────
+// CONTENT — singletons / settings (key/value)
+// ─────────────────────────────────────────────────────────
+// Home page strings + per-page hero headers + site-wide settings.
+// One row per key. en/hi for bilingual; `img` for image keys.
+model SiteSetting {
+  key     String  @id // e.g. home.hero.eyebrow, header.about.title, contact.phone1, bank.ifsc
+  en      String  @default("")
+  hi      String  @default("")
+  img     String?
+  group   String  @default("general") // for admin grouping
+}
+
+// Generic translation store — form labels, placeholders, buttons, messages.
+model Translation {
+  key   String @id // e.g. contact.field.name.label
+  en    String @default("")
+  hi    String @default("")
+  group String @default("general")
+}
+
+// Media Library
+model MediaAsset {
+  id         Int      @id @default(autoincrement())
+  url        String
+  alt        String   @default("")
+  category   String   @default("general")
+  uploadedAt DateTime @default(now())
+}

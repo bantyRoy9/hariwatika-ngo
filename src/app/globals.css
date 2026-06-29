@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -7,38 +7,38 @@
      Change these values to instantly update the entire site
      ══════════════════════════════════════════════════════════════ */
   
-  /* ─── Primary Colors (Main Brand) ─── */
-  --color-primary: #8B5A2B;           /* Warm terracotta brown */
-  --color-primary-dark: #5D3A1A;      /* Rich dark brown */
-  --color-primary-light: #C69C6D;     /* Soft camel */
-  
+  /* ─── Primary Colors (Main Brand) — WARM ORANGE-RED ─── */
+  --color-primary: #E84523;           /* CRY orange-red */
+  --color-primary-dark: #c93b1d;      /* Deep orange-red */
+  --color-primary-light: #f07455;     /* Light orange-red */
+
   /* ─── Accent Colors (Highlights & CTAs) ─── */
-  --color-accent: #D4A574;            /* Warm gold */
-  --color-accent-bright: #E8C4A0;     /* Light cream */
-  --color-accent-green: #2D5F4E;      /* Forest green */
-  --color-accent-green-light: #4A8A70; /* Sage green */
-  
-  /* ─── Surface Colors (Backgrounds) ─── */
-  --color-surface: #FFFAF5;           /* Warm white */
-  --color-surface-soft: #FFF8F0;      /* Soft cream */
-  --color-surface-muted: #F5F1EB;     /* Muted beige */
-  --color-surface-elevated: #FFFFFF;  /* Pure white for cards */
-  
+  --color-accent: #f59e0b;            /* Warm amber */
+  --color-accent-bright: #ec4899;     /* Pink */
+  --color-accent-green: #22c55e;      /* Success green */
+  --color-accent-green-light: #4ade80; /* Light green */
+
+  /* ─── Surface Colors (Backgrounds) — WARM WHITE ─── */
+  --color-surface: #ffffff;           /* White base */
+  --color-surface-soft: #fdf6f0;      /* Warm off-white */
+  --color-surface-muted: #f3f4f6;     /* Light gray panel */
+  --color-surface-elevated: #fff8f5;  /* Warm white card */
+
   /* ─── Text Colors ─── */
-  --color-on-surface: #1A1614;        /* Near black - primary text */
-  --color-on-surface-variant: #4A423A; /* Dark gray - secondary */
-  --color-secondary-text: #6B5F52;    /* Medium gray - tertiary */
-  --color-text-muted: #8F8377;        /* Light gray - captions */
-  
+  --color-on-surface: #1a1a1a;        /* Near-black text */
+  --color-on-surface-variant: #374151; /* Dark gray secondary */
+  --color-secondary-text: #6b7280;    /* Gray tertiary */
+  --color-text-muted: #9ca3af;        /* Light gray captions */
+
   /* ─── Border & Outline Colors ─── */
-  --color-outline: #D4C4B0;           /* Main border */
-  --color-outline-variant: #E8DFD3;   /* Light border */
-  --color-outline-subtle: #F2EDE5;    /* Subtle divider */
-  
+  --color-outline: rgba(232,69,35,0.20);        /* Main border */
+  --color-outline-variant: rgba(232,69,35,0.12); /* Light border */
+  --color-outline-subtle: rgba(232,69,35,0.07);  /* Subtle divider */
+
   /* ─── Shadow Colors (RGB for transparency) ─── */
-  --shadow-color-primary: 90, 60, 30;  /* Warm brown shadows */
-  --shadow-color-dark: 26, 22, 20;     /* Near black for depth */
-  
+  --shadow-color-primary: 232, 69, 35;   /* Warm shadows */
+  --shadow-color-dark: 26, 26, 26;       /* Dark depth */
+
   --color-shadow-xs: rgba(var(--shadow-color-primary), 0.04);
   --color-shadow-sm: rgba(var(--shadow-color-primary), 0.08);
   --color-shadow-md: rgba(var(--shadow-color-primary), 0.12);
@@ -46,21 +46,22 @@
   --color-shadow-xl: rgba(var(--shadow-color-primary), 0.24);
 
   /* ─── Utility Colors ─── */
-  --color-white: #FFFFFF;
-  --color-black: #0A0807;
-  --color-success: #2D5F4E;
-  --color-warning: #D4A574;
-  --color-error: #C14F3A;
-  --color-info: #4A8A70;
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #E84523;
+  --color-info: #2563eb;
 
   /* ═══════════════════════════════════════════════════════════════
      📝 TYPOGRAPHY SYSTEM — Premium Font Sizing
      ══════════════════════════════════════════════════════════════ */
   
-  /* ─── Font Families ─── */
-  --font-serif: 'Literata', Georgia, serif;
-  --font-display: 'Cormorant', 'Literata', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* ─── Font Families — TECHY ─── */
+  --font-serif: 'Exo 2', system-ui, sans-serif;
+  --font-display: 'Exo 2', system-ui, sans-serif;
+  --font-sans: 'Rajdhani', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   
   /* ─── Font Sizes (Refined Scale) ─── */
   --font-size-xs: 0.6875rem;      /* 11px - tiny labels */
@@ -181,6 +182,7 @@ html {
   html { font-size: 15px; }
 }
 
+html { background: var(--color-surface); }
 body {
   background: var(--color-surface);
   color: var(--color-on-surface);
@@ -491,6 +493,17 @@ p {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary-light) var(--color-surface-muted);
+}
+
+/* ── Admin dashboard dark overrides ── */
+.admin-surface {
+  background: #0f1117;
+  color: #e2e8f0;
+}
+.admin-card {
+  background: #161b27;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
 }
 
 /* Print styles */
@@ -979,15 +992,15 @@ p {
   transition: left 0.8s var(--ease-elegant), opacity 0.4s;
 }
 
-/* ── Glassmorphism card ── */
+/* ── Warm glass card ── */
 .glass-card {
-  background: rgba(255, 250, 245, 0.85);
+  background: rgba(255, 248, 245, 0.85);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 
-    0 12px 40px rgba(139, 90, 43, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(232, 69, 35, 0.15);
+  box-shadow:
+    0 12px 40px rgba(232, 69, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* ── Section divider ── */
@@ -1291,9 +1304,9 @@ p {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary: #6B4423;
-    --color-accent: #B8824D;
-    --color-on-surface: #000000;
+    --color-primary: #8fe0ff;
+    --color-accent: #cda0ff;
+    --color-on-surface: #ffffff;
   }
   
   .card-premium,
@@ -1324,3 +1337,165 @@ p {
   }
 }
 
+
+/* ─────────────────────────────────────────────────────────────
+   PAI EDITORIAL THEME — watercolor blobs + big section numbers
+───────────────────────────────────────────────────────────── */
+
+/* soft organic paint blob behind portraits; color set via --blob */
+.watercolor {
+  position: relative;
+}
+.watercolor::before {
+  content: "";
+  position: absolute;
+  inset: -12% -14%;
+  background: var(--blob, rgba(99,210,255,0.15));
+  border-radius: 42% 58% 63% 37% / 47% 42% 58% 53%;
+  filter: blur(40px);
+  z-index: 0;
+  animation: blob-morph 14s ease-in-out infinite;
+}
+.watercolor > * { position: relative; z-index: 1; }
+
+@keyframes blob-morph {
+  0%,100% { border-radius: 42% 58% 63% 37% / 47% 42% 58% 53%; }
+  50%     { border-radius: 60% 40% 38% 62% / 55% 58% 42% 45%; }
+}
+
+/* big outlined section number, e.g. "01" */
+.pai-number {
+  font-family: 'Literata', serif;
+  font-weight: 700;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px #E84523;
+  letter-spacing: -0.02em;
+}
+
+/* rotated vertical caption label */
+.pai-vlabel {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  color: #7a8fad;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CYBERPUNK EFFECT LAYER — ported from omiedutrack
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Warm subtle dot grid background (replaces cyberpunk grid) ── */
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(232,69,35,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Warm soft glow orbs ── */
+.cyber-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cyber-orbs .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orb-float 10s ease-in-out infinite;
+}
+.cyber-orbs .orb1 { width: 500px; height: 500px; background: radial-gradient(rgba(232,69,35,0.08), transparent 70%); top: -150px; left: -150px; animation-delay: 0s; }
+.cyber-orbs .orb2 { width: 400px; height: 400px; background: radial-gradient(rgba(245,158,11,0.07), transparent 70%); bottom: -100px; right: -100px; animation-delay: 4s; }
+.cyber-orbs .orb3 { width: 300px; height: 300px; background: radial-gradient(rgba(232,69,35,0.05), transparent 70%); top: 30%; left: 60%; animation-delay: 7s; }
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -20px) scale(1.05); }
+  66%      { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* ── Clip-path neon buttons ── */
+.btn-future {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.85rem 2rem;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-future::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+}
+.btn-future:hover::before { transform: translateX(100%); }
+.btn-cyan { background: linear-gradient(135deg, #c93b1d, #E84523); color: #fff; box-shadow: 0 4px 20px rgba(232,69,35,0.3); }
+.btn-cyan:hover { box-shadow: 0 6px 28px rgba(232,69,35,0.5); transform: translateY(-2px); }
+.btn-purple { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; box-shadow: 0 4px 20px rgba(245,158,11,0.3); }
+.btn-purple:hover { box-shadow: 0 6px 28px rgba(245,158,11,0.5); transform: translateY(-2px); }
+.btn-outline-cyber {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid rgba(232,69,35,0.4);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-outline-cyber:hover { background: rgba(232,69,35,0.08); border-color: var(--color-primary); }
+
+/* ── Warm border card ── */
+.glow-card {
+  position: relative;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+}
+.glow-card:hover {
+  border-color: rgba(232,69,35,0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(232,69,35,0.12);
+}
+
+/* ── Warm divider ── */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  margin: 1.2rem 0;
+  opacity: 0.3;
+  border: none;
+}
+
+/* ── Warm brand text utility (replaces neon-glow) ── */
+.neon-glow { color: var(--color-primary); font-weight: 700; }
+
+/* disable ambient bg motion for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .cyber-grid, .cyber-orbs .orb { animation: none !important; }
+}
