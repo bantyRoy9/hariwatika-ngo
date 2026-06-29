@@ -220,51 +220,8 @@ export default function HomePage() {
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
       <StickyQRDonate />
 
-      {/* ════════════ HERO ════════════ */}
-      <section className="relative overflow-hidden" style={{ background: LENITY.bg }}>
-        {/* yellow watercolor wash top-left */}
-        <div className="absolute -top-32 -left-32 w-[640px] h-[640px] rounded-full pointer-events-none"
-          style={{ background: LENITY.yellowSoft, filter: "blur(8px)", opacity: 0.6 }} />
-        <div className="absolute top-40 right-0 w-[420px] h-[420px] rounded-full pointer-events-none"
-          style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 lg:pt-44 pb-20 grid lg:grid-cols-2 gap-12 items-center">
-          {/* left: watercolor portrait */}
-          <Fade className="relative">
-            <WaterPortrait src={IMG.hero} alt={t("Community service by the Samiti", "समिति द्वारा सामुदायिक सेवा")}
-              blob={LENITY.yellowSoft} className="w-full h-[420px] sm:h-[520px]" />
-          </Fade>
-
-          {/* right: editorial headline */}
-          <Fade>
-            <div className="mb-5"><Eyebrow>{t(content.hero.eyebrow.en, content.hero.eyebrow.hi)}</Eyebrow></div>
-            <h1 className="font-bold leading-[0.95] mb-4 text-5xl sm:text-6xl lg:text-7xl" style={{ fontFamily: SERIF, color: LENITY.ink }}>
-              {t(content.hero.line1.en, content.hero.line1.hi)}<br />
-              <span style={{ color: LENITY.ink }}>{t(content.hero.line2.en, content.hero.line2.hi)}</span>
-            </h1>
-            <p className="text-lg italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              {t(content.hero.tagline.en, content.hero.tagline.hi)}
-            </p>
-            <p className="text-[15px] leading-relaxed mb-9 max-w-xl" style={{ color: LENITY.muted }}>
-              {t(content.hero.sub.en, content.hero.sub.hi)}
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <button onClick={openDonate}
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm transition-all hover:scale-105"
-                style={{ background: LENITY.yellow, color: LENITY.ink }}>
-                {t(content.hero.cta1.en, content.hero.cta1.hi)} <ArrowRight className="w-4 h-4" />
-              </button>
-              <Link href="/projects"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-bold text-sm border-2 transition-all hover:bg-white"
-                style={{ borderColor: LENITY.ink, color: LENITY.ink }}>
-                {t(content.hero.cta2.en, content.hero.cta2.hi)}
-              </Link>
-            </div>
-          </Fade>
-        </div>
-        {/* yellow rule under hero */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div className="h-1 w-full" style={{ background: LENITY.yellow }} /></div>
-      </section>
+      {/* ════════════ HERO SLIDER ════════════ */}
+      <HeroSlider onDonate={openDonate} />
 
       {/* ════════════ 01 — CONSISTENT SERVICE ════════════ */}
       <NumberedSection num="01" label={t(content.about.h2.en, content.about.h2.hi)}>
