@@ -124,31 +124,27 @@ export default function HeroSlider({ onDonate }: HeroSliderProps) {
               }}
             />
             
-            {/* Slider Container - Responsive height */}
+            {/* Slider Container - Responsive height - FIXED OVERFLOW */}
             <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[520px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl">
-              {/* Images Container - slides horizontally with proper width */}
-              <div 
-                className="absolute inset-0 flex transition-transform duration-1000 ease-in-out will-change-transform"
-                style={{ 
-                  transform: `translateX(-${current * 100}%)`,
-                  width: `${slides.length * 100}%`
-                }}
-              >
-                {slides.map((s, idx) => (
-                  <div
-                    key={s.id}
-                    className="relative flex-shrink-0"
-                    style={{ width: `${100 / slides.length}%` }}
-                  >
-                    <img
-                      src={s.image}
-                      alt={t(s.line1.en + " " + s.line2.en, s.line1.hi + " " + s.line2.hi)}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading={idx === 0 ? "eager" : "lazy"}
-                    />
-                  </div>
-                ))}
-              </div>
+              {/* Image wrapper - only one visible at a time */}
+              {slides.map((s, idx) => (
+                <div
+                  key={s.id}
+                  className="absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out"
+                  style={{
+                    opacity: idx === current ? 1 : 0,
+                    transform: idx === current ? 'translateX(0)' : idx < current ? 'translateX(-100%)' : 'translateX(100%)',
+                    zIndex: idx === current ? 10 : 0
+                  }}
+                >
+                  <img
+                    src={s.image}
+                    alt={t(s.line1.en + " " + s.line2.en, s.line1.hi + " " + s.line2.hi)}
+                    className="w-full h-full object-cover"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
             
             {/* Navigation Arrows - Responsive sizing */}
             <button
