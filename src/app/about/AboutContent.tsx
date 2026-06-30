@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
@@ -58,12 +58,23 @@ export default function AboutContent({
     <>
       <Navbar />
       <main>
-        <PageHero
-          tag={t(header.tag.en, header.tag.hi)}
+        <PremiumHero
           title={t(header.title.en, header.title.hi)}
-          subtitle={t(header.subtitle.en, header.subtitle.hi)}
-          icon={<Users className="w-7 h-7" style={{ color: LENITY.accent }} />}
+          subtitle={t(header.tag.en, header.tag.hi)}
+          description={t(header.subtitle.en, header.subtitle.hi)}
           image={header.img ?? IMG.community}
+          stats={[
+            { value: "25+", label: t("Years of Service", "वर्षों की सेवा") },
+            { value: "5000+", label: t("Families Helped", "परिवारों की मदद") },
+            { value: "100+", label: t("Villages Reached", "गांव पहुंचे") },
+            { value: "200+", label: t("Volunteers", "स्वयंसेवक") },
+          ]}
+          breadcrumbs={[
+            { label: t("Home", "होम"), href: "/" },
+            { label: t("About Us", "हमारे बारे में") },
+          ]}
+          overlay="pattern"
+          height="large"
         />
 
         {/* ── History ── */}

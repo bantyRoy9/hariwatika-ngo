@@ -7,6 +7,11 @@ import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
 import HeroSlider from "@/components/HeroSlider";
 import StickyQRDonate from "@/components/StickyQRDonate";
+import HorizontalCardSlider from "@/components/HorizontalCardSlider";
+import MarqueeText from "@/components/MarqueeText";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import ProgramsGrid from "@/components/ProgramsGrid";
+import LogoCarousel from "@/components/LogoCarousel";
 import { useLang } from "@/context/LanguageContext";
 import {
   TreePine, Users, Stethoscope,
@@ -21,6 +26,7 @@ const IMG = {
   portrait2:"https://images.unsplash.com/photo-1516549655169-df83a0774514?w=700&q=80&auto=format&fit=crop",
   portrait3:"https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=700&q=80&auto=format&fit=crop",
   quote:    "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&q=80&auto=format&fit=crop",
+  avatar:   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80&auto=format&fit=crop",
   svc: [
     "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80&auto=format&fit=crop",
@@ -92,10 +98,14 @@ const content = {
 };
 
 const services = [
-  { icon: BookOpen,    titleEn: "Shiksha Seva",   titleHi: "शिक्षा सेवा",   descEn: "Supporting education for underprivileged children through scholarships and learning materials.", descHi: "जरूरतमंद बच्चों की शिक्षा में सहयोग — छात्रवृत्ति और सामग्री।" },
-  { icon: TreePine,    titleEn: "Vrikshaaropan",  titleHi: "वृक्षारोपण",   descEn: "Large-scale tree plantation drives to green the region across West Champaran.", descHi: "क्षेत्र को हरा-भरा बनाने हेतु वृक्षारोपण अभियान।" },
-  { icon: Users,       titleEn: "Garib Sahayata", titleHi: "गरीब सहायता",   descEn: "Food, clothing, and essentials to underprivileged and disaster-affected families.", descHi: "जरूरतमंद परिवारों को भोजन, वस्त्र और आवश्यक सामान।" },
-  { icon: Stethoscope, titleEn: "Swasthya Seva",  titleHi: "स्वास्थ्य सेवा", descEn: "Free health camps and medical assistance for rural low-income communities.", descHi: "ग्रामीण समुदायों हेतु नि:शुल्क स्वास्थ्य शिविर।" },
+  { icon: BookOpen,    titleEn: "Shiksha Seva",      titleHi: "शिक्षा सेवा",      descEn: "Supporting education for underprivileged children through scholarships and learning materials.", descHi: "जरूरतमंद बच्चों की शिक्षा में सहयोग — छात्रवृत्ति और सामग्री।" },
+  { icon: TreePine,    titleEn: "Vrikshaaropan",     titleHi: "वृक्षारोपण",      descEn: "Large-scale tree plantation drives to green the region across West Champaran.", descHi: "क्षेत्र को हरा-भरा बनाने हेतु वृक्षारोपण अभियान।" },
+  { icon: Users,       titleEn: "Garib Sahayata",    titleHi: "गरीब सहायता",    descEn: "Food, clothing, and essentials to underprivileged and disaster-affected families.", descHi: "जरूरतमंद परिवारों को भोजन, वस्त्र और आवश्यक सामान।" },
+  { icon: Stethoscope, titleEn: "Swasthya Seva",     titleHi: "स्वास्थ्य सेवा",  descEn: "Free health camps and medical assistance for rural low-income communities.", descHi: "ग्रामीण समुदायों हेतु नि:शुल्क स्वास्थ्य शिविर।" },
+  { icon: Users,       titleEn: "Vivah Sahayata",    titleHi: "विवाह सहायता",    descEn: "Marriage assistance for underprivileged families and widow support programs.", descHi: "जरूरतमंद परिवारों के लिए विवाह सहायता और विधवा सहायता कार्यक्रम।" },
+  { icon: Droplets,    titleEn: "Aapada Prabandhan", titleHi: "आपदा प्रबंधन",     descEn: "Emergency relief during floods, disasters, and crisis situations.", descHi: "बाढ़, आपदा और संकट की स्थितियों में आपातकालीन राहत।" },
+  { icon: Users,       titleEn: "Mahila Bal Kalyan", titleHi: "महिला बाल कल्याण", descEn: "Women empowerment and child welfare programs for vulnerable communities.", descHi: "कमजोर समुदायों के लिए महिला सशक्तिकरण और बाल कल्याण कार्यक्रम।" },
+  { icon: BookOpen,    titleEn: "Rojgar Sahayata",   titleHi: "रोजगार सहायता",   descEn: "Free career guidance, skill training, and employment support programs.", descHi: "नि:शुल्क करियर मार्गदर्शन, कौशल प्रशिक्षण और रोजगार सहायता कार्यक्रम।" },
 ];
 
 const pillars = [
@@ -223,6 +233,87 @@ export default function HomePage() {
       {/* ════════════ HERO SLIDER ════════════ */}
       <HeroSlider onDonate={openDonate} />
 
+      {/* ════════════ MARQUEE TEXT BANNER ════════════ */}
+      <div style={{ background: LENITY.accent, padding: "1rem 0" }}>
+        <MarqueeText
+          texts={[
+            t("HARIWATIKA SEWA SAMITI", "हरिवाटिका सेवा समिति"),
+            "✦",
+            t("25 YEARS OF SERVICE", "25 वर्षों की सेवा"),
+            "✦",
+            t("TRANSFORMING LIVES", "जीवन बदलना"),
+            "✦",
+            t("BUILDING COMMUNITIES", "समुदाय बनाना"),
+            "✦",
+          ]}
+          speed={40}
+          direction="left"
+          textClassName="text-white text-lg md:text-xl font-bold tracking-wider"
+        />
+      </div>
+
+      {/* ════════════ MISSION & VISION ════════════ */}
+      <section className="py-16 md:py-20" style={{ background: LENITY.soft }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Fade className="text-center mb-12 md:mb-16">
+            <Eyebrow>{t("Our Purpose", "हमारा उद्देश्य")}</Eyebrow>
+            <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Mission & Vision", "मिशन और विज़न")}
+            </h2>
+            <p className="text-base md:text-lg italic" style={{ fontFamily: SERIF, color: LENITY.muted }}>
+              {t("Guiding our path to serve communities with compassion and dedication", "करुणा और समर्पण के साथ समुदायों की सेवा करने का हमारा मार्ग")}
+            </p>
+          </Fade>
+          
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {/* Mission Card */}
+            <Fade>
+              <div className="bg-white rounded-2xl border p-8 md:p-10 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
+                    <svg className="w-7 h-7" style={{ color: LENITY.accent }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                    {t("Our Mission", "हमारा मिशन")}
+                  </h3>
+                </div>
+                <p className="text-[15px] leading-relaxed" style={{ color: LENITY.muted }}>
+                  {t(
+                    "At Hariwatika Sewa Samiti, our mission is simple yet profound: to provide assistance and support to those in need. We believe every person deserves the opportunity to lead a dignified life, free from the burdens of poverty and hardship. Through our comprehensive programs, we aim to create a positive impact in the lives of individuals and families, fostering a spirit of resilience and hope.",
+                    "हरिवाटिका सेवा समिति में, हमारा मिशन सरल लेकिन गहरा है: जरूरतमंदों को सहायता और समर्थन प्रदान करना। हम मानते हैं कि हर व्यक्ति गरिमापूर्ण जीवन जीने का हकदार है। हमारे व्यापक कार्यक्रमों के माध्यम से, हम व्यक्तियों और परिवारों के जीवन में सकारात्मक प्रभाव डालने का लक्ष्य रखते हैं।"
+                  )}
+                </p>
+              </div>
+            </Fade>
+
+            {/* Vision Card */}
+            <Fade>
+              <div className="bg-white rounded-2xl border p-8 md:p-10 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.pinkSoft }}>
+                    <svg className="w-7 h-7" style={{ color: LENITY.accent }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                    {t("Our Vision", "हमारी दृष्टि")}
+                  </h3>
+                </div>
+                <p className="text-[15px] leading-relaxed" style={{ color: LENITY.muted }}>
+                  {t(
+                    "We envision a society where every individual has access to the resources and support they need to thrive. By bridging gaps in healthcare, education, and social welfare, we aspire to build a future where everyone can achieve their full potential and contribute meaningfully to their communities.",
+                    "हम एक ऐसे समाज की कल्पना करते हैं जहाँ प्रत्येक व्यक्ति के पास वे संसाधन और समर्थन हो जो उन्हें फलने-फूलने की आवश्यकता है। स्वास्थ्य सेवा, शिक्षा और सामाजिक कल्याण में अंतराल को पाटकर, हम एक ऐसे भविष्य का निर्माण करना चाहते हैं जहाँ हर कोई अपनी पूर्ण क्षमता प्राप्त कर सके।"
+                  )}
+                </p>
+              </div>
+            </Fade>
+          </div>
+        </div>
+      </section>
+
       {/* ════════════ 01 — CONSISTENT SERVICE ════════════ */}
       <NumberedSection num="01" label={t(content.about.h2.en, content.about.h2.hi)}>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -281,19 +372,25 @@ export default function HomePage() {
         <p className="text-lg italic mb-10" style={{ fontFamily: SERIF, color: LENITY.muted }}>
           {t(content.services.lead.en, content.services.lead.hi)}
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
-          {services.map((svc) => (
-            <Fade key={svc.titleEn}>
-              <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+        
+        <HorizontalCardSlider
+          cards={services.map((svc, idx) => ({
+            id: idx,
+            content: (
+              <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line, height: "280px" }}>
                 <span className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: LENITY.yellowSoft }}>
                   <svc.icon className="w-6 h-6" style={{ color: LENITY.ink }} />
                 </span>
                 <h3 className="text-lg font-bold mb-2" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(svc.titleEn, svc.titleHi)}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: LENITY.muted }}>{t(svc.descEn, svc.descHi)}</p>
               </div>
-            </Fade>
-          ))}
-        </div>
+            ),
+          }))}
+          autoPlay={true}
+          autoPlayInterval={4000}
+          cardWidth={300}
+          gap={24}
+        />
       </NumberedSection>
 
       {/* ════════════ STATS BAND ════════════ */}
@@ -309,6 +406,64 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ════════════ PARTNERS & SPONSORS ════════════ */}
+      <section className="py-16 md:py-20 overflow-hidden" style={{ background: LENITY.bg }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Fade className="text-center mb-12 md:mb-14">
+            <Eyebrow>{t("Working Together", "मिलकर काम करना")}</Eyebrow>
+            <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Our Partners & Sponsors", "हमारे साझेदार और प्रायोजक")}
+            </h2>
+            <p className="text-base md:text-lg italic max-w-2xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
+              {t("Grateful for the support of our partners who make our mission possible", "हमारे साझेदारों के समर्थन के लिए आभारी जो हमारे मिशन को संभव बनाते हैं")}
+            </p>
+          </Fade>
+
+          {/* Associate Partners - Scroll Right to Left */}
+          <div className="mb-16">
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-8" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Associate Partners", "सहयोगी साझेदार")}
+            </h3>
+            <LogoCarousel
+              logos={[
+                { id: 1, name: "Tata Trust", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Tata_logo.svg/200px-Tata_logo.svg.png" },
+                { id: 2, name: "Rotary International", image: "https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/RotaryInternationalLogo.svg/200px-RotaryInternationalLogo.svg.png" },
+                { id: 3, name: "United Way", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/United_Way_Worldwide_logo.svg/200px-United_Way_Worldwide_logo.svg.png" },
+                { id: 4, name: "World Vision", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/World_Vision_logo.svg/200px-World_Vision_logo.svg.png" },
+                { id: 5, name: "Care International", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/CARE_logo.svg/200px-CARE_logo.svg.png" },
+                { id: 6, name: "Oxfam", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Oxfam_logo.svg/200px-Oxfam_logo.svg.png" },
+                { id: 7, name: "Red Cross", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/American_Red_Cross_logo.svg/200px-American_Red_Cross_logo.svg.png" },
+                { id: 8, name: "Save the Children", image: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Save_the_Children_logo.svg/200px-Save_the_Children_logo.svg.png" },
+              ]}
+              direction="left"
+              speed={30}
+            />
+          </div>
+
+          {/* Medicine Sponsors - Scroll Left to Right */}
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-8" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Medicine Sponsored By", "दवा प्रायोजित")}
+            </h3>
+            <LogoCarousel
+              logos={[
+                { id: 1, name: "Cipla", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Cipla_logo.svg/200px-Cipla_logo.svg.png" },
+                { id: 2, name: "Sun Pharma", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Sun_Pharmaceutical_Logo.svg/200px-Sun_Pharmaceutical_Logo.svg.png" },
+                { id: 3, name: "Dr. Reddy's", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Dr._Reddy%27s_Laboratories_logo.svg/200px-Dr._Reddy%27s_Laboratories_logo.svg.png" },
+                { id: 4, name: "Lupin", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Lupin_Limited_Logo.svg/200px-Lupin_Limited_Logo.svg.png" },
+                { id: 5, name: "Aurobindo Pharma", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Aurobindo_Pharma_logo.svg/200px-Aurobindo_Pharma_logo.svg.png" },
+                { id: 6, name: "Torrent Pharma", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Torrent_Pharmaceuticals_logo.svg/200px-Torrent_Pharmaceuticals_logo.svg.png" },
+              ]}
+              direction="right"
+              speed={35}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════ PROGRAMS GRID WITH HOVER EFFECT ════════════ */}
+      <ProgramsGrid />
 
       {/* ════════════ 03 — CHALLENGES & SOLUTIONS (campaigns) ════════════ */}
       <NumberedSection num="03" label={t(content.challenges.h2.en, content.challenges.h2.hi)}>
@@ -347,6 +502,155 @@ export default function HomePage() {
           })}
         </div>
       </NumberedSection>
+
+      {/* ════════════ HOW YOU CAN HELP ════════════ */}
+      <section className="py-16 md:py-20 relative overflow-hidden" style={{ background: LENITY.yellow }}>
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20" style={{ background: LENITY.accent, filter: "blur(80px)" }} />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Fade className="text-center mb-12 md:mb-14">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Join Hands With Us", "हमारे साथ हाथ मिलाएं")}
+            </h2>
+            <p className="text-lg md:text-xl max-w-3xl mx-auto" style={{ color: LENITY.ink, opacity: 0.9 }}>
+              {t("On our amazing journey of helping others. Your support can transform lives.", "दूसरों की मदद करने की हमारी अद्भुत यात्रा में। आपका समर्थन जीवन बदल सकता है।")}
+            </p>
+          </Fade>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {/* Donate Money */}
+            <Fade>
+              <div className="bg-white rounded-2xl p-6 md:p-8 text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: LENITY.yellowSoft }}>
+                  <svg className="w-8 h-8" style={{ color: LENITY.accent }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                  {t("Donate Money", "पैसे दान करें")}
+                </h3>
+                <p className="text-sm mb-6" style={{ color: LENITY.muted }}>
+                  {t("Make a financial contribution to support our programs", "हमारे कार्यक्रमों का समर्थन करने के लिए वित्तीय योगदान दें")}
+                </p>
+                <button onClick={openDonate} className="w-full rounded-full py-3 text-sm font-bold transition-all hover:scale-105" style={{ background: LENITY.accent, color: "#fff" }}>
+                  {t("Donate Now", "अभी दान करें")}
+                </button>
+              </div>
+            </Fade>
+
+            {/* Volunteer */}
+            <Fade>
+              <div className="bg-white rounded-2xl p-6 md:p-8 text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: LENITY.pinkSoft }}>
+                  <Users className="w-8 h-8" style={{ color: LENITY.accent }} />
+                </div>
+                <h3 className="text-xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                  {t("Volunteer", "स्वयंसेवक बनें")}
+                </h3>
+                <p className="text-sm mb-6" style={{ color: LENITY.muted }}>
+                  {t("Give your time and skills to make a difference", "बदलाव लाने के लिए अपना समय और कौशल दें")}
+                </p>
+                <Link href="/volunteer" className="block w-full rounded-full py-3 text-sm font-bold transition-all hover:scale-105 border-2" style={{ borderColor: LENITY.accent, color: LENITY.accent }}>
+                  {t("Join Us", "हमसे जुड़ें")}
+                </Link>
+              </div>
+            </Fade>
+
+            {/* Sponsor Program */}
+            <Fade>
+              <div className="bg-white rounded-2xl p-6 md:p-8 text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: LENITY.yellowSoft }}>
+                  <svg className="w-8 h-8" style={{ color: LENITY.accent }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                  {t("Sponsor Program", "कार्यक्रम प्रायोजित करें")}
+                </h3>
+                <p className="text-sm mb-6" style={{ color: LENITY.muted }}>
+                  {t("Support specific initiatives like education or healthcare", "शिक्षा या स्वास्थ्य सेवा जैसी विशिष्ट पहलों का समर्थन करें")}
+                </p>
+                <Link href="/projects" className="block w-full rounded-full py-3 text-sm font-bold transition-all hover:scale-105 border-2" style={{ borderColor: LENITY.accent, color: LENITY.accent }}>
+                  {t("Learn More", "और जानें")}
+                </Link>
+              </div>
+            </Fade>
+
+            {/* Corporate Partnership */}
+            <Fade>
+              <div className="bg-white rounded-2xl p-6 md:p-8 text-center transition-all hover:shadow-2xl hover:-translate-y-2">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: LENITY.pinkSoft }}>
+                  <svg className="w-8 h-8" style={{ color: LENITY.accent }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+                  {t("Corporate Partnership", "कॉर्पोरेट साझेदारी")}
+                </h3>
+                <p className="text-sm mb-6" style={{ color: LENITY.muted }}>
+                  {t("Partner with us for CSR initiatives and social impact", "सीएसआर पहल और सामाजिक प्रभाव के लिए हमारे साथ साझेदार बनें")}
+                </p>
+                <Link href="/contact" className="block w-full rounded-full py-3 text-sm font-bold transition-all hover:scale-105 border-2" style={{ borderColor: LENITY.accent, color: LENITY.accent }}>
+                  {t("Contact Us", "संपर्क करें")}
+                </Link>
+              </div>
+            </Fade>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════ TESTIMONIALS / IMPACT STORIES ════════════ */}
+      <section className="py-16 md:py-20" style={{ background: LENITY.soft }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Fade className="text-center mb-12 md:mb-14">
+            <Eyebrow>{t("Real Impact", "वास्तविक प्रभाव")}</Eyebrow>
+            <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+              {t("Stories of Hope & Change", "आशा और परिवर्तन की कहानियाँ")}
+            </h2>
+            <p className="text-base md:text-lg italic max-w-2xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
+              {t("Hear from the lives we've touched and the communities we've transformed", "उन जीवनों से सुनें जिन्हें हमने छुआ है और उन समुदायों से जिन्हें हमने बदला है")}
+            </p>
+          </Fade>
+
+          <TestimonialCarousel
+            testimonials={[
+              {
+                id: 1,
+                quote: t(
+                  "Hariwatika helped my daughter get scholarships for her education. Today she is a teacher helping other children. Forever grateful.",
+                  "हरिवाटिका ने मेरी बेटी को उसकी शिक्षा के लिए छात्रवृत्ति प्राप्त करने में मदद की। आज वह एक शिक्षिका है जो अन्य बच्चों की मदद कर रही है। हमेशा आभारी।"
+                ),
+                name: t("Rekha Devi", "रेखा देवी"),
+                location: t("Parent, Bettiah", "अभिभावक, बेतिया"),
+                image: IMG.avatar,
+              },
+              {
+                id: 2,
+                quote: t(
+                  "During the flood, Hariwatika was the first to reach our village with food and medicine. They saved many lives including my family.",
+                  "बाढ़ के दौरान, हरिवाटिका भोजन और दवा के साथ हमारे गांव पहुंचने वाला पहला था। उन्होंने मेरे परिवार सहित कई जीवन बचाए।"
+                ),
+                name: t("Ramesh Kumar", "रमेश कुमार"),
+                location: t("Farmer, West Champaran", "किसान, पश्चिम चम्पारण"),
+                image: IMG.avatar,
+              },
+              {
+                id: 3,
+                quote: t(
+                  "The free health camp organized by Hariwatika diagnosed my illness early. Their support for treatment gave me a second chance at life.",
+                  "हरिवाटिका द्वारा आयोजित मुफ्त स्वास्थ्य शिविर ने मेरी बीमारी का जल्दी निदान किया। उनके उपचार समर्थन ने मुझे जीवन का दूसरा मौका दिया।"
+                ),
+                name: t("Sunita Singh", "सुनीता सिंह"),
+                location: t("Village Elder", "गांव की बुजुर्ग"),
+                image: IMG.avatar,
+              },
+            ]}
+            autoPlay={true}
+            interval={5000}
+          />
+        </div>
+      </section>
 
       {/* ════════════ 04 — PILLARS + BLOG ════════════ */}
       <NumberedSection num="04" label={t(content.blog.h2.en, content.blog.h2.hi)} alt>

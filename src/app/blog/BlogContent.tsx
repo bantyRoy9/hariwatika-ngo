@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PremiumHero from "@/components/PremiumHero";
 import { Calendar, Tag, ArrowRight, HandHeart } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { useLang } from "@/context/LanguageContext";
@@ -41,21 +42,24 @@ export default function BlogContent({
     <>
       <Navbar />
       <main>
-        <section className="relative overflow-hidden pt-36 pb-24" style={{ background: LENITY.soft }}>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-5" style={{ color: LENITY.ink }}>
-              <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-              <HandHeart className="w-3.5 h-3.5" />
-              {t(header.tag.en, header.tag.hi)}
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-[1.1]" style={{ fontFamily: SERIF, color: LENITY.ink }}>
-              {t(header.title.en, header.title.hi)}
-            </h1>
-            <p className="text-base sm:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: LENITY.muted }}>
-              {t(header.subtitle.en, header.subtitle.hi)}
-            </p>
-          </div>
-        </section>
+        <PremiumHero
+          title={t(header.title.en, header.title.hi)}
+          subtitle={t(header.tag.en, header.tag.hi)}
+          description={t(header.subtitle.en, header.subtitle.hi)}
+          image="https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=1600&q=80"
+          stats={[
+            { value: "50+", label: t("Stories", "कहानियां") },
+            { value: "10K+", label: t("Readers", "पाठक") },
+            { value: "25+", label: t("Years", "वर्ष") },
+            { value: "100+", label: t("Updates", "अपडेट") },
+          ]}
+          breadcrumbs={[
+            { label: t("Home", "होम"), href: "/" },
+            { label: t("Blog", "ब्लॉग") },
+          ]}
+          overlay="gradient"
+          height="medium"
+        />
 
         <section className="py-6 bg-white border-b" style={{ borderColor: LENITY.line }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

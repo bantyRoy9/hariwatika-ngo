@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PremiumHero from "@/components/PremiumHero";
 import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { submitInternship } from "@/app/actions/submissions";
@@ -160,28 +161,24 @@ export default function InternshipPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="relative pt-28 pb-20 overflow-hidden" style={{ background: LENITY.bg }}>
-          {/* watercolor washes */}
-          <div className="absolute -top-32 -left-32 w-[560px] h-[560px] rounded-full pointer-events-none"
-            style={{ background: LENITY.yellowSoft, filter: "blur(8px)", opacity: 0.6 }} />
-          <div className="absolute top-24 right-0 w-[380px] h-[380px] rounded-full pointer-events-none"
-            style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-5" style={{ color: LENITY.ink }}>
-              <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-              <BookOpen className="w-4 h-4" style={{ color: LENITY.ink }} /> Internship Program
-            </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold mb-4"
-              style={{ fontFamily: SERIF, color: LENITY.ink }}
-            >
-              Internship Program
-            </h1>
-            <p className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              Gain real-world social work experience and receive an official certificate upon completion.
-            </p>
-          </div>
-        </section>
+        <PremiumHero
+          title="Internship Program"
+          subtitle="Join Our Team"
+          description="Gain hands-on experience in social work, community development, and NGO operations. Learn while making a real difference."
+          image="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80"
+          stats={[
+            { value: "4", label: "Roles Available" },
+            { value: "3mo", label: "Duration" },
+            { value: "Free", label: "Certificate" },
+            { value: "LOR", label: "Provided" },
+          ]}
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Internship" },
+          ]}
+          overlay="pattern"
+          height="medium"
+        />
 
         {/* Opportunities */}
         <section className="py-16 bg-white">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { submitDonation } from "@/app/actions/submissions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
@@ -170,12 +170,23 @@ export default function DonatePage() {
     <>
       <Navbar />
       <main>
-        <PageHero
-          tag="Support Our Mission"
+        <PremiumHero
           title="दान करें"
-          subtitle="Your donation directly supports marriages, tree plantation, poverty relief, and community health in Bihar."
+          subtitle="Support Our Mission"
+          description="Your donation directly supports marriages, tree plantation, poverty relief, and community health in Bihar."
           image={IMG.relief}
-          icon={<Heart className="w-8 h-8 text-white fill-white" />}
+          stats={[
+            { value: "₹10L+", label: "Donated" },
+            { value: "1000+", label: "Donors" },
+            { value: "100%", label: "Transparent" },
+            { value: "80G", label: "Tax Benefit" },
+          ]}
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Donate" },
+          ]}
+          overlay="gradient"
+          height="large"
         />
 
         <section className="py-20 relative overflow-hidden" style={{ background: LENITY.soft }}>

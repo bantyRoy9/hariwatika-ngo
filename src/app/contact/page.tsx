@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
@@ -44,11 +44,23 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main>
-        <PageHero
-          tag="Get in Touch"
+        <PremiumHero
           title="संपर्क करें"
-          subtitle="Reach out to us for any queries, volunteering, or assistance. We respond within 24 hours."
+          subtitle="Get in Touch"
+          description="Reach out to us for any queries, volunteering, or assistance. We respond within 24 hours."
           image={IMG.community}
+          stats={[
+            { value: "24hrs", label: "Response Time" },
+            { value: "100%", label: "Satisfaction" },
+            { value: "365", label: "Days Open" },
+            { value: "5+", label: "Contact Methods" },
+          ]}
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Contact" },
+          ]}
+          overlay="pattern"
+          height="medium"
         />
         <section className="py-16 relative overflow-hidden" style={{ background: LENITY.soft }}>
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: `${LENITY.accent}0d` }} />
