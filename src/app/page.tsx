@@ -12,6 +12,7 @@ import MarqueeText from "@/components/MarqueeText";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import ProgramsGrid from "@/components/ProgramsGrid";
 import LogoCarousel from "@/components/LogoCarousel";
+import PremiumStorySection from "@/components/PremiumStorySection";
 import { useLang } from "@/context/LanguageContext";
 import {
   TreePine, Users, Stethoscope,
@@ -313,6 +314,57 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ════════════ PREMIUM STORYTELLING SECTION ════════════ */}
+      <PremiumStorySection
+        eyebrow={t("Impact Stories", "प्रभाव की कहानियाँ")}
+        heading={t("Transforming Lives, One Story at a Time", "एक समय में एक जीवन बदलना")}
+        description={t(
+          "Real stories from real people whose lives have been touched by our work. Every number represents a human story, every program brings hope to families across West Champaran.",
+          "वास्तविक लोगों की वास्तविक कहानियाँ जिनके जीवन हमारे काम से छुए गए हैं। हर संख्या एक मानवीय कहानी का प्रतिनिधित्व करती है।"
+        )}
+        cards={[
+          {
+            id: "story-1",
+            number: "01",
+            title: t("Education Transforms Communities", "शिक्षा समुदायों को बदलती है"),
+            description: t(
+              "Through our Shiksha Seva program, over 500 underprivileged children have received quality education, scholarships, and learning materials. Education is not just about books—it's about opening doors to opportunity and breaking the cycle of poverty.",
+              "हमारे शिक्षा सेवा कार्यक्रम के माध्यम से, 500 से अधिक वंचित बच्चों को गुणवत्तापूर्ण शिक्षा, छात्रवृत्ति और सीखने की सामग्री मिली है।"
+            ),
+            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80&auto=format&fit=crop",
+            stat: "500+",
+            statLabel: t("Students Supported", "छात्र समर्थित"),
+          },
+          {
+            id: "story-2",
+            number: "02",
+            title: t("Green Revolution in Action", "हरित क्रांति की कार्रवाई"),
+            description: t(
+              "Our Vrikshaaropan initiative has planted over 10,000 trees across West Champaran, creating a greener tomorrow. Each sapling is a promise to future generations.",
+              "हमारे वृक्षारोपण पहल ने पश्चिम चम्पारण में 10,000 से अधिक पेड़ लगाए हैं। हर पौधा भविष्य की पीढ़ियों के लिए एक वादा है।"
+            ),
+            image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80&auto=format&fit=crop",
+            stat: "10K+",
+            statLabel: t("Trees Planted", "पेड़ लगाए गए"),
+          },
+          {
+            id: "story-3",
+            number: "03",
+            title: t("Healthcare for All", "सभी के लिए स्वास्थ्य सेवा"),
+            description: t(
+              "Free health camps and medical assistance have reached over 5,000 patients in rural areas. Quality healthcare is a right, not a privilege.",
+              "मुफ्त स्वास्थ्य शिविर और चिकित्सा सहायता ग्रामीण क्षेत्रों में 5,000 से अधिक रोगियों तक पहुँची है।"
+            ),
+            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80&auto=format&fit=crop",
+            stat: "5K+",
+            statLabel: t("Patients Treated", "रोगियों का इलाज"),
+          },
+        ]}
+        ctaText={t("Explore All Programs", "सभी कार्यक्रम देखें")}
+        ctaLink="/programs"
+        theme="light"
+      />
 
       {/* ════════════ 01 — CONSISTENT SERVICE ════════════ */}
       <NumberedSection num="01" label={t(content.about.h2.en, content.about.h2.hi)}>
