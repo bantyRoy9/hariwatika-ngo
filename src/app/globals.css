@@ -653,6 +653,23 @@ p {
   animation: shimmer-stat 4s linear infinite;
 }
 
+/* ── Watercolor portrait (PAI design) ── */
+.watercolor {
+  position: relative;
+  display: inline-block;
+}
+
+.watercolor::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: var(--blob, rgba(212, 165, 116, 0.15));
+  border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+  filter: blur(40px);
+  z-index: -1;
+  animation: blob-organic 20s ease-in-out infinite;
+}
+
 /* ── Scroll-down indicator ── */
 @keyframes bounce-elegant {
   0%, 100% {
@@ -667,6 +684,35 @@ p {
 
 .bounce-down {
   animation: bounce-elegant 2s ease-in-out infinite;
+}
+
+/* ── Slide-in animation for QR popup ── */
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-in-from-right {
+  animation: slide-in-from-right 0.3s ease-out;
 }
 
 /* ═══════════════════════════════════════════════════════════════
