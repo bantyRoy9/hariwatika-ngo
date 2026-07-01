@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PremiumHero from "@/components/PremiumHero";
 import { Download, FileText, BarChart3, TrendingUp, IndianRupee, Users } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { useLang } from "@/context/LanguageContext";
@@ -29,23 +30,24 @@ export default function TransparencyContent({
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="pt-28 pb-16 relative bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-4" style={{ color: LENITY.ink }}>
-              <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-              {t(header.tag.en, header.tag.hi)}
-            </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold mb-4"
-              style={{ fontFamily: SERIF, color: LENITY.ink }}
-            >
-              {t(header.title.en, header.title.hi)}
-            </h1>
-            <p className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              {t(header.subtitle.en, header.subtitle.hi)}
-            </p>
-          </div>
-        </section>
+        <PremiumHero
+          title={t(header.title.en, header.title.hi)}
+          subtitle={t(header.tag.en, header.tag.hi)}
+          description={t(header.subtitle.en, header.subtitle.hi)}
+          image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80"
+          stats={[
+            { value: "100%", label: t("Transparent", "पारदर्शी") },
+            { value: "25+", label: t("Years", "वर्ष") },
+            { value: "₹50L+", label: t("Managed", "प्रबंधित") },
+            { value: "Audited", label: t("Reports", "रिपोर्ट") },
+          ]}
+          breadcrumbs={[
+            { label: t("Home", "होम"), href: "/" },
+            { label: t("Transparency", "पारदर्शिता") },
+          ]}
+          overlay="pattern"
+          height="medium"
+        />
 
         {/* Annual Reports */}
         <section className="py-20" style={{ background: LENITY.soft }}>

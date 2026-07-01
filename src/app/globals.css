@@ -1181,7 +1181,101 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .canvas-3d-container { display: none; }
-  .hero-blob-1, .hero-blob-2, .hero-blob-3 { animation: none; }
+  .hero-blob-1, .hero-blob-2, .hero-blob-3 { animation: none !important; }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL-TRIGGERED ANIMATIONS (Gokuldham NAR Style)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Slide from left ── */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scroll-slide-left {
+  opacity: 0;
+  animation: slide-in-left 0.9s var(--ease-elegant) forwards;
+}
+
+/* ── Slide from right ── */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scroll-slide-right {
+  opacity: 0;
+  animation: slide-in-right 0.9s var(--ease-elegant) forwards;
+}
+
+/* ── Scale up with fade ── */
+@keyframes scale-up-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scroll-scale-up {
+  opacity: 0;
+  animation: scale-up-fade 0.8s var(--ease-elegant) forwards;
+}
+
+/* ── Parallax section backgrounds ── */
+.parallax-section {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ── PAI editorial number marker ── */
+.pai-number {
+  font-size: 7rem;
+  font-weight: 900;
+  font-family: var(--font-display);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(232, 69, 35, 0.15);
+  letter-spacing: -0.05em;
+}
+
+@media (max-width: 1024px) {
+  .pai-number {
+    font-size: 5rem;
+    -webkit-text-stroke: 1.5px rgba(232, 69, 35, 0.15);
+  }
+}
+
+.pai-vlabel {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(232, 69, 35, 0.4);
 }
 
 /* ═══════════════════════════════════════════════════════════════

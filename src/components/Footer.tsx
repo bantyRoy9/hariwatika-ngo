@@ -174,6 +174,94 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Bank Details Section */}
+        <div className="mt-16 pt-12 border-t border-white/10">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: "'Literata', Georgia, serif" }}>
+              Donation Bank Details
+            </h3>
+            <p className="text-gray-400 text-sm">दान के लिए बैंक विवरण</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Bank Details Card */}
+            <div className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-sm">
+              <h4 className="text-lg font-bold text-[#E84523] mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                Bank Transfer Details
+              </h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Account Name:</span>
+                  <span className="text-white font-semibold text-right">Hariwatika Sewa Samiti</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Account Number:</span>
+                  <span className="text-white font-mono font-semibold">1234567890</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Bank Name:</span>
+                  <span className="text-white font-semibold text-right">State Bank of India</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Branch:</span>
+                  <span className="text-white text-right">Bettiah, West Champaran</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">IFSC Code:</span>
+                  <span className="text-white font-mono font-semibold">SBIN0001234</span>
+                </div>
+              </div>
+            </div>
+
+            {/* UPI & QR Code Card */}
+            <div className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-sm">
+              <h4 className="text-lg font-bold text-[#E84523] mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+                UPI & Quick Pay
+              </h4>
+              <div className="space-y-4">
+                <div>
+                  <span className="text-gray-300 text-sm block mb-2">UPI ID:</span>
+                  <div className="flex items-center gap-2 bg-white/20 rounded-lg px-3 py-2 border border-white/10">
+                    <span className="text-white font-mono text-sm flex-1">hariwatika@paytm</span>
+                    <button className="text-[#E84523] hover:text-[#c93b1d] transition-colors flex-shrink-0" title="Copy UPI ID">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="w-32 h-32 mx-auto bg-white rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="text-center text-xs text-gray-600">
+                      <svg className="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                      </svg>
+                      Scan QR Code
+                    </div>
+                  </div>
+                  <p className="text-gray-300 text-xs mt-2">Scan to donate instantly</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tax Benefits Notice */}
+          <div className="mt-8 max-w-3xl mx-auto">
+            <div className="bg-[#E84523]/10 border border-[#E84523]/30 rounded-xl p-4 text-center backdrop-blur-sm">
+              <p className="text-sm text-gray-200">
+                <span className="font-semibold text-[#E84523]">Tax Benefits:</span> All donations are eligible for 80G tax deduction. Certificate will be issued for donations above ₹500.
+              </p>
+              <p className="text-xs text-gray-300 mt-1">सभी दान 80G कर कटौती के लिए पात्र हैं। ₹500 से ऊपर के दान के लिए प्रमाणपत्र जारी किया जाएगा।</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Bottom Bar */}

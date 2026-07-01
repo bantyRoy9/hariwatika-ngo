@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PremiumHero from "@/components/PremiumHero";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { Heart, User, CheckCircle, Printer } from "lucide-react";
 import { submitRegistration } from "@/app/actions/submissions";
@@ -116,31 +117,25 @@ export default function RegistrationPage() {
     <>
       <Navbar />
       <main>
-        {/* ════════════ HERO — white editorial + watercolor wash ════════════ */}
-        <section className="relative pt-36 pb-16 overflow-hidden" style={{ background: LENITY.bg }}>
-          <div className="absolute -top-32 -left-32 w-[560px] h-[560px] rounded-full pointer-events-none"
-            style={{ background: LENITY.yellowSoft, filter: "blur(10px)", opacity: 0.6 }} />
-          <div className="absolute top-24 right-0 w-[380px] h-[380px] rounded-full pointer-events-none"
-            style={{ background: LENITY.pinkSoft, filter: "blur(20px)", opacity: 0.7 }} />
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span
-              className="inline-flex items-center justify-center w-14 h-14 rounded-full mx-auto mb-5"
-              style={{ background: LENITY.yellow }}
-            >
-              <Heart className="w-7 h-7" style={{ color: LENITY.ink }} />
-            </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold mb-4"
-              style={{ fontFamily: SERIF, color: LENITY.ink }}
-            >
-              विवाह पंजीकरण
-            </h1>
-            <p className="text-lg italic max-w-xl mx-auto leading-relaxed" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              Register for marriage assistance from Hariwatika Shiv Mandir Vivah Sewa Samiti.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10"><div className="h-1 w-full" style={{ background: LENITY.yellow }} /></div>
-        </section>
+        {/* ════════════ HERO ════════════ */}
+        <PremiumHero
+          title="विवाह पंजीकरण"
+          subtitle="Marriage Registration"
+          description="Register for marriage assistance from Hariwatika Shiv Mandir Vivah Sewa Samiti."
+          image="https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80"
+          stats={[
+            { value: "500+", label: "Marriages Assisted" },
+            { value: "Free", label: "Registration" },
+            { value: "24hrs", label: "Response Time" },
+            { value: "100%", label: "Privacy" },
+          ]}
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Registration" },
+          ]}
+          overlay="gradient"
+          height="medium"
+        />
 
         <section className="py-16" style={{ background: LENITY.soft }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6">

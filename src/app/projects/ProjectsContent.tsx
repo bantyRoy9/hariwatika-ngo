@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/PageHero";
+import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import ProjectMap from "@/components/ProjectMap";
@@ -56,11 +56,23 @@ export default function ProjectsContent({
     <>
       <Navbar />
       <main>
-        <PageHero
-          tag={t(header.tag.en, header.tag.hi)}
+        <PremiumHero
           title={t(header.title.en, header.title.hi)}
-          subtitle={t(header.subtitle.en, header.subtitle.hi)}
+          subtitle={t(header.tag.en, header.tag.hi)}
+          description={t(header.subtitle.en, header.subtitle.hi)}
           image={header.img ?? IMG.community}
+          stats={[
+            { value: `${projects.length}+`, label: t("Projects", "परियोजनाएं") },
+            { value: "₹50L+", label: t("Funds Raised", "धन एकत्रित") },
+            { value: "20+", label: t("Locations", "स्थान") },
+            { value: "5000+", label: t("Beneficiaries", "लाभार्थी") },
+          ]}
+          breadcrumbs={[
+            { label: t("Home", "होम"), href: "/" },
+            { label: t("Projects", "परियोजनाएं") },
+          ]}
+          overlay="gradient"
+          height="large"
         />
 
         {/* Project Map */}
