@@ -52,4 +52,9 @@ export const IMG = {
   children: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=900&q=80&auto=format&fit=crop",
   trees:    "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=900&q=80&auto=format&fit=crop",
   relief:   "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=900&q=80&auto=format&fit=crop",
+  // --- Local uploads (Our Helpers & Our Donors) ---
+  helpers1: "/images/helpers1.jpg",
+  helpers2: "/images/helpers2.jpg",
+  donors1:  "/images/donors1.jpg",
+  donors2:  "/images/donors2.jpg",
 } as const;
