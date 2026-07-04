@@ -8,7 +8,7 @@ export default async function AboutPage() {
   const [timelineRows, legalRows, teamRows, header] = await Promise.all([
     prisma.timelineItem.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.legalDoc.findMany({ orderBy: { sortOrder: "asc" } }),
-    prisma.teamMember.findMany({ orderBy: { sortOrder: "asc" } }),
+    prisma.teamMember.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }),
     getHeader("about"),
   ]);
 

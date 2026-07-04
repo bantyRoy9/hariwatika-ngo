@@ -17,12 +17,6 @@ export type TimelineData = { id: number; year: string; eventEn: string; eventHi:
 export type LegalDocData = { id: number; iconName: string; titleEn: string; titleHi: string; number: string; descEn: string; descHi: string };
 export type TeamMemberData = { id: number; name: string; designation: string; initials: string; phone: string | null };
 
-const rankOrder: Record<string, number> = {
-  Director: 1, Chairman: 2, "Executive President": 3, Secretary: 4,
-  "General Secretary": 5, Coordinator: 6, Treasurer: 7, "Vice Treasurer": 8,
-  Auditor: 9, "Legal Advisor": 10, "Media Reporter": 11, Member: 12,
-};
-
 /* PAI eyebrow: small yellow dash + uppercase ink label */
 function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
   return (
@@ -48,10 +42,6 @@ export default function AboutContent({
   header: Header & { img: string | null };
 }) {
   const { t } = useLang();
-
-  const sortedMembers = [...members].sort(
-    (a, b) => (rankOrder[a.designation] ?? 99) - (rankOrder[b.designation] ?? 99)
-  );
 
   return (
     <>
@@ -295,7 +285,7 @@ export default function AboutContent({
             </Reveal>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {sortedMembers.map((member, idx) => (
+              {members.map((member, idx) => (
                 <Reveal key={member.id} delay={idx * 30} animation="scale">
                   <Card3D
                     intensity={8}
