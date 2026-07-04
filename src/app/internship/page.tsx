@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
@@ -158,7 +156,6 @@ export default function InternshipPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         {/* Hero */}
         <PremiumHero
@@ -393,7 +390,6 @@ export default function InternshipPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

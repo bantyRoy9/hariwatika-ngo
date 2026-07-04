@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
@@ -54,7 +52,6 @@ export default function ProjectsContent({
 
   return (
     <>
-      <Navbar />
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}
@@ -199,7 +196,6 @@ export default function ProjectsContent({
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

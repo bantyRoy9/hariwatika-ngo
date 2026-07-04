@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { submitDonation } from "@/app/actions/submissions";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
@@ -86,7 +84,6 @@ export default function DonatePage() {
   if (submitted) {
     return (
       <>
-        <Navbar />
         <main className="min-h-screen flex items-center justify-center pt-20 pb-16 px-4" style={{ background: LENITY.soft }}>
           <div className="max-w-md w-full bg-white rounded-3xl shadow-lg border overflow-hidden" style={{ borderColor: LENITY.line }}>
             <div className="p-8 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
@@ -161,14 +158,12 @@ export default function DonatePage() {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
 
   return (
     <>
-      <Navbar />
       <main>
         <PremiumHero
           title="दान करें"
@@ -418,7 +413,6 @@ export default function DonatePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

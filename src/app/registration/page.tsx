@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { Heart, User, CheckCircle, Printer } from "lucide-react";
@@ -115,7 +113,6 @@ export default function RegistrationPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         {/* ════════════ HERO ════════════ */}
         <PremiumHero
@@ -351,7 +348,6 @@ export default function RegistrationPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

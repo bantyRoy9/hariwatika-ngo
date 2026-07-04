@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import { Download, FileText, BarChart3, TrendingUp, IndianRupee, Users } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
@@ -27,7 +25,6 @@ export default function TransparencyContent({
 
   return (
     <>
-      <Navbar />
       <main>
         {/* Hero */}
         <PremiumHero
@@ -226,7 +223,6 @@ export default function TransparencyContent({
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

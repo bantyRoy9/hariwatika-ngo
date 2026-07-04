@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Users, Heart, CheckCircle, Printer, Award, Clock, MapPin } from "lucide-react";
 import { submitVolunteer } from "@/app/actions/submissions";
@@ -99,7 +97,6 @@ export default function VolunteerPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         {/* Hero */}
         <section className="pt-28 pb-16 relative overflow-hidden" style={{ background: LENITY.soft }}>
@@ -467,7 +464,6 @@ export default function VolunteerPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

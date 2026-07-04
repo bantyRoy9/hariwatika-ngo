@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import HexagonalGallery from "@/components/HexagonalGallery";
 import PremiumHero from "@/components/PremiumHero";
 import { useLang } from "@/context/LanguageContext";
@@ -52,7 +50,6 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Navbar />
       
       {/* Hero Section */}
       <PremiumHero
@@ -117,7 +114,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      <Footer />
     </>
   );
 }

@@ -1,7 +1,24 @@
 import Link from "next/link";
-import { Heart, Phone, Mail, MapPin, MessageCircle, AtSign, Radio } from "lucide-react";
+import { Heart, Phone, Mail, MapPin, MessageCircle, AtSign, Radio, Link as LinkIcon } from "lucide-react";
+import type { NavLinkData, SocialLinkData } from "./Navbar";
 
-export default function Footer() {
+interface FooterProps {
+  quickLinks: NavLinkData[];
+  legalLinks: NavLinkData[];
+  socialLinks: SocialLinkData[];
+}
+
+function SocialIcon({ platform }: { platform: string }) {
+  switch (platform) {
+    case "Facebook": return <span className="text-xs font-bold">f</span>;
+    case "Instagram": return <AtSign className="w-4 h-4" />;
+    case "YouTube": return <Radio className="w-4 h-4" />;
+    case "LinkedIn": return <span className="text-xs font-bold">in</span>;
+    default: return <LinkIcon className="w-4 h-4" />;
+  }
+}
+
+export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterProps) {
   return (
     <footer className="bg-[#1b1c19] text-white">
       {/* Main Footer */}
@@ -32,33 +49,18 @@ export default function Footer() {
             </p>
             {/* Social Icons */}
             <div className="flex gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
-                aria-label="Facebook"
-              >
-                <span className="text-xs font-bold">f</span>
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
-                aria-label="Instagram"
-              >
-                <AtSign className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
-                aria-label="YouTube"
-              >
-                <Radio className="w-4 h-4" />
-              </a>
+              {socialLinks.filter((sl) => sl.platform !== "WhatsApp").map((sl) => (
+                <a
+                  key={sl.platform}
+                  href={sl.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#c93b1d] flex items-center justify-center transition-colors"
+                  aria-label={sl.platform}
+                >
+                  <SocialIcon platform={sl.platform} />
+                </a>
+              ))}
               <a
                 href="https://wa.me/919473331919?text=नमस्ते%20हरिवाटिका%20सेवा%20समिति"
                 target="_blank"
@@ -75,22 +77,13 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/about", label: "About Us" },
-                { href: "/projects", label: "Our Projects" },
-                { href: "/donate", label: "Donate" },
-                { href: "/volunteer", label: "Volunteer" },
-                { href: "/registration", label: "Marriage Registration" },
-                { href: "/blog", label: "News & Updates" },
-                { href: "/contact", label: "Contact" },
-              ].map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
-                    {link.label}
+                    {link.labelEn}
                   </Link>
                 </li>
               ))}
@@ -101,22 +94,13 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">Legal Documents</h3>
             <ul className="space-y-2">
-              {[
-                { href: "/transparency", label: "Annual Reports" },
-                { href: "/transparency", label: "Audited Financials" },
-                { href: "#", label: "Trust Registration" },
-                { href: "#", label: "PAN Card Details" },
-                { href: "#", label: "80G Certificate" },
-                { href: "#", label: "12A Certificate" },
-                { href: "/internship", label: "Internship" },
-                { href: "/admin", label: "Admin Portal" },
-              ].map((link, idx) => (
+              {legalLinks.map((link, idx) => (
                 <li key={idx}>
                   <Link
                     href={link.href}
                     className="text-gray-400 hover:text-[#E84523] text-sm transition-colors"
                   >
-                    {link.label}
+                    {link.labelEn}
                   </Link>
                 </li>
               ))}
@@ -183,7 +167,7 @@ export default function Footer() {
             </h3>
             <p className="text-gray-400 text-sm">दान के लिए बैंक विवरण</p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Bank Details Card */}
             <div className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-sm">

@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PremiumHero from "@/components/PremiumHero";
 import { Calendar, Tag, ArrowRight, HandHeart } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
@@ -40,7 +38,6 @@ export default function BlogContent({
 
   return (
     <>
-      <Navbar />
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}
@@ -128,7 +125,6 @@ export default function BlogContent({
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

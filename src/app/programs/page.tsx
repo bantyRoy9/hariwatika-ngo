@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
 import PremiumHero from "@/components/PremiumHero";
 import { useLang } from "@/context/LanguageContext";
@@ -183,7 +181,6 @@ export default function ProgramsPage() {
 
   return (
     <>
-      <Navbar />
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
 
       {/* Hero Section */}
@@ -517,7 +514,6 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      <Footer />
     </>
   );
 }
