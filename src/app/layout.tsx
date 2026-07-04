@@ -3,9 +3,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import ParallaxProvider from "@/components/ParallaxProvider";
 import ScrollProgress from "@/components/ScrollProgress";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { getTranslations, getNavLinks, getSocialLinks } from "@/lib/content";
+import { getTranslations } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Hariwatika Shiv Mandir Vivah Sewa Samiti | हरिवाटिका शिव मंदिर विवाह सेवा समिति",
@@ -30,13 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [translations, navbarLinks, footerQuickLinks, footerLegalLinks, socialLinks] = await Promise.all([
-    getTranslations(),
-    getNavLinks("navbar"),
-    getNavLinks("footer-quick"),
-    getNavLinks("footer-legal"),
-    getSocialLinks(),
-  ]);
+  const translations = await getTranslations();
   return (
     <html lang="hi" className="h-full scroll-smooth">
       <head>
@@ -61,12 +53,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <LanguageProvider translations={translations}>
           {/* Thin gradient progress bar at the very top */}
           <ScrollProgress />
-          <Navbar navLinks={navbarLinks} socialLinks={socialLinks} />
           {/* Global ambient canvas + mouse/scroll CSS vars */}
           <ParallaxProvider>
             {children}
           </ParallaxProvider>
-          <Footer quickLinks={footerQuickLinks} legalLinks={footerLegalLinks} socialLinks={socialLinks} />
         </LanguageProvider>
       </body>
     </html>
