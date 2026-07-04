@@ -13,7 +13,7 @@ function withMockFetch<T>(impl: typeof fetch, run: () => Promise<T>): Promise<T>
 
 const fetchShouldNotBeCalled = (async () => {
   throw new Error("fetch should not have been called");
-}) as typeof fetch;
+}) as unknown as typeof fetch;
 
 test("translateToHindi rejects empty/whitespace-only text without calling fetch", async () => {
   await withMockFetch(fetchShouldNotBeCalled, async () => {
@@ -33,7 +33,7 @@ test("translateToHindi accepts text at exactly 500 characters", async () => {
   const ok = (async () => ({
     ok: true,
     json: async () => ({ responseStatus: 200, responseData: { translatedText: "एक" } }),
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(ok, async () => {
     const result = await translateToHindi(exactText);
     assert.equal(result, "एक");
@@ -44,7 +44,7 @@ test("translateToHindi returns the translated text on success", async () => {
   const ok = (async () => ({
     ok: true,
     json: async () => ({ responseStatus: 200, responseData: { translatedText: "नमस्ते" } }),
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(ok, async () => {
     const result = await translateToHindi("hello");
     assert.equal(result, "नमस्ते");
@@ -52,7 +52,7 @@ test("translateToHindi returns the translated text on success", async () => {
 });
 
 test("translateToHindi throws when the HTTP response is not ok", async () => {
-  const bad = (async () => ({ ok: false, json: async () => ({}) })) as typeof fetch;
+  const bad = (async () => ({ ok: false, json: async () => ({}) })) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });
@@ -61,7 +61,7 @@ test("translateToHindi throws when the HTTP response is not ok", async () => {
 test("translateToHindi throws when fetch itself rejects (network error)", async () => {
   const bad = (async () => {
     throw new Error("network down");
-  }) as typeof fetch;
+  }) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });
@@ -74,7 +74,7 @@ test("translateToHindi throws when responseStatus is a non-200 string (MyMemory'
       responseStatus: "403",
       responseData: { translatedText: "QUERY LENGTH LIMIT EXCEEDED. MAX ALLOWED QUERY : 500 CHARS" },
     }),
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });
@@ -87,7 +87,7 @@ test("translateToHindi throws when translatedText contains a MyMemory warning de
       responseStatus: 200,
       responseData: { translatedText: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY" },
     }),
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });
@@ -97,7 +97,7 @@ test("translateToHindi throws when translatedText is missing", async () => {
   const bad = (async () => ({
     ok: true,
     json: async () => ({ responseStatus: 200, responseData: {} }),
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });
@@ -109,7 +109,7 @@ test("translateToHindi throws when the response body isn't valid JSON", async ()
     json: async () => {
       throw new Error("invalid json");
     },
-  })) as typeof fetch;
+  })) as unknown as typeof fetch;
   await withMockFetch(bad, async () => {
     await assert.rejects(() => translateToHindi("hello"), /Couldn't reach/);
   });

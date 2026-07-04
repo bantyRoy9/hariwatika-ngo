@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { LENITY, SERIF } from "@/theme/lenity";
+import { translateToHindi, UNREACHABLE_MESSAGE } from "@/app/actions/translate";
 
 export function PageTitle({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
   return (
@@ -29,7 +31,7 @@ export function TextArea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement
   return <textarea {...props} className={`${inputClass} resize-y`} style={{ ...inputStyle, ...(props.style ?? {}) }} />;
 }
 
-/** Bilingual EN + HI side-by-side input pair. */
+/** Bilingual EN + HI side-by-side input pair. Auto-translates EN -> HI on blur. */
 export function BilingualField({
   label,
   en,
@@ -46,13 +48,46 @@ export function BilingualField({
   textarea?: boolean;
 }) {
   const C = textarea ? TextArea : TextInput;
+  const [translating, setTranslating] = useState(false);
+  const [translateError, setTranslateError] = useState<string | null>(null);
+
+  const handleEnBlur = async () => {
+    if (!en.trim()) return;
+    setTranslating(true);
+    setTranslateError(null);
+    try {
+      const hiText = await translateToHindi(en);
+      onHi(hiText);
+    } catch (e) {
+      setTranslateError(e instanceof Error ? e.message : UNREACHABLE_MESSAGE);
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   return (
     <div>
       <Label>{label}</Label>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <C value={en} placeholder="English" onChange={(e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => onEn(e.target.value)} />
-        <C value={hi} placeholder="हिन्दी" onChange={(e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => onHi(e.target.value)} />
+        <C
+          value={en}
+          placeholder="English"
+          onChange={(e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => onEn(e.target.value)}
+          onBlur={handleEnBlur}
+        />
+        <C
+          value={hi}
+          placeholder="हिन्दी"
+          disabled={translating}
+          onChange={(e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => onHi(e.target.value)}
+        />
       </div>
+      {translating && (
+        <p className="text-xs mt-1" style={{ color: LENITY.adminMuted }}>Translating…</p>
+      )}
+      {translateError && (
+        <p className="text-xs mt-1" style={{ color: LENITY.red }}>{translateError}</p>
+      )}
     </div>
   );
 }
