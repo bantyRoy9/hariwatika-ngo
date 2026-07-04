@@ -5,55 +5,70 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { logoutAction } from "@/app/actions/auth";
-import { Menu, X, LogOut } from "lucide-react";
+import {
+  Menu, X, LogOut, type LucideIcon,
+  LayoutDashboard, Home, Info, FolderKanban, Newspaper, HeartHandshake,
+  PieChart, GraduationCap, Image, Share2, Landmark, Type, Images,
+  IndianRupee, Users, ClipboardList, Bell, Inbox, Mail, Receipt,
+  UserPlus, ClipboardCheck, Heart, KeyRound, ListFilter,
+} from "lucide-react";
 
-type Item = { label: string; href: string };
-type Group = { heading: string; items: Item[] };
+type Item = { label: string; href: string; icon: LucideIcon };
+type Group = { heading: string; hint?: string; items: Item[] };
 
 const NAV: Group[] = [
-  { heading: "Dashboard", items: [{ label: "Overview", href: "/admin" }] },
   {
-    heading: "Analytics",
+    heading: "Dashboard",
+    items: [{ label: "Overview", href: "/admin", icon: LayoutDashboard }],
+  },
+  {
+    heading: "Pages",
+    hint: "Click a page to edit what's shown on it.",
     items: [
-      { label: "Donations Report", href: "/admin/donations" },
-      { label: "Volunteers", href: "/admin/volunteers" },
-      { label: "Notifications", href: "/admin/notifications/volunteers" },
-      { label: "Projects Board", href: "/admin/projects" },
-      { label: "All Submissions", href: "/admin/submissions/all" },
+      { label: "Home Page", href: "/admin/content/home", icon: Home },
+      { label: "About Us", href: "/admin/content/about", icon: Info },
+      { label: "Our Projects", href: "/admin/content/projects", icon: FolderKanban },
+      { label: "Blog / News", href: "/admin/content/blog", icon: Newspaper },
+      { label: "Volunteer Page", href: "/admin/content/volunteer", icon: HeartHandshake },
+      { label: "Transparency Reports", href: "/admin/content/transparency", icon: PieChart },
+      { label: "Internship Listings", href: "/admin/content/internships", icon: GraduationCap },
     ],
   },
   {
-    heading: "Submissions",
+    heading: "Site-wide",
     items: [
-      { label: "Contact Messages", href: "/admin/submissions/contacts" },
-      { label: "Donations", href: "/admin/submissions/donations" },
-      { label: "Volunteers", href: "/admin/submissions/volunteers" },
-      { label: "Internship Applications", href: "/admin/submissions/internships" },
-      { label: "Marriage Registrations", href: "/admin/submissions/marriages" },
+      { label: "Page Banners", href: "/admin/content/headers", icon: Image },
+      { label: "Menu & Social Links", href: "/admin/nav", icon: Share2 },
+      { label: "Contact Info & Bank Details", href: "/admin/settings", icon: Landmark },
+      { label: "Text Labels", href: "/admin/content/labels", icon: Type },
+      { label: "Media Library", href: "/admin/media", icon: Images },
     ],
   },
   {
-    heading: "Site Content",
+    heading: "Reports",
     items: [
-      { label: "Home Page", href: "/admin/content/home" },
-      { label: "Page Headers", href: "/admin/content/headers" },
-      { label: "Blog Posts", href: "/admin/content/blog" },
-      { label: "Projects & Plans", href: "/admin/content/projects" },
-      { label: "About", href: "/admin/content/about" },
-      { label: "Transparency", href: "/admin/content/transparency" },
-      { label: "Internship Listings", href: "/admin/content/internships" },
-      { label: "Volunteer Benefits", href: "/admin/content/volunteer" },
-      { label: "Labels & Text", href: "/admin/content/labels" },
+      { label: "Donations Report", href: "/admin/donations", icon: IndianRupee },
+      { label: "Volunteers Report", href: "/admin/volunteers", icon: Users },
+      { label: "Projects Board", href: "/admin/projects", icon: ClipboardList },
+      { label: "Notifications", href: "/admin/notifications/volunteers", icon: Bell },
+      { label: "All Submissions", href: "/admin/submissions/all", icon: Inbox },
     ],
   },
-  { heading: "Media", items: [{ label: "Media Library", href: "/admin/media" }] },
-  { heading: "Navigation & Footer", items: [{ label: "Nav / Footer Links", href: "/admin/nav" }] },
+  {
+    heading: "Messages & Applications",
+    items: [
+      { label: "Contact Messages", href: "/admin/submissions/contacts", icon: Mail },
+      { label: "Donation Records", href: "/admin/submissions/donations", icon: Receipt },
+      { label: "Volunteer Applications", href: "/admin/submissions/volunteers", icon: UserPlus },
+      { label: "Internship Applications", href: "/admin/submissions/internships", icon: ClipboardCheck },
+      { label: "Marriage Registrations", href: "/admin/submissions/marriages", icon: Heart },
+    ],
+  },
   {
     heading: "Settings",
     items: [
-      { label: "Site Settings", href: "/admin/settings" },
-      { label: "Option Lists", href: "/admin/settings/options" },
-      { label: "Change Password", href: "/admin/settings/password" },
+      { label: "Change Password", href: "/admin/settings/password", icon: KeyRound },
+      { label: "Dropdown Choices", href: "/admin/settings/options", icon: ListFilter },
     ],
   },
 ];
@@ -81,21 +96,28 @@ export default function Sidebar() {
           <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: LENITY.adminMuted }}>
             {group.heading}
           </p>
+          {group.hint && (
+            <p className="text-[11px] mb-2 leading-snug" style={{ color: LENITY.adminMuted }}>
+              {group.hint}
+            </p>
+          )}
           <div className="flex flex-col gap-0.5">
             {group.items.map((item) => {
               const active = isActive(item.href);
+              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm transition-colors"
+                  className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors"
                   style={{
                     background: active ? LENITY.accent : "transparent",
                     color: active ? "#ffffff" : LENITY.adminInk,
                     fontWeight: active ? 700 : 400,
                   }}
                 >
+                  <Icon className="w-4 h-4 shrink-0" />
                   {item.label}
                 </Link>
               );
