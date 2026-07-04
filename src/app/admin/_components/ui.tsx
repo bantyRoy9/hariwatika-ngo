@@ -15,10 +15,10 @@ export function PageTitle({ title, subtitle, action }: { title: string; subtitle
 }
 
 export const inputClass = "w-full border rounded-lg px-3 py-2 text-sm focus:outline-none";
-export const inputStyle: React.CSSProperties = { borderColor: LENITY.line, color: LENITY.ink, background: "#111630" };
+export const inputStyle: React.CSSProperties = { borderColor: LENITY.line, color: LENITY.adminInk, background: "#111630" };
 
 export function Label({ children }: { children: React.ReactNode }) {
-  return <label className="block text-xs font-semibold mb-1" style={{ color: LENITY.ink }}>{children}</label>;
+  return <label className="block text-xs font-semibold mb-1" style={{ color: LENITY.adminInk }}>{children}</label>;
 }
 
 export function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
@@ -64,7 +64,7 @@ export function Btn({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "ghost" | "danger" }) {
   const styles: Record<string, React.CSSProperties> = {
     primary: { background: LENITY.accent, color: LENITY.ink },
-    ghost: { background: "transparent", color: LENITY.ink, border: `1px solid ${LENITY.line}` },
+    ghost: { background: "transparent", color: LENITY.adminInk, border: `1px solid ${LENITY.line}` },
     danger: { background: "transparent", color: LENITY.red, border: `1px solid ${LENITY.line}` },
   };
   return (
