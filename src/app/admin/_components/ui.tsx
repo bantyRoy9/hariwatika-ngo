@@ -6,8 +6,8 @@ export function PageTitle({ title, subtitle, action }: { title: string; subtitle
   return (
     <div className="flex items-start justify-between gap-4 mb-6">
       <div>
-        <h1 className="text-2xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}>{title}</h1>
-        {subtitle && <p className="text-sm mt-1" style={{ color: LENITY.muted }}>{subtitle}</p>}
+        <h1 className="text-2xl font-bold" style={{ fontFamily: SERIF, color: LENITY.adminInk }}>{title}</h1>
+        {subtitle && <p className="text-sm mt-1" style={{ color: LENITY.adminMuted }}>{subtitle}</p>}
       </div>
       {action}
     </div>
