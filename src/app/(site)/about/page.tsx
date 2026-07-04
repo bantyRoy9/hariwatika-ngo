@@ -41,7 +41,7 @@ export default async function AboutPage() {
     return <AboutContent timeline={timeline} legalDocs={legalDocs} members={members} header={header} />;
   } catch (error) {
     console.error("Failed to load about page data:", error);
-    
+
     // Return page with default/fallback data
     const defaultHeader = {
       title: { en: "About Us", hi: "हमारे बारे में" },
@@ -49,12 +49,12 @@ export default async function AboutPage() {
       tag: { en: "Who We Are", hi: "हम कौन हैं" },
       img: null
     };
-    
-    return <AboutContent 
-      timeline={[]} 
-      legalDocs={[]} 
-      members={[]} 
-      header={defaultHeader} 
+
+    return <AboutContent
+      timeline={[]}
+      legalDocs={[]}
+      members={[]}
+      header={defaultHeader}
     />;
   }
 }
