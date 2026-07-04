@@ -524,6 +524,7 @@ async function main() {
       { platform: "Instagram", url: "https://instagram.com", sortOrder: 1 },
       { platform: "YouTube", url: "https://youtube.com", sortOrder: 2 },
       { platform: "WhatsApp", url: "https://wa.me/919473331919", sortOrder: 3 },
+      { platform: "LinkedIn", url: "https://linkedin.com", sortOrder: 4 },
     ],
   });
 
