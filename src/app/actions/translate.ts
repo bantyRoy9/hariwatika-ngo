@@ -1,13 +1,10 @@
 "use server";
 
+import { TOO_LONG_MESSAGE, UNREACHABLE_MESSAGE } from "@/lib/translateMessages";
+
 const MYMEMORY_ENDPOINT = "https://api.mymemory.translated.net/get";
 const MAX_CHARS = 500;
 const FETCH_TIMEOUT_MS = 8000;
-
-export const TOO_LONG_MESSAGE =
-  "Text is too long to auto-translate (500 character limit) — please write the Hindi manually.";
-export const UNREACHABLE_MESSAGE =
-  "Couldn't reach the translation service — please write the Hindi manually.";
 
 const WARNING_SUBSTRINGS = ["MYMEMORY WARNING", "QUERY LENGTH LIMIT EXCEEDED"];
 

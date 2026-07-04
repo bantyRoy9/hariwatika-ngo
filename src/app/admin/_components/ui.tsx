@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { LENITY, SERIF } from "@/theme/lenity";
-import { translateToHindi, UNREACHABLE_MESSAGE } from "@/app/actions/translate";
+import { translateToHindi } from "@/app/actions/translate";
+import { UNREACHABLE_MESSAGE } from "@/lib/translateMessages";
 
 export function PageTitle({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
   return (
