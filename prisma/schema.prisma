@@ -62,6 +62,7 @@ model VolunteerSubmission {
   availability String
   motivation   String?
   createdAt    DateTime @default(now())
+  deliveries   NotificationDelivery[]
 }
 
 model InternshipSubmission {
@@ -327,4 +328,62 @@ model MediaAsset {
   alt        String   @default("")
   category   String   @default("general")
   uploadedAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────
+// NOTIFICATIONS — admin-only volunteer WhatsApp messaging
+// ─────────────────────────────────────────────────────────
+model NotificationTemplate {
+  id              Int      @id @default(autoincrement())
+  key             String   @unique
+  displayName     String
+  language        String   // hi | en
+  provider        String   @default("twilio_whatsapp")
+  providerContentSid String
+  variables       String   @default("[]") // JSON array of variable keys
+  enabled         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  campaigns       NotificationCampaign[]
+}
+
+model NotificationCampaign {
+  id                  Int      @id @default(autoincrement())
+  audienceType        String   @default("volunteer_submission")
+  language            String   // hi | en
+  templateId          Int
+  template            NotificationTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  status              String   @default("queued") // queued | sending | partial | sent | failed
+  variableValues      String   @default("{}") // JSON object
+  selectedVolunteerIds String  @default("[]") // JSON array
+  totalSelected       Int      @default(0)
+  sentCount           Int      @default(0)
+  failedCount         Int      @default(0)
+  pendingCount        Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  deliveries          NotificationDelivery[]
+}
+
+model NotificationDelivery {
+  id                    Int      @id @default(autoincrement())
+  campaignId            Int
+  campaign              NotificationCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  volunteerSubmissionId Int?
+  volunteerSubmission   VolunteerSubmission? @relation(fields: [volunteerSubmissionId], references: [id], onDelete: SetNull)
+  recipientName         String
+  recipientMobile       String
+  normalizedMobile      String?
+  provider              String   @default("twilio_whatsapp")
+  providerMessageSid    String?
+  status                String   @default("queued") // queued | sent | failed
+  errorCode             String?
+  errorMessage          String?
+  retryCount            Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([campaignId])
+  @@index([volunteerSubmissionId])
+  @@index([status])
 }

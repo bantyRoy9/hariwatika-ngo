@@ -17,6 +17,7 @@ const NAV: Group[] = [
     items: [
       { label: "Donations Report", href: "/admin/donations" },
       { label: "Volunteers", href: "/admin/volunteers" },
+      { label: "Notifications", href: "/admin/notifications/volunteers" },
       { label: "Projects Board", href: "/admin/projects" },
       { label: "All Submissions", href: "/admin/submissions/all" },
     ],

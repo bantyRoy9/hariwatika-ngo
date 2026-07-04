@@ -7,13 +7,11 @@ import { NextRequest, NextResponse } from "next/server";
 export default function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (process.env.NODE_ENV !== "development") {
-      const hasCookie = req.cookies.has("hw_admin");
-      if (!hasCookie) {
-        const url = req.nextUrl.clone();
-        url.pathname = "/admin/login";
-        return NextResponse.redirect(url);
-      }
+    const hasCookie = req.cookies.has("hw_admin");
+    if (!hasCookie) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/admin/login";
+      return NextResponse.redirect(url);
     }
   }
   return NextResponse.next();
