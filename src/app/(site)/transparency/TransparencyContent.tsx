@@ -1,6 +1,8 @@
 "use client";
 
 import PremiumHero from "@/components/PremiumHero";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { Download, FileText, BarChart3, TrendingUp, IndianRupee, Users } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { useLang } from "@/context/LanguageContext";
@@ -24,7 +26,7 @@ export default function TransparencyContent({
   const { t } = useLang();
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         {/* Hero */}
         <PremiumHero
@@ -52,14 +54,12 @@ export default function TransparencyContent({
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: LENITY.ink }}>
                 <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-                Annual Reports
+                <EditableText settingKey="transparency.reports.eyebrow" label="Reports Eyebrow" en="Annual Reports" hi="वार्षिक रिपोर्ट" />
               </span>
-              <h2
-                className="text-3xl font-bold"
-                style={{ fontFamily: SERIF, color: LENITY.ink }}
-              >
-                Financial Summary
-              </h2>
+              <EditableText as="h2" settingKey="transparency.reports.h2" label="Reports Heading"
+                en="Financial Summary" hi="वित्तीय सारांश"
+                className="text-3xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}
+              />
             </div>
 
             <div className="grid grid-cols-1 gap-4">
@@ -151,18 +151,17 @@ export default function TransparencyContent({
               <div>
                 <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-4" style={{ color: LENITY.ink }}>
                   <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-                  Fund Utilisation
+                  <EditableText settingKey="transparency.utilisation.eyebrow" label="Utilisation Eyebrow" en="Fund Utilisation" hi="फंड उपयोग" />
                 </span>
-                <h2
-                  className="text-3xl font-bold mb-4"
-                  style={{ fontFamily: SERIF, color: LENITY.ink }}
-                >
-                  How We Spend Your Donations
-                </h2>
-                <p className="leading-relaxed mb-6" style={{ color: LENITY.muted }}>
-                  We ensure maximum utilization of every rupee donated. Over 95% of funds go directly
-                  to community programs, with less than 5% spent on administrative costs.
-                </p>
+                <EditableText as="h2" settingKey="transparency.utilisation.h2" label="Utilisation Heading"
+                  en="How We Spend Your Donations" hi="हम आपका दान कैसे खर्च करते हैं"
+                  className="text-3xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+                />
+                <EditableText as="p" settingKey="transparency.utilisation.desc" label="Utilisation Description" multiline
+                  en="We ensure maximum utilization of every rupee donated. Over 95% of funds go directly to community programs, with less than 5% spent on administrative costs."
+                  hi="हम हर दान किए गए रुपये का अधिकतम उपयोग सुनिश्चित करते हैं। 95% से अधिक धन सीधे सामुदायिक कार्यक्रमों में जाता है।"
+                  className="leading-relaxed mb-6" style={{ color: LENITY.muted }}
+                />
                 <div className="space-y-4">
                   {expenseBreakdown.map((item) => (
                     <div key={item.id}>
@@ -185,12 +184,10 @@ export default function TransparencyContent({
 
               {/* Documents */}
               <div>
-                <h3
-                  className="font-semibold text-lg mb-4"
-                  style={{ fontFamily: SERIF, color: LENITY.ink }}
-                >
-                  Official Documents
-                </h3>
+                <EditableText as="h3" settingKey="transparency.docs.h3" label="Documents Heading"
+                  en="Official Documents" hi="आधिकारिक दस्तावेज़"
+                  className="font-semibold text-lg mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+                />
                 <div className="space-y-3">
                   {documents.map((doc) => (
                     <div
@@ -223,6 +220,6 @@ export default function TransparencyContent({
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }

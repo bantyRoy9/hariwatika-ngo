@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { LENITY, SERIF, IMG } from "@/theme/lenity";
-import { Users, Heart, CheckCircle, Printer, Award, Clock, MapPin } from "lucide-react";
 import { submitVolunteer } from "@/app/actions/submissions";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
+import { IMG, LENITY, SERIF } from "@/theme/lenity";
+import { Award, CheckCircle, Clock, Heart, MapPin, Printer, Users } from "lucide-react";
+import { useState } from "react";
 
 interface VolunteerForm {
   name: string;
@@ -96,7 +98,7 @@ export default function VolunteerPage() {
   const initials = form.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) || "VL";
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         {/* Hero */}
         <section className="pt-28 pb-16 relative overflow-hidden" style={{ background: LENITY.soft }}>
@@ -108,25 +110,22 @@ export default function VolunteerPage() {
             loading="lazy"
           />
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span
-              className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mx-auto mb-5"
-              style={{ background: LENITY.yellowSoft }}
-            >
+            <span className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mx-auto mb-5" style={{ background: LENITY.yellowSoft }}>
               <Users className="w-7 h-7" style={{ color: LENITY.ink }} />
             </span>
             <span className="inline-flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-4" style={{ color: LENITY.ink }}>
               <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-              Get Involved
+              <EditableText settingKey="volunteer.hero.eyebrow" label="Volunteer Hero Eyebrow" en="Get Involved" hi="जुड़ें" />
             </span>
-            <h1
-              className="text-3xl sm:text-5xl font-bold mb-4"
-              style={{ fontFamily: SERIF, color: LENITY.ink }}
-            >
-              स्वयंसेवक बनें
-            </h1>
-            <p className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-              Join our volunteer family and make a meaningful impact in your community.
-            </p>
+            <EditableText as="h1" settingKey="volunteer.hero.h1" label="Volunteer Hero Heading"
+              en="Become a Volunteer" hi="स्वयंसेवक बनें"
+              className="text-3xl sm:text-5xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+            />
+            <EditableText as="p" settingKey="volunteer.hero.sub" label="Volunteer Hero Subtext"
+              en="Join our volunteer family and make a meaningful impact in your community."
+              hi="हमारे स्वयंसेवक परिवार में शामिल हों और अपने समुदाय में सार्थक प्रभाव डालें।"
+              className="text-lg italic max-w-xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}
+            />
           </div>
         </section>
 
@@ -464,6 +463,6 @@ export default function VolunteerPage() {
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }

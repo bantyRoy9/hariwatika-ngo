@@ -4,6 +4,8 @@ import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import PremiumStorySection from "@/components/PremiumStorySection";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Target, Eye, FileText, Award, ShieldCheck, Download, Users, type LucideIcon } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
@@ -44,7 +46,7 @@ export default function AboutContent({
   const { t } = useLang();
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}
@@ -80,19 +82,20 @@ export default function AboutContent({
                   className="font-bold mb-3"
                   style={{ fontFamily: SERIF, color: LENITY.ink, fontSize: "2.25rem", lineHeight: 1.1, letterSpacing: "-0.01em" }}
                 >
-                  हमारी यात्रा
+                  <EditableText settingKey="about.history.h2" label="History Heading" en="Our Journey" hi="हमारी यात्रा" />
                 </h2>
                 <p className="italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem", lineHeight: 1.5 }}>
-                  Twenty-five years of seva, one family at a time.
+                  <EditableText settingKey="about.history.lead" label="History Lead" en="Twenty-five years of seva, one family at a time." hi="पच्चीस वर्षों की सेवा, एक परिवार एक बार।" />
                 </p>
                 <p className="mb-4" style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
-                  Founded in the year 2000 at the sacred Hariwatika Shiv Mandir in Bettiah, West Champaran,
-                  our samiti began with a simple vision — to assist poor families in conducting dignified
-                  marriages for their daughters and sons.
+                  <EditableText settingKey="about.history.p1" label="History Paragraph 1" multiline
+                    en="Founded in the year 2000 at the sacred Hariwatika Shiv Mandir in Bettiah, West Champaran, our samiti began with a simple vision — to assist poor families in conducting dignified marriages for their daughters and sons."
+                    hi="2000 में बेतिया, पश्चिम चम्पारण में पवित्र हरिवाटिका शिव मंदिर में स्थापित, हमारी समिति एक सरल दृष्टि के साथ शुरू हुई।" />
                 </p>
                 <p className="mb-4" style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
-                  Over the years, the scope expanded to include tree plantation, poverty relief, health
-                  camps, and educational support. Today we proudly serve thousands of families.
+                  <EditableText settingKey="about.history.p2" label="History Paragraph 2" multiline
+                    en="Over the years, the scope expanded to include tree plantation, poverty relief, health camps, and educational support. Today we proudly serve thousands of families."
+                    hi="वर्षों में, दायरा वृक्षारोपण, गरीबी राहत, स्वास्थ्य शिविर और शैक्षिक सहायता तक बढ़ा। आज हम गर्व से हजारों परिवारों की सेवा करते हैं।" />
                 </p>
                 <p style={{ color: LENITY.muted, fontSize: "1rem", lineHeight: 1.7 }}>
                   Our work is guided by{" "}
@@ -167,17 +170,16 @@ export default function AboutContent({
                   >
                     <Target className="w-5 h-5" style={{ color: LENITY.ink }} />
                   </div>
-                  <h3
+                  <EditableText as="h3" settingKey="about.mission.h3" label="Mission Card Title"
+                    en="Our Mission" hi="हमारा मिशन"
                     className="font-semibold mb-3"
                     style={{ fontFamily: SERIF, fontSize: "1.25rem", color: LENITY.ink, lineHeight: 1.35 }}
-                  >
-                    हमारा मिशन
-                  </h3>
-                  <p style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}>
-                    To provide free and subsidized marriage services, create a greener environment through
-                    tree plantation, support the poor with essential goods, and promote health and education
-                    in rural communities of West Champaran, Bihar.
-                  </p>
+                  />
+                  <EditableText as="p" settingKey="about.mission.text" label="Mission Text" multiline
+                    en="To provide free and subsidized marriage services, create a greener environment through tree plantation, support the poor with essential goods, and promote health and education in rural communities of West Champaran, Bihar."
+                    hi="पश्चिम चम्पारण, बिहार के ग्रामीण समुदायों में मुफ्त और सब्सिडी वाली विवाह सेवाएं प्रदान करना, वृक्षारोपण के माध्यम से हरियाली बढ़ाना, गरीबों को आवश्यक सामान और स्वास्थ्य-शिक्षा को बढ़ावा देना।"
+                    style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}
+                  />
                 </Card3D>
               </Reveal>
               <Reveal animation="slide-left">
@@ -191,17 +193,16 @@ export default function AboutContent({
                   >
                     <Eye className="w-5 h-5" style={{ color: LENITY.ink }} />
                   </div>
-                  <h3
+                  <EditableText as="h3" settingKey="about.vision.h3" label="Vision Card Title"
+                    en="Our Vision" hi="हमारा विजन"
                     className="font-semibold mb-3"
                     style={{ fontFamily: SERIF, fontSize: "1.25rem", color: LENITY.ink, lineHeight: 1.35 }}
-                  >
-                    हमारा विजन
-                  </h3>
-                  <p style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}>
-                    A society where no family is unable to marry off their children due to poverty, every
-                    village has green cover, hunger and preventable disease are eliminated, and every child
-                    has access to quality education — a truly self-reliant community.
-                  </p>
+                  />
+                  <EditableText as="p" settingKey="about.vision.text" label="Vision Text" multiline
+                    en="A society where no family is unable to marry off their children due to poverty, every village has green cover, hunger and preventable disease are eliminated, and every child has access to quality education."
+                    hi="एक समाज जहाँ कोई परिवार गरीबी के कारण अपने बच्चों की शादी न कर पाने में असमर्थ न हो, हर गाँव में हरियाली हो, भूख और रोकथाम योग्य बीमारियाँ समाप्त हों।"
+                    style={{ color: LENITY.muted, fontSize: "0.875rem", lineHeight: 1.7 }}
+                  />
                 </Card3D>
               </Reveal>
             </div>
@@ -390,6 +391,6 @@ export default function AboutContent({
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }

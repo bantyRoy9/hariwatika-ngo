@@ -4,6 +4,8 @@ import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Phone, Mail, MapPin, MessageCircle, Clock, Send, CheckCircle } from "lucide-react";
 import { submitContact } from "@/app/actions/submissions";
@@ -39,7 +41,7 @@ export default function ContactPage() {
   )}`;
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         <PremiumHero
           title="संपर्क करें"
@@ -67,12 +69,10 @@ export default function ContactPage() {
               <div className="lg:col-span-2 space-y-6">
                 <Reveal animation="slide-right">
                   <Card3D intensity={5} className="bg-white rounded-3xl border p-6 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
-                  <h3
-                    className="font-bold text-lg mb-4"
-                    style={{ fontFamily: SERIF, color: LENITY.ink }}
-                  >
-                    Office Details
-                  </h3>
+                  <EditableText as="h3" settingKey="contact.office.h3" label="Office Details Heading"
+                    en="Office Details" hi="कार्यालय विवरण"
+                    className="font-bold text-lg mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+                  />
                   <div className="space-y-4">
                     <div className="flex gap-3">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LENITY.yellowSoft }}>
@@ -200,15 +200,15 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <div className="bg-white rounded-3xl border p-6 sm:p-8 shadow-sm" style={{ borderColor: LENITY.line }}>
-                    <h2
-                      className="text-2xl font-bold mb-1"
-                      style={{ fontFamily: SERIF, color: LENITY.ink }}
-                    >
-                      Send us a Message
-                    </h2>
-                    <p className="text-sm italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted }}>
-                      Tell us how we can help — we read every word.
-                    </p>
+                  <EditableText as="h2" settingKey="contact.form.h2" label="Contact Form Heading"
+                    en="Send us a Message" hi="हमें संदेश भेजें"
+                    className="text-2xl font-bold mb-1" style={{ fontFamily: SERIF, color: LENITY.ink }}
+                  />
+                  <EditableText as="p" settingKey="contact.form.sub" label="Contact Form Subtext"
+                    en="Tell us how we can help — we read every word."
+                    hi="हमें बताएं हम कैसे मदद कर सकते हैं — हम हर शब्द पढ़ते हैं।"
+                    className="text-sm italic mb-6" style={{ fontFamily: SERIF, color: LENITY.muted }}
+                  />
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
@@ -330,6 +330,6 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }

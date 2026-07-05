@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
-import { Calendar, Tag, ArrowRight, HandHeart } from "lucide-react";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
+import { Calendar, Tag, ArrowRight } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 import { useLang } from "@/context/LanguageContext";
 
@@ -37,7 +39,7 @@ export default function BlogContent({
   const filtered = activeCategory === "All" ? posts : posts.filter((p) => p.category === activeCategory);
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}
@@ -80,6 +82,17 @@ export default function BlogContent({
 
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <EditableText as="h2" settingKey="blog.section.h2" label="Blog Section Heading"
+                en="Latest Stories & News" hi="ताज़ी कहानियाँ और समाचार"
+                className="text-3xl font-bold mb-2" style={{ fontFamily: SERIF, color: LENITY.ink }}
+              />
+              <EditableText as="p" settingKey="blog.section.sub" label="Blog Section Subtext"
+                en="Read about our impact and community work from the field."
+                hi="क्षेत्र से हमारे प्रभाव और सामुदायिक कार्य के बारे में पढ़ें।"
+                className="text-sm italic" style={{ fontFamily: SERIF, color: LENITY.muted }}
+              />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((post) => {
                 const title = t(post.titleEn, post.titleHi);
@@ -125,6 +138,6 @@ export default function BlogContent({
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }
