@@ -10,20 +10,19 @@ export default async function AboutPage() {
       prisma.timelineItem.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.legalDoc.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.teamMember.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }),
-      prisma.journeyCard.findMany({ orderBy: { sortOrder: "asc" } }),
-      prisma.heroStat.findMany({ where: { page: "about" }, orderBy: { sortOrder: "asc" } }),
+      (prisma as any).journeyCard.findMany({ orderBy: { sortOrder: "asc" } }),
+      (prisma as any).heroStat.findMany({ where: { page: "about" }, orderBy: { sortOrder: "asc" } }),
       getHeader("about"),
-      getSettings(["about"]),
     ]);
 
-    const timeline: TimelineData[] = timelineRows.map((r) => ({
+    const timeline: TimelineData[] = timelineRows.map((r: any) => ({
       id: r.id,
       year: r.year,
       eventEn: r.eventEn,
       eventHi: r.eventHi,
     }));
 
-    const legalDocs: LegalDocData[] = legalRows.map((r) => ({
+    const legalDocs: LegalDocData[] = legalRows.map((r: any) => ({
       id: r.id,
       iconName: r.iconName,
       titleEn: r.titleEn,
@@ -33,7 +32,7 @@ export default async function AboutPage() {
       descHi: r.descHi,
     }));
 
-    const members: TeamMemberData[] = teamRows.map((r) => ({
+    const members: TeamMemberData[] = teamRows.map((r: any) => ({
       id: r.id,
       name: r.name,
       designation: r.designation,
@@ -41,7 +40,7 @@ export default async function AboutPage() {
       phone: r.phone,
     }));
 
-    const journeyCards: JourneyCardData[] = journeyRows.map((r) => ({
+    const journeyCards: JourneyCardData[] = journeyRows.map((r: any) => ({
       id: r.id,
       number: r.number,
       titleEn: r.titleEn,
@@ -54,7 +53,7 @@ export default async function AboutPage() {
       statLabelHi: r.statLabelHi,
     }));
 
-    const heroStats: HeroStatData[] = heroStatRows.map((r) => ({
+    const heroStats: HeroStatData[] = heroStatRows.map((r: any) => ({
       id: r.id,
       value: r.value,
       labelEn: r.labelEn,
@@ -134,7 +133,6 @@ export default async function AboutPage() {
       journeyCards={[]}
       heroStats={[]}
       header={defaultHeader}
-      settings={{}}
     />;
   }
 }
