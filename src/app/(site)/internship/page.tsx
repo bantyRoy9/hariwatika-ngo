@@ -1,4 +1,5 @@
-"use client";
+import { getSettings, getHeader } from "@/lib/content";
+import InternshipContent from "./InternshipContent";
 
 import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";

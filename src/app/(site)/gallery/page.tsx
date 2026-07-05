@@ -1,4 +1,5 @@
-"use client";
+import { getSettings } from "@/lib/content";
+import GalleryContent from "./GalleryContent";
 
 export const dynamic = "force-dynamic";
 

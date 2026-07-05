@@ -1,4 +1,5 @@
-"use client";
+import { getSettings } from "@/lib/content";
+import ProgramsContent from "./ProgramsContent";
 
 import { useState } from "react";
 import DonationModal from "@/components/DonationModal";

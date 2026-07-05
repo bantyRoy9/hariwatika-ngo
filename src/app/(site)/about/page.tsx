@@ -13,6 +13,7 @@ export default async function AboutPage() {
       (prisma as any).journeyCard.findMany({ orderBy: { sortOrder: "asc" } }),
       (prisma as any).heroStat.findMany({ where: { page: "about" }, orderBy: { sortOrder: "asc" } }),
       getHeader("about"),
+      getSettings(["about"]),
     ]);
 
     const timeline: TimelineData[] = timelineRows.map((r: any) => ({
@@ -133,6 +134,7 @@ export default async function AboutPage() {
       journeyCards={[]}
       heroStats={[]}
       header={defaultHeader}
+      settings={{}}
     />;
   }
 }
