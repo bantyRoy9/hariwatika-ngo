@@ -18,11 +18,16 @@ import EditableImage from "@/components/EditableImage";
 import { useLang } from "@/context/LanguageContext";
 import {
   TreePine, Users, Stethoscope,
-  BookOpen, Droplets, Wheat, ArrowRight, Quote,
+  BookOpen, Droplets, Wheat, ArrowRight, Quote, Heart, type LucideIcon,
 } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 
 export type HomeSettings = Record<string, { en: string; hi: string }>;
+export type HomeServiceData = { id: number; iconName: string; titleEn: string; titleHi: string; descEn: string; descHi: string };
+export type HomeCampaignData = { id: number; titleEn: string; titleHi: string; raised: number; goal: number; backers: number };
+
+const ICONS: Record<string, LucideIcon> = { Heart, TreePine, Users, Stethoscope, BookOpen, Droplets, Wheat };
+const iconFor = (name: string): LucideIcon => ICONS[name] ?? Heart;
 
 const IMG = {
   hero:     "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80&auto=format&fit=crop",
@@ -45,15 +50,23 @@ function s(settings: HomeSettings, key: string, fallbackEn: string, fallbackHi: 
   return { en: row?.en || fallbackEn, hi: row?.hi || fallbackHi };
 }
 
-const services = [
-  { icon: BookOpen,    titleEn: "Shiksha Seva",      titleHi: "शिक्षा सेवा",      descEn: "Supporting education for underprivileged children through scholarships and learning materials.", descHi: "जरूरतमंद बच्चों की शिक्षा में सहयोग।" },
-  { icon: TreePine,    titleEn: "Vrikshaaropan",     titleHi: "वृक्षारोपण",       descEn: "Large-scale tree plantation drives to green the region across West Champaran.", descHi: "क्षेत्र को हरा-भरा बनाने हेतु वृक्षारोपण अभियान।" },
-  { icon: Users,       titleEn: "Garib Sahayata",    titleHi: "गरीब सहायता",     descEn: "Food, clothing, and essentials to underprivileged and disaster-affected families.", descHi: "जरूरतमंद परिवारों को भोजन, वस्त्र और आवश्यक सामान।" },
-  { icon: Stethoscope, titleEn: "Swasthya Seva",     titleHi: "स्वास्थ्य सेवा",   descEn: "Free health camps and medical assistance for rural low-income communities.", descHi: "ग्रामीण समुदायों हेतु नि:शुल्क स्वास्थ्य शिविर।" },
-  { icon: Users,       titleEn: "Vivah Sahayata",    titleHi: "विवाह सहायता",     descEn: "Marriage assistance for underprivileged families and widow support programs.", descHi: "जरूरतमंद परिवारों के लिए विवाह सहायता कार्यक्रम।" },
-  { icon: Droplets,    titleEn: "Aapada Prabandhan", titleHi: "आपदा प्रबंधन",      descEn: "Emergency relief during floods, disasters, and crisis situations.", descHi: "बाढ़, आपदा और संकट की स्थितियों में आपातकालीन राहत।" },
-  { icon: Users,       titleEn: "Mahila Bal Kalyan", titleHi: "महिला बाल कल्याण",  descEn: "Women empowerment and child welfare programs for vulnerable communities.", descHi: "महिला सशक्तिकरण और बाल कल्याण कार्यक्रम।" },
-  { icon: BookOpen,    titleEn: "Rojgar Sahayata",   titleHi: "रोजगार सहायता",    descEn: "Free career guidance, skill training, and employment support programs.", descHi: "नि:शुल्क करियर मार्गदर्शन और रोजगार सहायता।" },
+/** Used only if the DB has no HomeService rows yet (e.g. DB not ready). */
+const DEFAULT_SERVICES: HomeServiceData[] = [
+  { id: -1, iconName: "BookOpen",    titleEn: "Shiksha Seva",      titleHi: "शिक्षा सेवा",      descEn: "Supporting education for underprivileged children through scholarships and learning materials.", descHi: "जरूरतमंद बच्चों की शिक्षा में सहयोग।" },
+  { id: -2, iconName: "TreePine",    titleEn: "Vrikshaaropan",     titleHi: "वृक्षारोपण",       descEn: "Large-scale tree plantation drives to green the region across West Champaran.", descHi: "क्षेत्र को हरा-भरा बनाने हेतु वृक्षारोपण अभियान।" },
+  { id: -3, iconName: "Users",       titleEn: "Garib Sahayata",    titleHi: "गरीब सहायता",     descEn: "Food, clothing, and essentials to underprivileged and disaster-affected families.", descHi: "जरूरतमंद परिवारों को भोजन, वस्त्र और आवश्यक सामान।" },
+  { id: -4, iconName: "Stethoscope", titleEn: "Swasthya Seva",     titleHi: "स्वास्थ्य सेवा",   descEn: "Free health camps and medical assistance for rural low-income communities.", descHi: "ग्रामीण समुदायों हेतु नि:शुल्क स्वास्थ्य शिविर।" },
+  { id: -5, iconName: "Users",       titleEn: "Vivah Sahayata",    titleHi: "विवाह सहायता",     descEn: "Marriage assistance for underprivileged families and widow support programs.", descHi: "जरूरतमंद परिवारों के लिए विवाह सहायता कार्यक्रम।" },
+  { id: -6, iconName: "Droplets",    titleEn: "Aapada Prabandhan", titleHi: "आपदा प्रबंधन",      descEn: "Emergency relief during floods, disasters, and crisis situations.", descHi: "बाढ़, आपदा और संकट की स्थितियों में आपातकालीन राहत।" },
+  { id: -7, iconName: "Users",       titleEn: "Mahila Bal Kalyan", titleHi: "महिला बाल कल्याण",  descEn: "Women empowerment and child welfare programs for vulnerable communities.", descHi: "महिला सशक्तिकरण और बाल कल्याण कार्यक्रम।" },
+  { id: -8, iconName: "BookOpen",    titleEn: "Rojgar Sahayata",   titleHi: "रोजगार सहायता",    descEn: "Free career guidance, skill training, and employment support programs.", descHi: "नि:शुल्क करियर मार्गदर्शन और रोजगार सहायता।" },
+];
+
+/** Used only if the DB has no HomeCampaign rows yet (e.g. DB not ready). */
+const DEFAULT_CAMPAIGNS: HomeCampaignData[] = [
+  { id: -1, titleEn: "Clean Water for 50 Villages", titleHi: "50 गांवों में स्वच्छ जल", raised: 85000, goal: 100000, backers: 42 },
+  { id: -2, titleEn: "10,000 Trees This Monsoon",   titleHi: "इस मानसून 10,000 पेड़",  raised: 32000, goal: 50000,  backers: 118 },
+  { id: -3, titleEn: "Winter Relief Drive",          titleHi: "शीतकालीन राहत अभियान",  raised: 18500, goal: 30000,  backers: 67 },
 ];
 
 const pillars = [
@@ -131,10 +144,20 @@ function NumberedSection({ num, label, children, alt = false }:
 /* ═══════════════════════════════════════════════════════════════
    MAIN PAGE CLIENT COMPONENT
 ═══════════════════════════════════════════════════════════════ */
-export default function HomePageClient({ settings }: { settings: HomeSettings }) {
+export default function HomePageClient({
+  settings,
+  services: dbServices,
+  campaigns: dbCampaigns,
+}: {
+  settings: HomeSettings;
+  services: HomeServiceData[];
+  campaigns: HomeCampaignData[];
+}) {
   const [donateOpen, setDonateOpen] = useState(false);
   const { t } = useLang();
   const openDonate = () => setDonateOpen(true);
+
+  const services = dbServices.length ? dbServices : DEFAULT_SERVICES;
 
   // Resolve all content from DB settings with hardcoded fallbacks
   const c = {
@@ -185,11 +208,7 @@ export default function HomePageClient({ settings }: { settings: HomeSettings })
     { value: "200+",   ...s(settings, "home.stat.3", "Volunteers Trained","स्वयंसेवक प्रशिक्षित") },
   ];
 
-  const campaigns = [
-    { titleEn: "Clean Water for 50 Villages", titleHi: "50 गांवों में स्वच्छ जल", raised: 85000, goal: 100000, backers: 42 },
-    { titleEn: "10,000 Trees This Monsoon",   titleHi: "इस मानसून 10,000 पेड़",  raised: 32000, goal: 50000,  backers: 118 },
-    { titleEn: "Winter Relief Drive",          titleHi: "शीतकालीन राहत अभियान",  raised: 18500, goal: 30000,  backers: 67 },
-  ];
+  const campaigns = dbCampaigns.length ? dbCampaigns : DEFAULT_CAMPAIGNS;
 
   const blogPosts = [
     { date: "15 Dec 2024", catEn: "Education",   catHi: "शिक्षा",    img: IMG.svc[0], titleEn: "150 Children Receive School Scholarships This Year", titleHi: "इस वर्ष 150 बच्चों को स्कूल छात्रवृत्ति मिली", excerptEn: "Hariwatika's education drive reached 150 underprivileged children with scholarships.", excerptHi: "हरिवाटिका के शिक्षा अभियान ने 150 जरूरतमंद बच्चों को छात्रवृत्ति दी।" },
@@ -390,18 +409,21 @@ export default function HomePageClient({ settings }: { settings: HomeSettings })
         <EditableText as="h2" settingKey="home.services.h2" label="Services Heading" en={c.services.h2.en} hi={c.services.h2.hi} className="text-4xl font-bold mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }} />
         <EditableText as="p" settingKey="home.services.lead" label="Services Lead" en={c.services.lead.en} hi={c.services.lead.hi} className="text-lg italic mb-10" style={{ fontFamily: SERIF, color: LENITY.muted }} />
         <HorizontalCardSlider
-          cards={services.map((svc, idx) => ({
-            id: idx,
-            content: (
-              <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line, height: "280px" }}>
-                <span className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: LENITY.yellowSoft }}>
-                  <svc.icon className="w-6 h-6" style={{ color: LENITY.ink }} />
-                </span>
-                <h3 className="text-lg font-bold mb-2" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(svc.titleEn, svc.titleHi)}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: LENITY.muted }}>{t(svc.descEn, svc.descHi)}</p>
-              </div>
-            ),
-          }))}
+          cards={services.map((svc) => {
+            const Icon = iconFor(svc.iconName);
+            return {
+              id: svc.id,
+              content: (
+                <div className="bg-white rounded-2xl border p-7 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line, height: "280px" }}>
+                  <span className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: LENITY.yellowSoft }}>
+                    <Icon className="w-6 h-6" style={{ color: LENITY.ink }} />
+                  </span>
+                  <h3 className="text-lg font-bold mb-2" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(svc.titleEn, svc.titleHi)}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: LENITY.muted }}>{t(svc.descEn, svc.descHi)}</p>
+                </div>
+              ),
+            };
+          })}
           autoPlay={true} autoPlayInterval={4000} cardWidth={300} gap={24}
         />
       </NumberedSection>
@@ -462,7 +484,7 @@ export default function HomePageClient({ settings }: { settings: HomeSettings })
           {campaigns.map((cam) => {
             const pct = Math.round((cam.raised / cam.goal) * 100);
             return (
-              <Fade key={cam.titleEn}>
+              <Fade key={cam.id}>
                 <div className="bg-white rounded-2xl border p-7 transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                   <h3 className="font-bold text-base leading-snug mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}>{t(cam.titleEn, cam.titleHi)}</h3>
                   <div className="h-2.5 rounded-full overflow-hidden mb-4" style={{ background: LENITY.line }}>
