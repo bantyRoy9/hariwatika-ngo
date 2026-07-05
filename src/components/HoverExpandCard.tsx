@@ -7,11 +7,11 @@ import Link from "next/link";
 
 interface HoverExpandCardProps {
   number: string;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   image: string;
   link?: string;
-  linkText?: string;
+  linkText?: React.ReactNode;
 }
 
 export default function HoverExpandCard({

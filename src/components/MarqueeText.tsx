@@ -3,7 +3,7 @@
 import { useRef } from "react";
 
 interface MarqueeTextProps {
-  texts: string[];
+  texts: React.ReactNode[];
   speed?: number;
   direction?: "left" | "right";
   className?: string;

@@ -6,9 +6,12 @@ import { LENITY, SERIF } from "@/theme/lenity";
 
 interface Testimonial {
   id: number;
-  quote: string;
+  quote: React.ReactNode;
+  /** Plain-text name — used for the avatar initial and image alt text. */
   name: string;
-  location: string;
+  /** Rendered in place of `name` if provided (e.g. an EditableText node). Falls back to `name`. */
+  nameNode?: React.ReactNode;
+  location: React.ReactNode;
   image?: string;
 }
 
@@ -100,7 +103,7 @@ export default function TestimonialCarousel({
                     className="font-bold text-lg"
                     style={{ color: LENITY.ink }}
                   >
-                    {item.name}
+                    {item.nameNode ?? item.name}
                   </p>
                   <p className="text-sm" style={{ color: LENITY.muted }}>
                     {item.location}

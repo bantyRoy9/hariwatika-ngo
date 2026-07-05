@@ -7,19 +7,21 @@ import { LENITY, SERIF } from "@/theme/lenity";
 interface StoryCard {
   id: string;
   number: string;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   image: string;
+  /** Plain-text alt for the image — falls back to "" if not given (title may not be plain text). */
+  imageAlt?: string;
   stat?: string;
-  statLabel?: string;
+  statLabel?: React.ReactNode;
 }
 
 interface PremiumStorySectionProps {
-  eyebrow: string;
-  heading: string;
-  description: string;
+  eyebrow: React.ReactNode;
+  heading: React.ReactNode;
+  description: React.ReactNode;
   cards: StoryCard[];
-  ctaText?: string;
+  ctaText?: React.ReactNode;
   ctaLink?: string;
   theme?: "light" | "dark";
 }
@@ -213,7 +215,7 @@ export default function PremiumStorySection({
               <div className="relative h-80 overflow-hidden">
                 <img
                   src={cards[0].image}
-                  alt={cards[0].title}
+                  alt={cards[0].imageAlt ?? ""}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ willChange: "transform" }}
                 />

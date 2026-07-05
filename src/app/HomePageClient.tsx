@@ -272,13 +272,13 @@ export default function HomePageClient({
       <div style={{ background: LENITY.accent, padding: "1rem 0" }}>
         <MarqueeText
           texts={[
-            t(s(settings,"home.marquee.0","HARIWATIKA SEWA SAMITI","हरिवाटिका सेवा समिति").en, s(settings,"home.marquee.0","HARIWATIKA SEWA SAMITI","हरिवाटिका सेवा समिति").hi),
+            <EditableText key="m0" settingKey="home.marquee.0" label="Marquee 1" en={s(settings,"home.marquee.0","HARIWATIKA SEWA SAMITI","हरिवाटिका सेवा समिति").en} hi={s(settings,"home.marquee.0","HARIWATIKA SEWA SAMITI","हरिवाटिका सेवा समिति").hi} />,
             "✦",
-            t(s(settings,"home.marquee.1","25 YEARS OF SERVICE","25 वर्षों की सेवा").en, s(settings,"home.marquee.1","25 YEARS OF SERVICE","25 वर्षों की सेवा").hi),
+            <EditableText key="m1" settingKey="home.marquee.1" label="Marquee 2" en={s(settings,"home.marquee.1","25 YEARS OF SERVICE","25 वर्षों की सेवा").en} hi={s(settings,"home.marquee.1","25 YEARS OF SERVICE","25 वर्षों की सेवा").hi} />,
             "✦",
-            t(s(settings,"home.marquee.2","TRANSFORMING LIVES","जीवन बदलना").en, s(settings,"home.marquee.2","TRANSFORMING LIVES","जीवन बदलना").hi),
+            <EditableText key="m2" settingKey="home.marquee.2" label="Marquee 3" en={s(settings,"home.marquee.2","TRANSFORMING LIVES","जीवन बदलना").en} hi={s(settings,"home.marquee.2","TRANSFORMING LIVES","जीवन बदलना").hi} />,
             "✦",
-            t(s(settings,"home.marquee.3","BUILDING COMMUNITIES","समुदाय बनाना").en, s(settings,"home.marquee.3","BUILDING COMMUNITIES","समुदाय बनाना").hi),
+            <EditableText key="m3" settingKey="home.marquee.3" label="Marquee 4" en={s(settings,"home.marquee.3","BUILDING COMMUNITIES","समुदाय बनाना").en} hi={s(settings,"home.marquee.3","BUILDING COMMUNITIES","समुदाय बनाना").hi} />,
             "✦",
           ]}
           speed={40} direction="left"
@@ -335,15 +335,27 @@ export default function HomePageClient({
 
       {/* PREMIUM STORY SECTION */}
       <PremiumStorySection
-        eyebrow={t("Impact Stories", "प्रभाव की कहानियाँ")}
-        heading={t("Transforming Lives, One Story at a Time", "एक समय में एक जीवन बदलना")}
-        description={t("Real stories from real people whose lives have been touched by our work.", "वास्तविक लोगों की वास्तविक कहानियाँ जिनके जीवन हमारे काम से छुए गए हैं।")}
+        eyebrow={<EditableText settingKey="home.impact.eyebrow" label="Impact Eyebrow" en={s(settings,"home.impact.eyebrow","Impact Stories","प्रभाव की कहानियाँ").en} hi={s(settings,"home.impact.eyebrow","Impact Stories","प्रभाव की कहानियाँ").hi} />}
+        heading={<EditableText settingKey="home.impact.heading" label="Impact Heading" en={s(settings,"home.impact.heading","Transforming Lives, One Story at a Time","एक समय में एक जीवन बदलना").en} hi={s(settings,"home.impact.heading","Transforming Lives, One Story at a Time","एक समय में एक जीवन बदलना").hi} />}
+        description={<EditableText settingKey="home.impact.desc" label="Impact Description" multiline en={s(settings,"home.impact.desc","Real stories from real people whose lives have been touched by our work.","वास्तविक लोगों की वास्तविक कहानियाँ जिनके जीवन हमारे काम से छुए गए हैं।").en} hi={s(settings,"home.impact.desc","Real stories from real people whose lives have been touched by our work.","वास्तविक लोगों की वास्तविक कहानियाँ जिनके जीवन हमारे काम से छुए गए हैं।").hi} />}
         cards={[
-          { id: "story-1", number: "01", title: t("Education Transforms Communities", "शिक्षा समुदायों को बदलती है"), description: t("Through our Shiksha Seva program, over 500 underprivileged children have received quality education.", "हमारे शिक्षा सेवा कार्यक्रम के माध्यम से, 500 से अधिक वंचित बच्चों को गुणवत्तापूर्ण शिक्षा मिली है।"), image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80&auto=format&fit=crop", stat: "500+", statLabel: t("Students Supported", "छात्र समर्थित") },
-          { id: "story-2", number: "02", title: t("Green Revolution in Action", "हरित क्रांति की कार्रवाई"), description: t("Our Vrikshaaropan initiative has planted over 10,000 trees across West Champaran.", "हमारे वृक्षारोपण पहल ने पश्चिम चम्पारण में 10,000 से अधिक पेड़ लगाए हैं।"), image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80&auto=format&fit=crop", stat: "10K+", statLabel: t("Trees Planted", "पेड़ लगाए गए") },
-          { id: "story-3", number: "03", title: t("Healthcare for All", "सभी के लिए स्वास्थ्य सेवा"), description: t("Free health camps and medical assistance have reached over 5,000 patients.", "मुफ्त स्वास्थ्य शिविर ग्रामीण क्षेत्रों में 5,000 से अधिक रोगियों तक पहुँची है।"), image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80&auto=format&fit=crop", stat: "5K+", statLabel: t("Patients Treated", "रोगियों का इलाज") },
+          { id: "story-1", number: "01",
+            title: <EditableText settingKey="home.impact.story.0.title" label="Story 1 Title" en={s(settings,"home.impact.story.0.title","Education Transforms Communities","शिक्षा समुदायों को बदलती है").en} hi={s(settings,"home.impact.story.0.title","Education Transforms Communities","शिक्षा समुदायों को बदलती है").hi} />,
+            description: <EditableText settingKey="home.impact.story.0.desc" label="Story 1 Description" multiline en={s(settings,"home.impact.story.0.desc","Through our Shiksha Seva program, over 500 underprivileged children have received quality education.","हमारे शिक्षा सेवा कार्यक्रम के माध्यम से, 500 से अधिक वंचित बच्चों को गुणवत्तापूर्ण शिक्षा मिली है।").en} hi={s(settings,"home.impact.story.0.desc","Through our Shiksha Seva program, over 500 underprivileged children have received quality education.","हमारे शिक्षा सेवा कार्यक्रम के माध्यम से, 500 से अधिक वंचित बच्चों को गुणवत्तापूर्ण शिक्षा मिली है।").hi} />,
+            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80&auto=format&fit=crop", imageAlt: "Education Transforms Communities",
+            stat: "500+", statLabel: <EditableText settingKey="home.impact.story.0.stat" label="Story 1 Stat Label" en={s(settings,"home.impact.story.0.stat","Students Supported","छात्र समर्थित").en} hi={s(settings,"home.impact.story.0.stat","Students Supported","छात्र समर्थित").hi} /> },
+          { id: "story-2", number: "02",
+            title: <EditableText settingKey="home.impact.story.1.title" label="Story 2 Title" en={s(settings,"home.impact.story.1.title","Green Revolution in Action","हरित क्रांति की कार्रवाई").en} hi={s(settings,"home.impact.story.1.title","Green Revolution in Action","हरित क्रांति की कार्रवाई").hi} />,
+            description: <EditableText settingKey="home.impact.story.1.desc" label="Story 2 Description" multiline en={s(settings,"home.impact.story.1.desc","Our Vrikshaaropan initiative has planted over 10,000 trees across West Champaran.","हमारे वृक्षारोपण पहल ने पश्चिम चम्पारण में 10,000 से अधिक पेड़ लगाए हैं।").en} hi={s(settings,"home.impact.story.1.desc","Our Vrikshaaropan initiative has planted over 10,000 trees across West Champaran.","हमारे वृक्षारोपण पहल ने पश्चिम चम्पारण में 10,000 से अधिक पेड़ लगाए हैं।").hi} />,
+            image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80&auto=format&fit=crop", imageAlt: "Green Revolution in Action",
+            stat: "10K+", statLabel: <EditableText settingKey="home.impact.story.1.stat" label="Story 2 Stat Label" en={s(settings,"home.impact.story.1.stat","Trees Planted","पेड़ लगाए गए").en} hi={s(settings,"home.impact.story.1.stat","Trees Planted","पेड़ लगाए गए").hi} /> },
+          { id: "story-3", number: "03",
+            title: <EditableText settingKey="home.impact.story.2.title" label="Story 3 Title" en={s(settings,"home.impact.story.2.title","Healthcare for All","सभी के लिए स्वास्थ्य सेवा").en} hi={s(settings,"home.impact.story.2.title","Healthcare for All","सभी के लिए स्वास्थ्य सेवा").hi} />,
+            description: <EditableText settingKey="home.impact.story.2.desc" label="Story 3 Description" multiline en={s(settings,"home.impact.story.2.desc","Free health camps and medical assistance have reached over 5,000 patients.","मुफ्त स्वास्थ्य शिविर ग्रामीण क्षेत्रों में 5,000 से अधिक रोगियों तक पहुँची है।").en} hi={s(settings,"home.impact.story.2.desc","Free health camps and medical assistance have reached over 5,000 patients.","मुफ्त स्वास्थ्य शिविर ग्रामीण क्षेत्रों में 5,000 से अधिक रोगियों तक पहुँची है।").hi} />,
+            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80&auto=format&fit=crop", imageAlt: "Healthcare for All",
+            stat: "5K+", statLabel: <EditableText settingKey="home.impact.story.2.stat" label="Story 3 Stat Label" en={s(settings,"home.impact.story.2.stat","Patients Treated","रोगियों का इलाज").en} hi={s(settings,"home.impact.story.2.stat","Patients Treated","रोगियों का इलाज").hi} /> },
         ]}
-        ctaText={t("Explore All Programs", "सभी कार्यक्रम देखें")}
+        ctaText={<EditableText settingKey="home.impact.cta" label="Impact CTA" en={s(settings,"home.impact.cta","Explore All Programs","सभी कार्यक्रम देखें").en} hi={s(settings,"home.impact.cta","Explore All Programs","सभी कार्यक्रम देखें").hi} />}
         ctaLink="/programs"
         theme="light"
       />
@@ -474,7 +486,7 @@ export default function HomePageClient({
         </div>
       </section>
 
-      <ProgramsGrid />
+      <ProgramsGrid settings={settings} />
 
       {/* 03 — CAMPAIGNS */}
       <NumberedSection num="03" label={t(c.challenges.h2.en, c.challenges.h2.hi)}>
@@ -568,23 +580,26 @@ export default function HomePageClient({
             testimonials={[
               {
                 id: 1,
-                quote: t(s(settings,"home.testimonial.0.quote","Hariwatika helped my daughter get scholarships. Today she is a teacher helping other children.","हरिवाटिका ने मेरी बेटी को छात्रवृत्ति प्राप्त करने में मदद की। आज वह एक शिक्षिका है।").en, s(settings,"home.testimonial.0.quote","Hariwatika helped my daughter get scholarships. Today she is a teacher helping other children.","हरिवाटिका ने मेरी बेटी को छात्रवृत्ति प्राप्त करने में मदद की। आज वह एक शिक्षिका है।").hi),
-                name:  t(s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").en, s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").hi),
-                location: t(s(settings,"home.testimonial.0.loc","Parent, Bettiah","अभिभावक, बेतिया").en, s(settings,"home.testimonial.0.loc","Parent, Bettiah","अभिभावक, बेतिया").hi),
+                quote: <EditableText settingKey="home.testimonial.0.quote" label="Testimonial 1 Quote" multiline en={s(settings,"home.testimonial.0.quote","Hariwatika helped my daughter get scholarships. Today she is a teacher helping other children.","हरिवाटिका ने मेरी बेटी को छात्रवृत्ति प्राप्त करने में मदद की। आज वह एक शिक्षिका है।").en} hi={s(settings,"home.testimonial.0.quote","Hariwatika helped my daughter get scholarships. Today she is a teacher helping other children.","हरिवाटिका ने मेरी बेटी को छात्रवृत्ति प्राप्त करने में मदद की। आज वह एक शिक्षिका है।").hi} />,
+                name: t(s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").en, s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").hi),
+                nameNode: <EditableText settingKey="home.testimonial.0.name" label="Testimonial 1 Name" en={s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").en} hi={s(settings,"home.testimonial.0.name","Rekha Devi","रेखा देवी").hi} />,
+                location: <EditableText settingKey="home.testimonial.0.loc" label="Testimonial 1 Location" en={s(settings,"home.testimonial.0.loc","Parent, Bettiah","अभिभावक, बेतिया").en} hi={s(settings,"home.testimonial.0.loc","Parent, Bettiah","अभिभावक, बेतिया").hi} />,
                 image: IMG.avatar,
               },
               {
                 id: 2,
-                quote: t(s(settings,"home.testimonial.1.quote","During the flood, Hariwatika was first to reach our village with food and medicine.","बाढ़ के दौरान, हरिवाटिका भोजन और दवा के साथ पहुंचने वाला पहला था।").en, s(settings,"home.testimonial.1.quote","During the flood, Hariwatika was first to reach our village with food and medicine.","बाढ़ के दौरान, हरिवाटिका भोजन और दवा के साथ पहुंचने वाला पहला था।").hi),
-                name:  t(s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").en, s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").hi),
-                location: t(s(settings,"home.testimonial.1.loc","Farmer, West Champaran","किसान, पश्चिम चम्पारण").en, s(settings,"home.testimonial.1.loc","Farmer, West Champaran","किसान, पश्चिम चम्पारण").hi),
+                quote: <EditableText settingKey="home.testimonial.1.quote" label="Testimonial 2 Quote" multiline en={s(settings,"home.testimonial.1.quote","During the flood, Hariwatika was first to reach our village with food and medicine.","बाढ़ के दौरान, हरिवाटिका भोजन और दवा के साथ पहुंचने वाला पहला था।").en} hi={s(settings,"home.testimonial.1.quote","During the flood, Hariwatika was first to reach our village with food and medicine.","बाढ़ के दौरान, हरिवाटिका भोजन और दवा के साथ पहुंचने वाला पहला था।").hi} />,
+                name: t(s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").en, s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").hi),
+                nameNode: <EditableText settingKey="home.testimonial.1.name" label="Testimonial 2 Name" en={s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").en} hi={s(settings,"home.testimonial.1.name","Ramesh Kumar","रमेश कुमार").hi} />,
+                location: <EditableText settingKey="home.testimonial.1.loc" label="Testimonial 2 Location" en={s(settings,"home.testimonial.1.loc","Farmer, West Champaran","किसान, पश्चिम चम्पारण").en} hi={s(settings,"home.testimonial.1.loc","Farmer, West Champaran","किसान, पश्चिम चम्पारण").hi} />,
                 image: IMG.avatar,
               },
               {
                 id: 3,
-                quote: t(s(settings,"home.testimonial.2.quote","The free health camp diagnosed my illness early. Their support gave me a second chance.","मुफ्त स्वास्थ्य शिविर ने मेरी बीमारी का जल्दी निदान किया। उनके समर्थन ने मुझे दूसरा मौका दिया।").en, s(settings,"home.testimonial.2.quote","The free health camp diagnosed my illness early. Their support gave me a second chance.","मुफ्त स्वास्थ्य शिविर ने मेरी बीमारी का जल्दी निदान किया। उनके समर्थन ने मुझे दूसरा मौका दिया।").hi),
-                name:  t(s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").en, s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").hi),
-                location: t(s(settings,"home.testimonial.2.loc","Village Elder","गांव की बुजुर्ग").en, s(settings,"home.testimonial.2.loc","Village Elder","गांव की बुजुर्ग").hi),
+                quote: <EditableText settingKey="home.testimonial.2.quote" label="Testimonial 3 Quote" multiline en={s(settings,"home.testimonial.2.quote","The free health camp diagnosed my illness early. Their support gave me a second chance.","मुफ्त स्वास्थ्य शिविर ने मेरी बीमारी का जल्दी निदान किया। उनके समर्थन ने मुझे दूसरा मौका दिया।").en} hi={s(settings,"home.testimonial.2.quote","The free health camp diagnosed my illness early. Their support gave me a second chance.","मुफ्त स्वास्थ्य शिविर ने मेरी बीमारी का जल्दी निदान किया। उनके समर्थन ने मुझे दूसरा मौका दिया।").hi} />,
+                name: t(s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").en, s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").hi),
+                nameNode: <EditableText settingKey="home.testimonial.2.name" label="Testimonial 3 Name" en={s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").en} hi={s(settings,"home.testimonial.2.name","Sunita Singh","सुनीता सिंह").hi} />,
+                location: <EditableText settingKey="home.testimonial.2.loc" label="Testimonial 3 Location" en={s(settings,"home.testimonial.2.loc","Village Elder","गांव की बुजुर्ग").en} hi={s(settings,"home.testimonial.2.loc","Village Elder","गांव की बुजुर्ग").hi} />,
                 image: IMG.avatar,
               },
             ]}

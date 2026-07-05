@@ -1,10 +1,20 @@
 "use client";
 
 import HoverExpandCard from "./HoverExpandCard";
+import EditableText from "./EditableText";
 import { useLang } from "@/context/LanguageContext";
 import { LENITY, SERIF } from "@/theme/lenity";
 
+type HomeSettings = Record<string, { en: string; hi: string }>;
+
+/** Resolve a setting key from DB, falling back to a hardcoded default. */
+function s(settings: HomeSettings, key: string, fallbackEn: string, fallbackHi: string) {
+  const row = settings[key];
+  return { en: row?.en || fallbackEn, hi: row?.hi || fallbackHi };
+}
+
 interface Program {
+  key: string;
   number: string;
   titleEn: string;
   titleHi: string;
@@ -16,6 +26,7 @@ interface Program {
 
 const programs: Program[] = [
   {
+    key: "campus",
     number: "01",
     titleEn: "Hariwatika Campus",
     titleHi: "हरिवाटिका परिसर",
@@ -27,6 +38,7 @@ const programs: Program[] = [
     link: "/about",
   },
   {
+    key: "education",
     number: "02",
     titleEn: "Hariwatika Education",
     titleHi: "हरिवाटिका शिक्षा",
@@ -38,6 +50,7 @@ const programs: Program[] = [
     link: "/programs",
   },
   {
+    key: "social-service",
     number: "03",
     titleEn: "Hariwatika Social Service",
     titleHi: "हरिवाटिका सामाजिक सेवा",
@@ -49,6 +62,7 @@ const programs: Program[] = [
     link: "/services",
   },
   {
+    key: "environment",
     number: "04",
     titleEn: "Hariwatika Environment",
     titleHi: "हरिवाटिका पर्यावरण",
@@ -61,7 +75,7 @@ const programs: Program[] = [
   },
 ];
 
-export default function ProgramsGrid() {
+export default function ProgramsGrid({ settings = {} }: { settings?: HomeSettings }) {
   const { t } = useLang();
 
   return (
@@ -74,22 +88,21 @@ export default function ProgramsGrid() {
             style={{ color: LENITY.ink }}
           >
             <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-            {t("Our Programs", "हमारे कार्यक्रम")}
+            <EditableText settingKey="home.programs.eyebrow" label="Programs Eyebrow" en={s(settings,"home.programs.eyebrow","Our Programs","हमारे कार्यक्रम").en} hi={s(settings,"home.programs.eyebrow","Our Programs","हमारे कार्यक्रम").hi} />
           </span>
           <h2
             className="text-3xl md:text-4xl font-bold mb-4"
             style={{ fontFamily: SERIF, color: LENITY.ink }}
           >
-            {t("Transforming Lives Through Service", "सेवा के माध्यम से जीवन बदलना")}
+            <EditableText settingKey="home.programs.h2" label="Programs Heading" en={s(settings,"home.programs.h2","Transforming Lives Through Service","सेवा के माध्यम से जीवन बदलना").en} hi={s(settings,"home.programs.h2","Transforming Lives Through Service","सेवा के माध्यम से जीवन बदलना").hi} />
           </h2>
           <p
             className="text-base md:text-lg italic max-w-2xl mx-auto"
             style={{ fontFamily: SERIF, color: LENITY.muted }}
           >
-            {t(
-              "Discover our key programs that are making a difference in communities",
-              "हमारे प्रमुख कार्यक्रमों की खोज करें जो समुदायों में बदलाव ला रहे हैं"
-            )}
+            <EditableText settingKey="home.programs.lead" label="Programs Lead" multiline
+              en={s(settings,"home.programs.lead","Discover our key programs that are making a difference in communities","हमारे प्रमुख कार्यक्रमों की खोज करें जो समुदायों में बदलाव ला रहे हैं").en}
+              hi={s(settings,"home.programs.lead","Discover our key programs that are making a difference in communities","हमारे प्रमुख कार्यक्रमों की खोज करें जो समुदायों में बदलाव ला रहे हैं").hi} />
           </p>
         </div>
 
@@ -99,8 +112,8 @@ export default function ProgramsGrid() {
             <HoverExpandCard
               key={program.number}
               number={program.number}
-              title={t(program.titleEn, program.titleHi)}
-              description={t(program.descriptionEn, program.descriptionHi)}
+              title={<EditableText settingKey={`home.programs.${program.key}.title`} label={`Program — ${program.titleEn} — Title`} en={s(settings,`home.programs.${program.key}.title`,program.titleEn,program.titleHi).en} hi={s(settings,`home.programs.${program.key}.title`,program.titleEn,program.titleHi).hi} />}
+              description={<EditableText settingKey={`home.programs.${program.key}.desc`} label={`Program — ${program.titleEn} — Description`} multiline en={s(settings,`home.programs.${program.key}.desc`,program.descriptionEn,program.descriptionHi).en} hi={s(settings,`home.programs.${program.key}.desc`,program.descriptionEn,program.descriptionHi).hi} />}
               image={program.image}
               link={program.link}
               linkText={t("Read More", "और पढ़ें")}
