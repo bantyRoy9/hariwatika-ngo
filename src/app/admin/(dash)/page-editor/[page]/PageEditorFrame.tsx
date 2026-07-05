@@ -226,6 +226,29 @@ export default function PageEditorFrame({ publicPath, label, slug }: Props) {
         </span>
       </div>
 
+      {/* ── "Can't add/edit a card?" hint — Services, Campaigns, Stats, Pillars are
+           managed as list data, not inline text, so double-click won't touch them here. ── */}
+      {slug === "home" && (
+        <div
+          style={{
+            background: LENITY.adminSoft,
+            borderBottom: `1px solid ${LENITY.adminLine}`,
+            padding: "8px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            flexShrink: 0,
+            fontSize: 12,
+            color: LENITY.adminMuted,
+          }}
+        >
+          Can&apos;t add, remove, or edit a Service or Campaign card here — double-click only edits section headings/labels, not card content. Services and Campaigns are managed as a list.{" "}
+          <Link href="/admin/content/home" style={{ color: LENITY.yellow, fontWeight: 600, textDecoration: "underline" }}>
+            Manage them in Home Page content →
+          </Link>
+        </div>
+      )}
+
       {/* ── iframe area ── */}
       <div
         style={{

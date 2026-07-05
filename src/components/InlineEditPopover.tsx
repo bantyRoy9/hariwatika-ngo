@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X, Check, Pencil } from "lucide-react";
 import { saveSettings } from "@/app/actions/content";
+import { translateToHindi } from "@/app/actions/translate";
+import { UNREACHABLE_MESSAGE } from "@/lib/translateMessages";
 import { useAdminEdit } from "@/context/AdminEditContext";
 import { LENITY, SERIF } from "@/theme/lenity";
 
@@ -32,6 +34,8 @@ export default function InlineEditPopover() {
   const [hi, setHi]       = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError]   = useState("");
+  const [translating, setTranslating] = useState(false);
+  const [translateError, setTranslateError] = useState("");
 
   const firstRef = useRef<HTMLTextAreaElement | HTMLInputElement | null>(null);
 
@@ -41,6 +45,8 @@ export default function InlineEditPopover() {
     setHi(editing.hi);
     setError("");
     setSaving(false);
+    setTranslating(false);
+    setTranslateError("");
     setTimeout(() => firstRef.current?.focus(), 50);
   }, [editing]);
 
@@ -55,6 +61,20 @@ export default function InlineEditPopover() {
 
   const multiline = editing.multiline ?? (en.length > 80 || hi.length > 80);
   const label = editing.label ?? editing.settingKey.split(".").slice(-2).join(" › ");
+
+  const handleEnBlur = async () => {
+    if (!en.trim()) return;
+    setTranslating(true);
+    setTranslateError("");
+    try {
+      const hiText = await translateToHindi(en);
+      setHi(hiText);
+    } catch (e) {
+      setTranslateError(e instanceof Error ? e.message : UNREACHABLE_MESSAGE);
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -153,12 +173,14 @@ export default function InlineEditPopover() {
             <textarea
               ref={firstRef as React.RefObject<HTMLTextAreaElement>}
               value={en} onChange={(e) => setEn(e.target.value)}
+              onBlur={handleEnBlur}
               rows={4} style={inputStyle}
             />
           ) : (
             <input
               ref={firstRef as React.RefObject<HTMLInputElement>}
               type="text" value={en} onChange={(e) => setEn(e.target.value)}
+              onBlur={handleEnBlur}
               style={inputStyle}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSave(); } }}
             />
@@ -166,21 +188,27 @@ export default function InlineEditPopover() {
         </div>
 
         {/* ── Hindi ── */}
-        <div style={{ marginBottom: 22 }}>
+        <div style={{ marginBottom: 10 }}>
           <label style={fieldLabel}>हिन्दी</label>
           {multiline ? (
             <textarea
               value={hi} onChange={(e) => setHi(e.target.value)}
-              rows={4} style={inputStyle}
+              disabled={translating}
+              rows={4} style={{ ...inputStyle, opacity: translating ? 0.6 : 1 }}
             />
           ) : (
             <input
               type="text" value={hi} onChange={(e) => setHi(e.target.value)}
-              style={inputStyle}
+              disabled={translating}
+              style={{ ...inputStyle, opacity: translating ? 0.6 : 1 }}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSave(); } }}
             />
           )}
         </div>
+
+        {/* ── Translate status ── */}
+        {translating && <p style={{ color: C.muted, fontSize: 12, marginBottom: 12 }}>Translating…</p>}
+        {translateError && <p style={{ color: C.red, fontSize: 12, marginBottom: 12 }}>{translateError}</p>}
 
         {/* ── Error ── */}
         {error && <p style={{ color: C.red, fontSize: 13, marginBottom: 12 }}>{error}</p>}
