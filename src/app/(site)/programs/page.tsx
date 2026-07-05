@@ -1,5 +1,4 @@
-import { getSettings } from "@/lib/content";
-import ProgramsContent from "./ProgramsContent";
+"use client";
 
 import { useState } from "react";
 import DonationModal from "@/components/DonationModal";
@@ -8,19 +7,66 @@ import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
 import { useLang } from "@/context/LanguageContext";
 import {
-  BookOpen, Users, Stethoscope, TreePine, Droplets, Wheat,
-  Heart, UserPlus, Building2, Target, Check, ArrowRight
+  BookOpen, Users, Heart, UserPlus, Building2, Target, Check, ArrowRight
 } from "lucide-react";
 import { LENITY, SERIF } from "@/theme/lenity";
 import Link from "next/link";
 
-export default async function ProgramsPage() {
-  let settings: Record<string, { en: string; hi: string }> = {};
-  try {
-    settings = await getSettings(["programs"]);
-  } catch {
-    // DB not ready — fall through to hardcoded defaults in the client
-  }
+// Temporary programs data - TODO: Replace with database data
+const programs = [
+  { 
+    id: "marriage", 
+    icon: Heart, 
+    titleEn: "Marriage Assistance", 
+    titleHi: "विवाह सहायता", 
+    descEn: "Free and subsidized marriage services", 
+    descHi: "मुफ्त और सब्सिडी वाली विवाह सेवाएं", 
+    shortDescEn: "Supporting families", 
+    shortDescHi: "परिवारों का समर्थन", 
+    descriptionEn: "We provide complete marriage assistance including venue, food, and documentation support.", 
+    descriptionHi: "हम स्थल, भोजन और दस्तावेज़ सहायता सहित पूर्ण विवाह सहायता प्रदान करते हैं।", 
+    beneficiaries: "5000+", 
+    features: ["Free venue", "Food arrangements", "Documentation help"], 
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+    stats: {
+      beneficiaries: "5000+",
+      years: "25+",
+      villages: "50+"
+    },
+    objectives: [
+      { en: "Provide free marriage venues for underprivileged families", hi: "वंचित परिवारों के लिए मुफ्त विवाह स्थल प्रदान करें" },
+      { en: "Arrange complete food and catering services", hi: "पूर्ण भोजन और खानपान सेवाओं की व्यवस्था करें" },
+      { en: "Assist with marriage documentation and legal formalities", hi: "विवाह दस्तावेज़ीकरण और कानूनी औपचारिकताओं में सहायता करें" },
+      { en: "Ensure dignified ceremonies for all communities", hi: "सभी समुदायों के लिए गरिमापूर्ण समारोह सुनिश्चित करें" }
+    ]
+  },
+  { 
+    id: "education", 
+    icon: BookOpen, 
+    titleEn: "Education Support", 
+    titleHi: "शिक्षा सहायता", 
+    descEn: "Educational support for rural children", 
+    descHi: "ग्रामीण बच्चों के लिए शैक्षिक सहायता", 
+    shortDescEn: "Empowering children", 
+    shortDescHi: "बच्चों को सशक्त बनाना", 
+    descriptionEn: "Providing educational support including school supplies, tuition assistance, and scholarships.", 
+    descriptionHi: "स्कूल आपूर्ति, ट्यूशन सहायता और छात्रवृत्ति सहित शैक्षिक सहायता प्रदान करना।", 
+    beneficiaries: "2000+", 
+    features: ["School supplies", "Tuition support", "Scholarships"], 
+    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80",
+    stats: {
+      beneficiaries: "2000+",
+      years: "20+",
+      schools: "30+"
+    },
+    objectives: [
+      { en: "Provide school supplies and stationery to needy students", hi: "जरूरतमंद छात्रों को स्कूल की आपूर्ति और स्टेशनरी प्रदान करें" },
+      { en: "Offer tuition fee assistance for deserving children", hi: "योग्य बच्चों के लिए ट्यूशन शुल्क सहायता प्रदान करें" },
+      { en: "Award scholarships for higher education", hi: "उच्च शिक्षा के लिए छात्रवृत्ति प्रदान करें" },
+      { en: "Support infrastructure development in rural schools", hi: "ग्रामीण स्कूलों में बुनियादी ढांचे के विकास का समर्थन करें" }
+    ]
+  },
+];
 
 export default function ProgramsPage() {
   const { t } = useLang();
@@ -150,12 +196,10 @@ export default function ProgramsPage() {
                             className="text-2xl font-bold"
                             style={{ fontFamily: SERIF, color: LENITY.accent }}
                           >
-                            {Object.values(program.stats)[2]}
+                            {"villages" in program.stats ? program.stats.villages : "schools" in program.stats ? program.stats.schools : ""}
                           </div>
                           <div className="text-xs" style={{ color: LENITY.muted }}>
-                            {Object.keys(program.stats)[2]
-                              .split(/(?=[A-Z])/)
-                              .join(" ")}
+                            {program.id === "marriage" ? t("Villages", "गांव") : t("Schools", "स्कूल")}
                           </div>
                         </div>
                       </div>
@@ -191,10 +235,10 @@ export default function ProgramsPage() {
                           }}
                         >
                           <ul className="space-y-3">
-                            {program.objectives.map((obj, idx) => (
+                            {program.objectives.map((obj: { en: string; hi: string }, idx: number) => (
                               <li key={idx} className="flex items-start gap-3">
                                 <Check
-                                  className="w-5 h-5 flex-shrink-0 mt-0.5"
+                                  className="w-5 h-5 shrink-0 mt-0.5"
                                   style={{ color: LENITY.accent }}
                                 />
                                 <span className="text-sm" style={{ color: LENITY.muted }}>

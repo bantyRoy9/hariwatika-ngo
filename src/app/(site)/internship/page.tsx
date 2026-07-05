@@ -1,25 +1,13 @@
-import { getSettings, getHeader } from "@/lib/content";
-import InternshipContent from "./InternshipContent";
+"use client";
 
 import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
 import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
-import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
-import { LENITY, SERIF, IMG } from "@/theme/lenity";
+import { Award, Clock, CheckCircle, Briefcase } from "lucide-react";
+import { LENITY, SERIF } from "@/theme/lenity";
 import { submitInternship } from "@/app/actions/submissions";
-
-export default async function InternshipPage() {
-  let settings: Record<string, { en: string; hi: string }> = {};
-  let header: { tag: { en: string; hi: string }; title: { en: string; hi: string }; subtitle: { en: string; hi: string }; img: string | null } | undefined;
-  try {
-    [settings, header] = await Promise.all([
-      getSettings(["internship"]),
-      getHeader("internship"),
-    ]);
-  } catch {
-    // DB not ready — fall through to hardcoded defaults in the client
-  }
+import { useLang } from "@/context/LanguageContext";
 
 interface AppForm {
   name: string;
@@ -34,7 +22,32 @@ interface AppForm {
   motivation: string;
 }
 
+// Temporary internship data - TODO: Replace with database data
+const internships = [
+  { 
+    id: 1, 
+    title: "Social Work Intern", 
+    duration: "3 months", 
+    department: "Community Outreach",
+    seats: "5",
+    stipend: "₹5000/month",
+    description: "Work with communities in West Champaran",
+    skills: ["Communication", "Social Work"]
+  },
+  { 
+    id: 2, 
+    title: "Education Coordinator", 
+    duration: "6 months", 
+    department: "Education",
+    seats: "3",
+    stipend: "₹7000/month",
+    description: "Coordinate education programs",
+    skills: ["Teaching", "Planning"]
+  },
+];
+
 export default function InternshipPage() {
+  const { t } = useLang();
   const [form, setForm] = useState<AppForm>({
     name: "", age: "", qualification: "", institute: "",
     mobile: "", email: "", role: "", startDate: "", duration: "", motivation: "",
