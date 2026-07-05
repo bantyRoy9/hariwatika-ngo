@@ -1,11 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import PremiumStorySection from "@/components/PremiumStorySection";
 import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
+import EditableCard, { AddButton } from "@/components/EditableCard";
+import EditableHeroStats from "@/components/EditableHeroStats";
+import EditableJourneyCards from "@/components/EditableJourneyCards";
+import { TimelineForm, TeamMemberForm, LegalDocForm, JourneyCardForm, HeroStatForm } from "@/components/AboutForms";
+import { HeroContentForm } from "@/components/HeroContentForm";
+import { deleteTimelineItem, deleteTeamMember, deleteLegalDoc, deleteJourneyCard, deleteHeroStat } from "@/app/actions/aboutContent";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Target, Eye, FileText, Award, ShieldCheck, Download, Users, type LucideIcon } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
@@ -18,6 +25,8 @@ const iconFor = (name: string): LucideIcon => ICONS[name] ?? FileText;
 export type TimelineData = { id: number; year: string; eventEn: string; eventHi: string };
 export type LegalDocData = { id: number; iconName: string; titleEn: string; titleHi: string; number: string; descEn: string; descHi: string };
 export type TeamMemberData = { id: number; name: string; designation: string; initials: string; phone: string | null };
+export type JourneyCardData = { id: number; number: string; titleEn: string; titleHi: string; descEn: string; descHi: string; image: string; stat: string; statLabelEn: string; statLabelHi: string };
+export type HeroStatData = { id: number; value: string; labelEn: string; labelHi: string };
 
 /* PAI eyebrow: small yellow dash + uppercase ink label */
 function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
@@ -36,38 +45,116 @@ export default function AboutContent({
   timeline,
   legalDocs,
   members,
+  journeyCards,
+  heroStats,
   header,
   settings = {},
 }: {
   timeline: TimelineData[];
   legalDocs: LegalDocData[];
   members: TeamMemberData[];
+  journeyCards: JourneyCardData[];
+  heroStats: HeroStatData[];
   header: Header & { img: string | null };
   settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t } = useLang();
 
+  // Timeline modals
+  const [timelineModal, setTimelineModal] = useState<{ open: boolean; data?: TimelineData }>({ open: false });
+  // Team member modals
+  const [teamModal, setTeamModal] = useState<{ open: boolean; data?: TeamMemberData }>({ open: false });
+  // Legal doc modals
+  const [legalModal, setLegalModal] = useState<{ open: boolean; data?: LegalDocData }>({ open: false });
+  // Journey card modals
+  const [journeyModal, setJourneyModal] = useState<{ open: boolean; data?: JourneyCardData }>({ open: false });
+  // Hero stat modals
+  const [heroStatModal, setHeroStatModal] = useState<{ open: boolean; data?: HeroStatData }>({ open: false });
+  // Hero content modal
+  const [heroContentModal, setHeroContentModal] = useState(false);
+
+  const handleDeleteTimeline = async (id: number) => {
+    const result = await deleteTimelineItem(id);
+    if (result.success) {
+      window.location.reload();
+    } else {
+      alert(result.error || "Failed to delete");
+    }
+  };
+
+  const handleDeleteTeamMember = async (id: number) => {
+    const result = await deleteTeamMember(id);
+    if (result.success) {
+      window.location.reload();
+    } else {
+      alert(result.error || "Failed to delete");
+    }
+  };
+
+  const handleDeleteLegalDoc = async (id: number) => {
+    const result = await deleteLegalDoc(id);
+    if (result.success) {
+      window.location.reload();
+    } else {
+      alert(result.error || "Failed to delete");
+    }
+  };
+
+  const handleDeleteJourneyCard = async (id: number) => {
+    const result = await deleteJourneyCard(id);
+    if (result.success) {
+      window.location.reload();
+    } else {
+      alert(result.error || "Failed to delete");
+    }
+  };
+
+  const handleDeleteHeroStat = async (id: number) => {
+    const result = await deleteHeroStat(id);
+    if (result.success) {
+      window.location.reload();
+    } else {
+      alert(result.error || "Failed to delete");
+    }
+  };
+
   return (
     <AdminEditProvider initialValues={settings}>
       <main>
-        <PremiumHero
-          title={<EditableText settingKey="header.about.title" label="Hero Title" en={header.title.en} hi={header.title.hi} />}
-          subtitle={<EditableText settingKey="header.about.tag" label="Hero Eyebrow" en={header.tag.en} hi={header.tag.hi} />}
-          description={<EditableText settingKey="header.about.subtitle" label="Hero Description" multiline en={header.subtitle.en} hi={header.subtitle.hi} />}
-          image={header.img ?? IMG.community}
-          stats={[
-            { value: "25+", label: <EditableText settingKey="about.stat.0" label="Stat 0 Label" en="Years of Service" hi="वर्षों की सेवा" /> },
-            { value: "5000+", label: <EditableText settingKey="about.stat.1" label="Stat 1 Label" en="Families Helped" hi="परिवारों की मदद" /> },
-            { value: "100+", label: <EditableText settingKey="about.stat.2" label="Stat 2 Label" en="Villages Reached" hi="गांव पहुंचे" /> },
-            { value: "200+", label: <EditableText settingKey="about.stat.3" label="Stat 3 Label" en="Volunteers" hi="स्वयंसेवक" /> },
-          ]}
-          breadcrumbs={[
-            { label: t("Home", "होम"), href: "/" },
-            { label: t("About Us", "हमारे बारे में") },
-          ]}
-          overlay="pattern"
-          height="large"
-        />
+        {/* Hero Section - Original Design with Editable Stats */}
+        <EditableHeroStats
+          stats={heroStats}
+          heroContent={{
+            tagEn: header.tag.en,
+            tagHi: header.tag.hi,
+            titleEn: header.title.en,
+            titleHi: header.title.hi,
+            subtitleEn: header.subtitle.en,
+            subtitleHi: header.subtitle.hi,
+            image: header.img || "",
+          }}
+          onAdd={() => setHeroStatModal({ open: true })}
+          onEdit={(stat) => setHeroStatModal({ open: true, data: stat })}
+          onDelete={handleDeleteHeroStat}
+          onEditHeroContent={() => setHeroContentModal(true)}
+        >
+          <PremiumHero
+            title={t(header.title.en, header.title.hi)}
+            subtitle={t(header.tag.en, header.tag.hi)}
+            description={t(header.subtitle.en, header.subtitle.hi)}
+            image={header.img ?? IMG.community}
+            stats={heroStats.map((stat) => ({
+              value: stat.value,
+              label: t(stat.labelEn, stat.labelHi)
+            }))}
+            breadcrumbs={[
+              { label: t("Home", "होम"), href: "/" },
+              { label: t("About Us", "हमारे बारे में") },
+            ]}
+            overlay="pattern"
+            height="large"
+          />
+        </EditableHeroStats>
 
         {/* ── History ── */}
         <section
@@ -109,32 +196,45 @@ export default function AboutContent({
               </Reveal>
 
               <div className="space-y-2">
+                {/* Add Timeline Button */}
+                <div className="mb-4">
+                  <AddButton
+                    onClick={() => setTimelineModal({ open: true })}
+                    label="Add Timeline Event"
+                  />
+                </div>
+
                 {timeline.map((item, i) => (
-                  <Reveal key={item.year} delay={i * 60} animation="slide-left">
-                    <div className="flex gap-4 items-start">
-                      <div className="flex flex-col items-center shrink-0">
-                        <div
-                          className="w-9 h-9 rounded-full flex items-center justify-center font-bold"
-                          style={{ background: LENITY.accent, color: LENITY.ink, fontSize: "0.7rem", fontWeight: 700 }}
-                        >
-                          {item.year.slice(2)}
+                  <Reveal key={item.id} delay={i * 60} animation="slide-left">
+                    <EditableCard
+                      onEdit={() => setTimelineModal({ open: true, data: item })}
+                      onDelete={() => handleDeleteTimeline(item.id)}
+                    >
+                      <div className="flex gap-4 items-start">
+                        <div className="flex flex-col items-center shrink-0">
+                          <div
+                            className="w-9 h-9 rounded-full flex items-center justify-center font-bold"
+                            style={{ background: LENITY.accent, color: LENITY.ink, fontSize: "0.7rem", fontWeight: 700 }}
+                          >
+                            {item.year.slice(2)}
+                          </div>
+                          {i < timeline.length - 1 && (
+                            <div className="w-0.5 h-4 mt-1" style={{ background: LENITY.line }} />
+                          )}
                         </div>
-                        {i < timeline.length - 1 && (
-                          <div className="w-0.5 h-4 mt-1" style={{ background: LENITY.line }} />
-                        )}
+                        <div className="pb-2">
+                          <span
+                            className="font-bold block mb-0.5"
+                            style={{ color: LENITY.ink, fontSize: "0.7rem", fontWeight: 700 }}
+                          >
+                            {item.year}
+                          </span>
+                          <p style={{ color: LENITY.ink, fontSize: "0.875rem", lineHeight: 1.35 }}>
+                            {t(item.eventEn, item.eventHi)}
+                          </p>
+                        </div>
                       </div>
-                      <div className="pb-2">
-                        <span
-                          className="font-bold block mb-0.5"
-                          style={{ color: LENITY.ink, fontSize: "0.7rem", fontWeight: 700 }}
-                        >
-                          {item.year}
-                        </span>
-                        <p style={{ color: LENITY.ink, fontSize: "0.875rem", lineHeight: 1.35 }}>
-                          {t(item.eventEn, item.eventHi)}
-                        </p>
-                      </div>
-                    </div>
+                    </EditableCard>
                   </Reveal>
                 ))}
               </div>
@@ -211,52 +311,34 @@ export default function AboutContent({
           </div>
         </section>
 
-        {/* ── Our Journey Stories ── */}
-        <PremiumStorySection
-          eyebrow={<EditableText settingKey="about.story.eyebrow" label="Story Eyebrow" en="Our Journey" hi="हमारी यात्रा" />}
-          heading={<EditableText settingKey="about.story.h2" label="Story Heading" en="25 Years of Unwavering Commitment" hi="25 वर्षों की अटूट प्रतिबद्धता" />}
-          description={<EditableText settingKey="about.story.lead" label="Story Lead" multiline
-            en="From humble beginnings at Hariwatika Shiv Mandir to serving thousands across West Champaran, our journey is defined by compassion, transparency, and measurable impact."
-            hi="हरिवाटिका शिव मंदिर से शुरू होकर पश्चिम चम्पारण में हजारों की सेवा तक, हमारी यात्रा करुणा, पारदर्शिता और मापने योग्य प्रभाव से परिभाषित है।" />}
-          cards={[
-            {
-              id: "milestone-1",
-              number: "01",
-              title: <EditableText settingKey="about.story.card.0.title" label="Card 1 Title" en="Foundation & Early Years" hi="स्थापना और प्रारंभिक वर्ष" />,
-              description: <EditableText settingKey="about.story.card.0.desc" label="Card 1 Text" multiline
-                en="Established in 2000 at the sacred Hariwatika Shiv Mandir with a vision to help families conduct dignified marriages. What started as a small community initiative has grown into a comprehensive welfare organization serving the entire region."
-                hi="2000 में पवित्र हरिवाटिका शिव मंदिर में स्थापित, परिवारों को सम्मानजनक विवाह कराने में मदद करने के दृष्टिकोण के साथ। एक छोटी सामुदायिक पहल से शुरू होकर पूरे क्षेत्र की सेवा करने वाले व्यापक कल्याण संगठन में विकसित हुआ।" />,
-              image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80&auto=format&fit=crop",
-              stat: "2000",
-              statLabel: <EditableText settingKey="about.story.card.0.statLabel" label="Card 1 Stat Label" en="Year Founded" hi="स्थापना वर्ष" />,
-            },
-            {
-              id: "milestone-2",
-              number: "02",
-              title: <EditableText settingKey="about.story.card.1.title" label="Card 2 Title" en="Growth & Expansion" hi="विकास और विस्तार" />,
-              description: <EditableText settingKey="about.story.card.1.desc" label="Card 2 Text" multiline
-                en="Expanded services to include tree plantation, poverty relief, healthcare camps, and educational support. Registered as a recognized welfare organization with transparent operations."
-                hi="सेवाओं का विस्तार वृक्षारोपण, गरीबी राहत, स्वास्थ्य शिविर और शैक्षिक सहायता शामिल करने के लिए किया गया। पारदर्शी संचालन के साथ मान्यता प्राप्त कल्याण संगठन के रूप में पंजीकृत।" />,
-              image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80&auto=format&fit=crop",
-              stat: "100+",
-              statLabel: <EditableText settingKey="about.story.card.1.statLabel" label="Card 2 Stat Label" en="Villages Reached" hi="गांव पहुंचे" />,
-            },
-            {
-              id: "milestone-3",
-              number: "03",
-              title: <EditableText settingKey="about.story.card.2.title" label="Card 3 Title" en="Today & Tomorrow" hi="आज और कल" />,
-              description: <EditableText settingKey="about.story.card.2.desc" label="Card 3 Text" multiline
-                en="Serving thousands of families annually with 200+ trained volunteers and a network of dedicated partners. Our commitment to seva continues to grow stronger with each passing year."
-                hi="200+ प्रशिक्षित स्वयंसेवकों और समर्पित साझेदारों के नेटवर्क के साथ सालाना हजारों परिवारों की सेवा। सेवा के प्रति हमारी प्रतिबद्धता हर गुजरते साल के साथ मजबूत होती जा रही है।" />,
-              image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80&auto=format&fit=crop",
-              stat: "5K+",
-              statLabel: <EditableText settingKey="about.story.card.2.statLabel" label="Card 3 Stat Label" en="Annual Beneficiaries" hi="वार्षिक लाभार्थी" />,
-            },
-          ]}
-          ctaText={<EditableText settingKey="about.story.cta" label="Story CTA" en="View Our Programs" hi="हमारे कार्यक्रम देखें" />}
-          ctaLink="/programs"
-          theme="light"
-        />
+        {/* ── Our Journey Stories - Original Design with Editable Cards ── */}
+        <EditableJourneyCards
+          cards={journeyCards}
+          onAdd={() => setJourneyModal({ open: true })}
+          onEdit={(card) => setJourneyModal({ open: true, data: card })}
+          onDelete={handleDeleteJourneyCard}
+        >
+          <PremiumStorySection
+            eyebrow={t("Our Journey", "हमारी यात्रा")}
+            heading={t("25 Years of Unwavering Commitment", "25 वर्षों की अटूट प्रतिबद्धता")}
+            description={t(
+              "From humble beginnings at Hariwatika Shiv Mandir to serving thousands across West Champaran, our journey is defined by compassion, transparency, and measurable impact.",
+              "हरिवाटिका शिव मंदिर से शुरू होकर पश्चिम चम्पारण में हजारों की सेवा तक, हमारी यात्रा करुणा, पारदर्शिता और मापने योग्य प्रभाव से परिभाषित है।"
+            )}
+            cards={journeyCards.map((card, idx) => ({
+              id: `journey-${card.id || idx}`,
+              number: card.number,
+              title: t(card.titleEn, card.titleHi),
+              description: t(card.descEn, card.descHi),
+              image: card.image,
+              stat: card.stat,
+              statLabel: t(card.statLabelEn, card.statLabelHi),
+            }))}
+            ctaText={t("View Our Programs", "हमारे कार्यक्रम देखें")}
+            ctaLink="/programs"
+            theme="light"
+          />
+        </EditableJourneyCards>
 
         {/* ── Team ── */}
         <section
@@ -283,38 +365,51 @@ export default function AboutContent({
               </p>
             </Reveal>
 
+            {/* Add Team Member Button */}
+            <div className="mb-6 text-center">
+              <AddButton
+                onClick={() => setTeamModal({ open: true })}
+                label="Add Team Member"
+              />
+            </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {members.map((member, idx) => (
                 <Reveal key={member.id} delay={idx * 30} animation="scale">
-                  <Card3D
-                    intensity={8}
-                    className="rounded-3xl border p-4 text-center cursor-default transition-all hover:shadow-xl hover:-translate-y-1"
-                    style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
+                  <EditableCard
+                    onEdit={() => setTeamModal({ open: true, data: member })}
+                    onDelete={() => handleDeleteTeamMember(member.id)}
                   >
-                    <div
-                      className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center font-bold relative"
-                      style={{ background: LENITY.accent, color: LENITY.ink, fontSize: "0.875rem", fontWeight: 700 }}
+                    <Card3D
+                      intensity={8}
+                      className="rounded-3xl border p-4 text-center cursor-default transition-all hover:shadow-xl hover:-translate-y-1"
+                      style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                     >
-                      {member.initials}
-                    </div>
-                    <h4
-                      className="font-semibold leading-tight mb-1"
-                      style={{ color: LENITY.ink, fontSize: "0.7rem", lineHeight: 1.35 }}
-                    >
-                      {member.name}
-                    </h4>
-                    <span
-                      className="inline-block font-semibold rounded-full px-2 py-0.5"
-                      style={{
-                        fontSize: "0.7rem",
-                        ...(member.designation === "Member"
-                          ? { background: LENITY.soft, color: LENITY.muted }
-                          : { background: LENITY.yellowSoft, color: LENITY.ink }),
-                      }}
-                    >
-                      {member.designation}
-                    </span>
-                  </Card3D>
+                      <div
+                        className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center font-bold relative"
+                        style={{ background: LENITY.accent, color: LENITY.ink, fontSize: "0.875rem", fontWeight: 700 }}
+                      >
+                        {member.initials}
+                      </div>
+                      <h4
+                        className="font-semibold leading-tight mb-1"
+                        style={{ color: LENITY.ink, fontSize: "0.7rem", lineHeight: 1.35 }}
+                      >
+                        {member.name}
+                      </h4>
+                      <span
+                        className="inline-block font-semibold rounded-full px-2 py-0.5"
+                        style={{
+                          fontSize: "0.7rem",
+                          ...(member.designation === "Member"
+                            ? { background: LENITY.soft, color: LENITY.muted }
+                            : { background: LENITY.yellowSoft, color: LENITY.ink }),
+                        }}
+                      >
+                        {member.designation}
+                      </span>
+                    </Card3D>
+                  </EditableCard>
                 </Reveal>
               ))}
             </div>
@@ -345,43 +440,57 @@ export default function AboutContent({
                 All legal registrations and certifications
               </p>
             </Reveal>
+
+            {/* Add Legal Document Button */}
+            <div className="mb-6 text-center">
+              <AddButton
+                onClick={() => setLegalModal({ open: true })}
+                label="Add Legal Document"
+              />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {legalDocs.map((doc, i) => {
                 const Icon = iconFor(doc.iconName);
                 return (
                   <Reveal key={doc.id} delay={i * 70} animation="slide-up">
-                    <Card3D
-                      className="rounded-3xl border p-6 h-full transition-all hover:shadow-xl hover:-translate-y-1"
-                      style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
+                    <EditableCard
+                      onEdit={() => setLegalModal({ open: true, data: doc })}
+                      onDelete={() => handleDeleteLegalDoc(doc.id)}
                     >
-                      <div
-                        className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                        style={{ background: LENITY.yellow }}
+                      <Card3D
+                        className="rounded-3xl border p-6 h-full transition-all hover:shadow-xl hover:-translate-y-1"
+                        style={{ background: LENITY.bg, borderColor: LENITY.line, borderWidth: "1px" }}
                       >
-                        <Icon className="w-5 h-5" style={{ color: LENITY.ink }} />
-                      </div>
-                      <h3
-                        className="font-semibold mb-1"
-                        style={{ fontFamily: SERIF, color: LENITY.ink, fontSize: "0.875rem", fontWeight: 600 }}
-                      >
-                        {t(doc.titleEn, doc.titleHi)}
-                      </h3>
-                      <p
-                        className="font-mono mb-2"
-                        style={{ color: LENITY.ink, fontSize: "0.7rem", fontWeight: 600 }}
-                      >
-                        {doc.number}
-                      </p>
-                      <p className="mb-4" style={{ color: LENITY.muted, fontSize: "0.7rem", lineHeight: 1.35 }}>
-                        {t(doc.descEn, doc.descHi)}
-                      </p>
-                      <button
-                        className="flex items-center gap-1.5 font-bold rounded-full px-3 py-1.5 transition-all hover:scale-105"
-                        style={{ fontSize: "0.7rem", background: LENITY.accent, color: LENITY.ink }}
-                      >
-                        <Download className="w-3 h-3" /> Download
-                      </button>
-                    </Card3D>
+                        <div
+                          className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                          style={{ background: LENITY.yellow }}
+                        >
+                          <Icon className="w-5 h-5" style={{ color: LENITY.ink }} />
+                        </div>
+                        <h3
+                          className="font-semibold mb-1"
+                          style={{ fontFamily: SERIF, color: LENITY.ink, fontSize: "0.875rem", fontWeight: 600 }}
+                        >
+                          {t(doc.titleEn, doc.titleHi)}
+                        </h3>
+                        <p
+                          className="font-mono mb-2"
+                          style={{ color: LENITY.ink, fontSize: "0.7rem", fontWeight: 600 }}
+                        >
+                          {doc.number}
+                        </p>
+                        <p className="mb-4" style={{ color: LENITY.muted, fontSize: "0.7rem", lineHeight: 1.35 }}>
+                          {t(doc.descEn, doc.descHi)}
+                        </p>
+                        <button
+                          className="flex items-center gap-1.5 font-bold rounded-full px-3 py-1.5 transition-all hover:scale-105"
+                          style={{ fontSize: "0.7rem", background: LENITY.accent, color: LENITY.ink }}
+                        >
+                          <Download className="w-3 h-3" /> Download
+                        </button>
+                      </Card3D>
+                    </EditableCard>
                   </Reveal>
                 );
               })}
@@ -389,6 +498,56 @@ export default function AboutContent({
           </div>
         </section>
       </main>
+
+      {/* Form Modals */}
+      <TimelineForm 
+        isOpen={timelineModal.open} 
+        onClose={() => setTimelineModal({ open: false })}
+        initialData={timelineModal.data}
+        itemId={timelineModal.data?.id}
+      />
+      <TeamMemberForm 
+        isOpen={teamModal.open}
+        onClose={() => setTeamModal({ open: false })}
+        initialData={teamModal.data ? {
+          name: teamModal.data.name,
+          designation: teamModal.data.designation,
+          phone: teamModal.data.phone || ""
+        } : undefined}
+        itemId={teamModal.data?.id}
+      />
+      <LegalDocForm
+        isOpen={legalModal.open}
+        onClose={() => setLegalModal({ open: false })}
+        initialData={legalModal.data}
+        itemId={legalModal.data?.id}
+      />
+      <JourneyCardForm
+        isOpen={journeyModal.open}
+        onClose={() => setJourneyModal({ open: false })}
+        initialData={journeyModal.data}
+        itemId={journeyModal.data?.id}
+      />
+      <HeroStatForm
+        isOpen={heroStatModal.open}
+        onClose={() => setHeroStatModal({ open: false })}
+        initialData={heroStatModal.data}
+        itemId={heroStatModal.data?.id}
+      />
+      <HeroContentForm
+        isOpen={heroContentModal}
+        onClose={() => setHeroContentModal(false)}
+        initialData={{
+          tagEn: header.tag.en,
+          tagHi: header.tag.hi,
+          titleEn: header.title.en,
+          titleHi: header.title.hi,
+          subtitleEn: header.subtitle.en,
+          subtitleHi: header.subtitle.hi,
+          image: header.img || "",
+        }}
+        page="about"
+      />
     </AdminEditProvider>
   );
 }

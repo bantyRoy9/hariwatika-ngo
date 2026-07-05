@@ -181,6 +181,29 @@ model LegalDoc {
   sortOrder Int    @default(0)
 }
 
+model JourneyCard {
+  id          Int    @id @default(autoincrement())
+  number      String
+  titleEn     String
+  titleHi     String
+  descEn      String
+  descHi      String
+  image       String
+  stat        String
+  statLabelEn String
+  statLabelHi String
+  sortOrder   Int    @default(0)
+}
+
+model HeroStat {
+  id        Int    @id @default(autoincrement())
+  value     String
+  labelEn   String
+  labelHi   String
+  page      String @default("about") // about | home | etc
+  sortOrder Int    @default(0)
+}
+
 model FinancialReport {
   id            Int @id @default(autoincrement())
   year          String
