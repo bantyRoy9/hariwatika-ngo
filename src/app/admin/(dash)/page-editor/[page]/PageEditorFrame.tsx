@@ -96,8 +96,8 @@ export default function PageEditorFrame({ publicPath, label, slug }: Props) {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "calc(100vh - 64px)", // fill admin main area
-        margin: "-24px -24px 0",      // bleed to edges of the admin padding
+        height: "calc(100vh - 10px)", // fill admin main area
+        margin: "-31px -24px -31px",      // bleed to edges of the admin padding
         overflow: "hidden",
       }}
     >
@@ -302,7 +302,7 @@ export default function PageEditorFrame({ publicPath, label, slug }: Props) {
           <iframe
             key={key}
             ref={iframeRef}
-            src={publicPath}
+            src={`${publicPath}?editMode=true`}
             title={`${label} page editor`}
             onLoad={() => setLoading(false)}
             style={{

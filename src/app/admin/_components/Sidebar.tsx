@@ -11,6 +11,11 @@ import {
   PieChart, GraduationCap, Image, Share2, Landmark, Type, Images,
   IndianRupee, Users, ClipboardList, Bell, Inbox, Mail, Receipt,
   UserPlus, ClipboardCheck, Heart, KeyRound, ListFilter,
+  HomeIcon,
+  InfoIcon,
+  HeartIcon,
+  ContactIcon,
+  BellRingIcon,
 } from "lucide-react";
 
 type Item = { label: string; href: string; icon?: LucideIcon };
@@ -47,16 +52,16 @@ const NAV: Group[] = [
   {
     heading: "Page Editor",
     items: [
-      { label: "🏠 Home", href: "/admin/page-editor/home" },
-      { label: "ℹ️ About", href: "/admin/page-editor/about" },
-      { label: "📰 Blog", href: "/admin/page-editor/blog" },
-      { label: "📁 Projects", href: "/admin/page-editor/projects" },
-      { label: "💛 Donate", href: "/admin/page-editor/donate" },
-      { label: "🤝 Volunteer", href: "/admin/page-editor/volunteer" },
-      { label: "📞 Contact", href: "/admin/page-editor/contact" },
-      { label: "📊 Transparency", href: "/admin/page-editor/transparency" },
-      { label: "🎓 Internship", href: "/admin/page-editor/internship" },
-      { label: "💍 Registration", href: "/admin/page-editor/registration" },
+      { label: "Home", href: "/admin/page-editor/home",icon:HomeIcon },
+      { label: "About", href: "/admin/page-editor/about",icon:InfoIcon },
+      { label: "Blog", href: "/admin/page-editor/blog",icon:Newspaper },
+      { label: "Projects", href: "/admin/page-editor/projects",icon:FolderKanban },
+      { label: "Donate", href: "/admin/page-editor/donate",icon:HeartIcon },
+      { label: "Volunteer", href: "/admin/page-editor/volunteer",icon:HeartHandshake },
+      { label: "Contact", href: "/admin/page-editor/contact",icon:ContactIcon },
+      { label: "Transparency", href: "/admin/page-editor/transparency",icon:PieChart },
+      { label: "Internship", href: "/admin/page-editor/internship",icon:GraduationCap },
+      { label: "Registration", href: "/admin/page-editor/registration",icon:BellRingIcon },
     ],
   },
   {
