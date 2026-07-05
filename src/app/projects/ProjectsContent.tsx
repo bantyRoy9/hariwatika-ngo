@@ -7,6 +7,8 @@ import PremiumHero from "@/components/PremiumHero";
 import Card3D from "@/components/Card3D";
 import Reveal from "@/components/Reveal";
 import ProjectMap from "@/components/ProjectMap";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { Heart, TreePine, Users, Stethoscope, BookOpen, CalendarDays, MapPin, type LucideIcon } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
@@ -53,7 +55,7 @@ export default function ProjectsContent({
     activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <>
+    <AdminEditProvider>
       <Navbar />
       <main>
         <PremiumHero
@@ -173,10 +175,17 @@ export default function ProjectsContent({
             <Reveal className="text-center mb-12">
               <span className="inline-flex items-center gap-3 mb-3 text-xs font-bold uppercase tracking-[0.22em]" style={{ color: LENITY.ink }}>
                 <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-                Future Plans
+                <EditableText settingKey="projects.future.eyebrow" label="Future Plans Eyebrow" en="Future Plans" hi="भविष्य की योजनाएं" />
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}>भविष्य की योजनाएं</h2>
-              <p className="text-lg italic mt-2" style={{ fontFamily: SERIF, color: LENITY.muted }}>What we are building next for West Champaran.</p>
+              <EditableText as="h2" settingKey="projects.future.h2" label="Future Plans Heading"
+                en="What We Are Building Next" hi="भविष्य की योजनाएं"
+                className="text-3xl sm:text-4xl font-bold" style={{ color: LENITY.ink, fontFamily: SERIF }}
+              />
+              <EditableText as="p" settingKey="projects.future.sub" label="Future Plans Subtext"
+                en="What we are building next for West Champaran."
+                hi="पश्चिम चम्पारण के लिए हम आगे क्या बना रहे हैं।"
+                className="text-lg italic mt-2" style={{ fontFamily: SERIF, color: LENITY.muted }}
+              />
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {futurePlans.map((plan, i) => (
@@ -200,6 +209,6 @@ export default function ProjectsContent({
         </section>
       </main>
       <Footer />
-    </>
+    </AdminEditProvider>
   );
 }

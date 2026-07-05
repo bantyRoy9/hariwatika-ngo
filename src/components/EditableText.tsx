@@ -4,39 +4,25 @@
  * EditableText
  * ------------
  * Drop-in replacement for any inline text node that should be editable by an
- * admin. When isAdmin is true it:
- *   • Shows a subtle dashed-yellow outline on hover (edit hint)
- *   • Shows a small pencil badge so admins know the element is editable
- *   • Opens InlineEditPopover on double-click
- *
- * When isAdmin is false it renders as a plain <span> (zero overhead).
- *
- * Usage:
- *   <EditableText settingKey="home.hero.eyebrow" en={s.en} hi={s.hi} />
- *
- * The component reads from AdminEditContext's liveValues so it immediately
- * reflects any save without a full page reload.
+ * admin. When isAdmin is true it shows a dashed-yellow outline on hover and
+ * opens InlineEditPopover on double-click.
+ * When isAdmin is false it renders as a plain element (zero overhead).
  */
 
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Pencil } from "lucide-react";
 import { useAdminEdit } from "@/context/AdminEditContext";
 import { useLang } from "@/context/LanguageContext";
 import { LENITY } from "@/theme/lenity";
 
 type Props = {
-  /** The SiteSetting key this text is bound to, e.g. "home.hero.eyebrow" */
   settingKey: string;
-  /** English fallback (used when no liveValue exists yet) */
   en: string;
-  /** Hindi fallback */
   hi: string;
-  /** Human-readable label shown in the edit popover header */
   label?: string;
-  /** Force multiline textarea in popover */
   multiline?: boolean;
-  /** Rendered tag — defaults to span */
-  as?: keyof JSX.IntrinsicElements;
+  /** Rendered HTML tag — defaults to "span" */
+  as?: string;
   className?: string;
   style?: React.CSSProperties;
 };
@@ -47,7 +33,7 @@ export default function EditableText({
   hi,
   label,
   multiline,
-  as: Tag = "span",
+  as: tagName = "span",
   className,
   style,
 }: Props) {
@@ -55,7 +41,6 @@ export default function EditableText({
   const { lang } = useLang();
   const [hovered, setHovered] = useState(false);
 
-  // Prefer live (optimistically updated) values over props
   const live = liveValues[settingKey];
   const displayEn = live?.en ?? en;
   const displayHi = live?.hi ?? hi;
@@ -71,44 +56,41 @@ export default function EditableText({
         en: displayEn,
         hi: displayHi,
         label,
-        multiline: multiline ?? (displayEn.length > 80),
+        multiline: multiline ?? displayEn.length > 80,
       });
     },
     [isAdmin, startEdit, settingKey, displayEn, displayHi, label, multiline],
   );
 
   if (!isAdmin) {
-    return (
-      <Tag className={className} style={style}>
-        {display}
-      </Tag>
-    );
+    return React.createElement(tagName, { className, style }, display);
   }
 
-  return (
-    <Tag
-      className={className}
-      style={{
+  return React.createElement(
+    tagName,
+    {
+      className,
+      style: {
         ...style,
         position: "relative",
         cursor: "pointer",
-        outline: hovered
-          ? `2px dashed ${LENITY.yellow}`
-          : "2px dashed transparent",
+        outline: hovered ? `2px dashed ${LENITY.yellow}` : "2px dashed transparent",
         outlineOffset: 3,
         borderRadius: 4,
         transition: "outline-color 0.15s",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onDoubleClick={handleDoubleClick}
-      title="Double-click to edit"
-    >
-      {display}
-      {/* Pencil badge — only visible on hover */}
-      {hovered && (
-        <span
-          style={{
+      },
+      onMouseEnter: () => setHovered(true),
+      onMouseLeave: () => setHovered(false),
+      onDoubleClick: handleDoubleClick,
+      title: "Double-click to edit",
+    },
+    display,
+    hovered &&
+      React.createElement(
+        "span",
+        {
+          key: "pencil",
+          style: {
             position: "absolute",
             top: -10,
             right: -10,
@@ -122,11 +104,9 @@ export default function EditableText({
             pointerEvents: "none",
             zIndex: 10,
             flexShrink: 0,
-          }}
-        >
-          <Pencil size={10} color={LENITY.ink} />
-        </span>
-      )}
-    </Tag>
+          },
+        },
+        React.createElement(Pencil, { size: 10, color: LENITY.ink }),
+      ),
   );
 }
