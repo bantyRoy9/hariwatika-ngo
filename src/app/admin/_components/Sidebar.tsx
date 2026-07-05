@@ -32,6 +32,21 @@ const NAV: Group[] = [
     ],
   },
   {
+    heading: "Page Editor",
+    items: [
+      { label: "🏠 Home", href: "/admin/page-editor/home" },
+      { label: "ℹ️ About", href: "/admin/page-editor/about" },
+      { label: "📰 Blog", href: "/admin/page-editor/blog" },
+      { label: "📁 Projects", href: "/admin/page-editor/projects" },
+      { label: "💛 Donate", href: "/admin/page-editor/donate" },
+      { label: "🤝 Volunteer", href: "/admin/page-editor/volunteer" },
+      { label: "📞 Contact", href: "/admin/page-editor/contact" },
+      { label: "📊 Transparency", href: "/admin/page-editor/transparency" },
+      { label: "🎓 Internship", href: "/admin/page-editor/internship" },
+      { label: "💍 Registration", href: "/admin/page-editor/registration" },
+    ],
+  },
+  {
     heading: "Site Content",
     items: [
       { label: "Home Page", href: "/admin/content/home" },

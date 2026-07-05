@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed-home": "tsx prisma/seed-home-settings.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -40,7 +41,7 @@
     "eslint-config-next": "16.2.9",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
-    "tsx": "^4.22.4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }
