@@ -67,7 +67,7 @@ export async function isAuthenticated(): Promise<boolean> {
 
 /** Use at the top of every admin page/layout and Server Action. Redirects if not logged in. */
 export async function requireAdmin(): Promise<void> {
-  return; // dev bypass — remove before deploying
+  if (!(await isAuthenticated())) redirect("/admin/login");
 }
 
 /** For Server Actions that should throw rather than redirect. */

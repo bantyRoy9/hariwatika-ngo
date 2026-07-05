@@ -34,9 +34,7 @@ export async function changePasswordAction(input: unknown): Promise<{ success: b
   return { success: true };
 }
 
-/** Safe to call from any client component: returns true if the current session is an admin.
- *  In development mirrors the requireAdmin() bypass so edit mode always activates. */
+/** Safe to call from any client component: returns true if the current session is an admin. */
 export async function isAdminUser(): Promise<boolean> {
-  if (process.env.NODE_ENV !== "production") return true;
   return isAuthenticated();
 }
