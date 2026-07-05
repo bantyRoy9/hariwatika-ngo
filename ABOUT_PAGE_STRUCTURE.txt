@@ -1,0 +1,179 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                    ABOUT PAGE STRUCTURE                          ║
+║                  (ALL SECTIONS EDITABLE!)                        ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  1. HERO SECTION ✅ EDITABLE                                    │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  [➕ Add Hero Stat]  ← Admin sees this button                  │
+│                                                                 │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐          │
+│  │  ✏️ 🗑️  │  │  ✏️ 🗑️  │  │  ✏️ 🗑️  │  │  ✏️ 🗑️  │          │
+│  │  25+    │  │  5000+  │  │  100+   │  │  200+   │          │
+│  │  Years  │  │ Families│  │ Villages│  │Volunteers│          │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘          │
+│                                                                 │
+│  Database: HeroStat table                                      │
+│  Actions: create, update, delete                               │
+│  Form: HeroStatForm                                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  2. HISTORY SECTION ✅ EDITABLE                                 │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  [➕ Add Timeline Event]  ← Admin sees this button             │
+│                                                                 │
+│  ┌──────────────┐                                              │
+│  │  ✏️ 🗑️       │                                              │
+│  │  ⭕ 2000     │  Organization founded at Shiv Mandir         │
+│  │  │           │                                              │
+│  └──────────────┘                                              │
+│  ┌──────────────┐                                              │
+│  │  ✏️ 🗑️       │                                              │
+│  │  ⭕ 2005     │  First major campaign launched               │
+│  │  │           │                                              │
+│  └──────────────┘                                              │
+│                                                                 │
+│  Database: TimelineItem table                                  │
+│  Actions: create, update, delete                               │
+│  Form: TimelineForm                                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  3. MISSION & VISION SECTION                                    │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  ┌──────────────────┐  ┌──────────────────┐                   │
+│  │  Our Mission     │  │  Our Vision      │                   │
+│  │  (static text)   │  │  (static text)   │                   │
+│  └──────────────────┘  └──────────────────┘                   │
+│                                                                 │
+│  Note: Uses EditableText for inline editing                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  4. JOURNEY CARDS (25 YEARS) ✅ EDITABLE                        │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  [➕ Add Journey Card]  ← Admin sees this button               │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐ │
+│  │  ✏️ 🗑️                                                     │ │
+│  │                                                           │ │
+│  │  ┌─────────┐        [01]                                 │ │
+│  │  │  Image  │        Foundation & Early Years             │ │
+│  │  │         │        Established in 2000 at sacred...     │ │
+│  │  └─────────┘        ┌──────────────┐                     │ │
+│  │                     │ 2000         │                     │ │
+│  │                     │ Year Founded │                     │ │
+│  │                     └──────────────┘                     │ │
+│  └───────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐ │
+│  │  ✏️ 🗑️                                                     │ │
+│  │                                                           │ │
+│  │  [02]                ┌─────────┐                         │ │
+│  │  Growth & Expansion  │  Image  │                         │ │
+│  │  Expanded services   │         │                         │ │
+│  │  ┌──────────────┐    └─────────┘                         │ │
+│  │  │ 100+         │                                        │ │
+│  │  │ Villages     │                                        │ │
+│  │  └──────────────┘                                        │ │
+│  └───────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│  Database: JourneyCard table                                   │
+│  Actions: create, update, delete                               │
+│  Form: JourneyCardForm                                         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  5. TEAM SECTION ✅ EDITABLE                                    │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  [➕ Add Team Member]  ← Admin sees this button                │
+│                                                                 │
+│  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐  │
+│  │ ✏️ 🗑️  │  │ ✏️ 🗑️  │  │ ✏️ 🗑️  │  │ ✏️ 🗑️  │  │ ✏️ 🗑️  │  │
+│  │  [RK]  │  │  [SK]  │  │  [AV]  │  │  [MP]  │  │  [RS]  │  │
+│  │ Rajesh │  │  Sita  │  │  Anil  │  │ Meena  │  │  Ram   │  │
+│  │ Kumar  │  │ Kumari │  │ Verma  │  │ Patel  │  │ Sharma │  │
+│  │Director│  │Secretary│ │Treasurer│ │ Member │  │ Member │  │
+│  └────────┘  └────────┘  └────────┘  └────────┘  └────────┘  │
+│                                                                 │
+│  Database: TeamMember table                                    │
+│  Actions: create, update, delete                               │
+│  Form: TeamMemberForm                                          │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  6. LEGAL DOCUMENTS ✅ EDITABLE                                 │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  [➕ Add Legal Document]  ← Admin sees this button             │
+│                                                                 │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│  │  ✏️ 🗑️   │  │  ✏️ 🗑️   │  │  ✏️ 🗑️   │  │  ✏️ 🗑️   │      │
+│  │   📄     │  │   🛡️     │  │   🏆     │  │   📄     │      │
+│  │  Trust   │  │  80G Tax │  │   FCRA   │  │  PAN     │      │
+│  │  Reg.    │  │ Exemption│  │   Reg.   │  │  Card    │      │
+│  │Reg. No.  │  │ Cert. No.│  │  Reg. No.│  │ Number   │      │
+│  │XXXXX/2000│  │  YYYYY   │  │  ZZZZZ   │  │ ABCDE    │      │
+│  │[Download]│  │[Download]│  │[Download]│  │[Download]│      │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘      │
+│                                                                 │
+│  Database: LegalDoc table                                      │
+│  Actions: create, update, delete                               │
+│  Form: LegalDocForm                                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════╗
+║  SUMMARY                                                         ║
+╚══════════════════════════════════════════════════════════════════╝
+
+✅ 5 Fully Editable Sections
+✅ 5 Database Models (HeroStat, JourneyCard, TimelineItem, TeamMember, LegalDoc)
+✅ 15 Server Actions (create/update/delete for each model)
+✅ 5 Form Components (modal-based editing)
+✅ 5 "Add New" Buttons (one per section)
+✅ Edit/Delete Icons (on hover for each card)
+✅ 100% Bilingual (English/Hindi)
+✅ Zero Code Knowledge Required
+✅ Production Ready (0 build errors)
+
+╔══════════════════════════════════════════════════════════════════╗
+║  LEGEND                                                          ║
+╚══════════════════════════════════════════════════════════════════╝
+
+[➕ Add...] = Yellow "Add New" button (visible only in edit mode)
+✏️ = Yellow edit button (appears on hover in edit mode)
+🗑️ = Red delete button (appears on hover in edit mode)
+⭕ = Timeline node
+📄 = Document icon
+🛡️ = Shield icon
+🏆 = Award icon
+
+╔══════════════════════════════════════════════════════════════════╗
+║  ACCESS                                                          ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Edit Mode: /admin/page-editor/about?editMode=true
+Public View: /about
+
+Only admins see edit buttons!
+Public users see content normally!
+
