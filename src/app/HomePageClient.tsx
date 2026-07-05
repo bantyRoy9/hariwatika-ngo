@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import DonationModal from "@/components/DonationModal";
 import HeroSlider from "@/components/HeroSlider";
 import type { SlideOverride } from "@/components/HeroSlider";
@@ -245,7 +243,6 @@ export default function HomePageClient({ settings }: { settings: HomeSettings })
 
   return (
     <AdminEditProvider initialValues={settings}>
-      <Navbar />
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
       <StickyQRDonate />
 
@@ -626,7 +623,6 @@ export default function HomePageClient({ settings }: { settings: HomeSettings })
         </div>
       </NumberedSection>
 
-      <Footer />
     </AdminEditProvider>
   );
 }

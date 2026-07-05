@@ -13,7 +13,7 @@ import {
   UserPlus, ClipboardCheck, Heart, KeyRound, ListFilter,
 } from "lucide-react";
 
-type Item = { label: string; href: string; icon: LucideIcon };
+type Item = { label: string; href: string; icon?: LucideIcon };
 type Group = { heading: string; hint?: string; items: Item[] };
 
 const NAV: Group[] = [
@@ -132,7 +132,7 @@ export default function Sidebar() {
                     fontWeight: active ? 700 : 400,
                   }}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
+                  {Icon ? <Icon className="w-4 h-4 shrink-0" /> : <span className="w-4 h-4 shrink-0 text-xs leading-none">{item.label.slice(0,2)}</span>}
                   {item.label}
                 </Link>
               );
