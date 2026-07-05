@@ -5,16 +5,18 @@ import { ChevronDown } from "lucide-react";
 
 interface Stat {
   value: string;
-  label: string;
+  /** ReactNode so admins can pass an <EditableText> for inline editing. */
+  label: React.ReactNode;
 }
 
 interface PremiumHeroProps {
-  title: string;
-  subtitle?: string;
-  description?: string;
+  /** ReactNode so admins can pass an <EditableText> for inline editing. */
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  description?: React.ReactNode;
   image?: string;
   stats?: Stat[];
-  breadcrumbs?: { label: string; href?: string }[];
+  breadcrumbs?: { label: React.ReactNode; href?: string }[];
   overlay?: "gradient" | "solid" | "pattern";
   height?: "small" | "medium" | "large";
 }

@@ -1,15 +1,16 @@
 import { prisma } from "@/lib/db";
-import { getHeader, getOptions } from "@/lib/content";
+import { getHeader, getOptions, getSettings } from "@/lib/content";
 import BlogContent, { BlogPostData } from "./BlogContent";
 
 export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {
   try {
-    const [rows, header, cats] = await Promise.all([
+    const [rows, header, cats, settings] = await Promise.all([
       prisma.blogPost.findMany({ where: { published: true }, orderBy: { sortOrder: "asc" } }),
       getHeader("blog"),
       getOptions("blog_category"),
+      getSettings(["blog"]),
     ]);
 
     const posts: BlogPostData[] = rows.map((p) => ({
@@ -26,7 +27,7 @@ export default async function BlogPage() {
 
     const categories = cats.map((c) => c.value || c.labelEn).filter((c) => c !== "All");
 
-    return <BlogContent posts={posts} categories={categories} header={header} />;
+    return <BlogContent posts={posts} categories={categories} header={header} settings={settings} />;
   } catch (error) {
     console.error("Failed to load blog page data:", error);
     
@@ -37,6 +38,6 @@ export default async function BlogPage() {
       img: null
     };
     
-    return <BlogContent posts={[]} categories={[]} header={defaultHeader} />;
+    return <BlogContent posts={[]} categories={[]} header={defaultHeader} settings={{}} />;
   }
 }

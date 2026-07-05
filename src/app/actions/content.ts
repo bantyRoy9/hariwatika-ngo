@@ -75,6 +75,12 @@ export async function reorderRecords(model: string, orderedIds: number[]) {
 // ── Key/value settings (SiteSetting + Translation) ──
 type KV = { key: string; en?: string; hi?: string; img?: string | null };
 
+/** Derive the admin group from the setting key's first segment.
+ *  Matches the seed convention: `home.hero.line1` → "home", `header.about.title` → "header". */
+function groupFromKey(key: string): string {
+  return key.split(".")[0] || "general";
+}
+
 export async function saveSettings(rows: KV[]) {
   await assertAdmin();
   await prisma.$transaction(
@@ -82,7 +88,7 @@ export async function saveSettings(rows: KV[]) {
       prisma.siteSetting.upsert({
         where: { key: r.key },
         update: { en: r.en ?? "", hi: r.hi ?? "", ...(r.img !== undefined ? { img: r.img } : {}) },
-        create: { key: r.key, en: r.en ?? "", hi: r.hi ?? "", img: r.img ?? null, group: "home" },
+        create: { key: r.key, en: r.en ?? "", hi: r.hi ?? "", img: r.img ?? null, group: groupFromKey(r.key) },
       }),
     ),
   );

@@ -13,6 +13,8 @@ const PAGE_MAP: Record<string, { path: string; label: string }> = {
   transparency: { path: "/transparency", label: "Transparency" },
   internship:   { path: "/internship",   label: "Internship" },
   registration: { path: "/registration", label: "Registration" },
+  gallery:      { path: "/gallery",      label: "Gallery" },
+  programs:     { path: "/programs",     label: "Programs" },
 };
 
 export function generateStaticParams() {

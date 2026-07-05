@@ -26,10 +26,12 @@ export default function BlogContent({
   posts,
   categories,
   header,
+  settings = {},
 }: {
   posts: BlogPostData[];
   categories: string[];
   header: Header;
+  settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t } = useLang();
   const [activeCategory, setActiveCategory] = useState("All");
@@ -39,7 +41,7 @@ export default function BlogContent({
   const filtered = activeCategory === "All" ? posts : posts.filter((p) => p.category === activeCategory);
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}

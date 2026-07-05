@@ -37,27 +37,29 @@ export default function AboutContent({
   legalDocs,
   members,
   header,
+  settings = {},
 }: {
   timeline: TimelineData[];
   legalDocs: LegalDocData[];
   members: TeamMemberData[];
   header: Header & { img: string | null };
+  settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t } = useLang();
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
       <main>
         <PremiumHero
-          title={t(header.title.en, header.title.hi)}
-          subtitle={t(header.tag.en, header.tag.hi)}
-          description={t(header.subtitle.en, header.subtitle.hi)}
+          title={<EditableText settingKey="header.about.title" label="Hero Title" en={header.title.en} hi={header.title.hi} />}
+          subtitle={<EditableText settingKey="header.about.tag" label="Hero Eyebrow" en={header.tag.en} hi={header.tag.hi} />}
+          description={<EditableText settingKey="header.about.subtitle" label="Hero Description" multiline en={header.subtitle.en} hi={header.subtitle.hi} />}
           image={header.img ?? IMG.community}
           stats={[
-            { value: "25+", label: t("Years of Service", "वर्षों की सेवा") },
-            { value: "5000+", label: t("Families Helped", "परिवारों की मदद") },
-            { value: "100+", label: t("Villages Reached", "गांव पहुंचे") },
-            { value: "200+", label: t("Volunteers", "स्वयंसेवक") },
+            { value: "25+", label: <EditableText settingKey="about.stat.0" label="Stat 0 Label" en="Years of Service" hi="वर्षों की सेवा" /> },
+            { value: "5000+", label: <EditableText settingKey="about.stat.1" label="Stat 1 Label" en="Families Helped" hi="परिवारों की मदद" /> },
+            { value: "100+", label: <EditableText settingKey="about.stat.2" label="Stat 2 Label" en="Villages Reached" hi="गांव पहुंचे" /> },
+            { value: "200+", label: <EditableText settingKey="about.stat.3" label="Stat 3 Label" en="Volunteers" hi="स्वयंसेवक" /> },
           ]}
           breadcrumbs={[
             { label: t("Home", "होम"), href: "/" },
@@ -151,10 +153,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                हमारा उद्देश्य
+                <EditableText as="span" settingKey="about.mv.h2" label="Mission & Vision Heading" en="Our Purpose" hi="हमारा उद्देश्य" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                The purpose that guides every step we take.
+                <EditableText as="span" settingKey="about.mv.lead" label="Mission & Vision Subtitle" en="The purpose that guides every step we take." hi="हर कदम का मार्गदर्शन करने वाला उद्देश्य।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
             </Reveal>
@@ -211,51 +213,47 @@ export default function AboutContent({
 
         {/* ── Our Journey Stories ── */}
         <PremiumStorySection
-          eyebrow={t("Our Journey", "हमारी यात्रा")}
-          heading={t("25 Years of Unwavering Commitment", "25 वर्षों की अटूट प्रतिबद्धता")}
-          description={t(
-            "From humble beginnings at Hariwatika Shiv Mandir to serving thousands across West Champaran, our journey is defined by compassion, transparency, and measurable impact.",
-            "हरिवाटिका शिव मंदिर से शुरू होकर पश्चिम चम्पारण में हजारों की सेवा तक, हमारी यात्रा करुणा, पारदर्शिता और मापने योग्य प्रभाव से परिभाषित है।"
-          )}
+          eyebrow={<EditableText settingKey="about.story.eyebrow" label="Story Eyebrow" en="Our Journey" hi="हमारी यात्रा" />}
+          heading={<EditableText settingKey="about.story.h2" label="Story Heading" en="25 Years of Unwavering Commitment" hi="25 वर्षों की अटूट प्रतिबद्धता" />}
+          description={<EditableText settingKey="about.story.lead" label="Story Lead" multiline
+            en="From humble beginnings at Hariwatika Shiv Mandir to serving thousands across West Champaran, our journey is defined by compassion, transparency, and measurable impact."
+            hi="हरिवाटिका शिव मंदिर से शुरू होकर पश्चिम चम्पारण में हजारों की सेवा तक, हमारी यात्रा करुणा, पारदर्शिता और मापने योग्य प्रभाव से परिभाषित है।" />}
           cards={[
             {
               id: "milestone-1",
               number: "01",
-              title: t("Foundation & Early Years", "स्थापना और प्रारंभिक वर्ष"),
-              description: t(
-                "Established in 2000 at the sacred Hariwatika Shiv Mandir with a vision to help families conduct dignified marriages. What started as a small community initiative has grown into a comprehensive welfare organization serving the entire region.",
-                "2000 में पवित्र हरिवाटिका शिव मंदिर में स्थापित, परिवारों को सम्मानजनक विवाह कराने में मदद करने के दृष्टिकोण के साथ। एक छोटी सामुदायिक पहल से शुरू होकर पूरे क्षेत्र की सेवा करने वाले व्यापक कल्याण संगठन में विकसित हुआ।"
-              ),
+              title: <EditableText settingKey="about.story.card.0.title" label="Card 1 Title" en="Foundation & Early Years" hi="स्थापना और प्रारंभिक वर्ष" />,
+              description: <EditableText settingKey="about.story.card.0.desc" label="Card 1 Text" multiline
+                en="Established in 2000 at the sacred Hariwatika Shiv Mandir with a vision to help families conduct dignified marriages. What started as a small community initiative has grown into a comprehensive welfare organization serving the entire region."
+                hi="2000 में पवित्र हरिवाटिका शिव मंदिर में स्थापित, परिवारों को सम्मानजनक विवाह कराने में मदद करने के दृष्टिकोण के साथ। एक छोटी सामुदायिक पहल से शुरू होकर पूरे क्षेत्र की सेवा करने वाले व्यापक कल्याण संगठन में विकसित हुआ।" />,
               image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80&auto=format&fit=crop",
               stat: "2000",
-              statLabel: t("Year Founded", "स्थापना वर्ष"),
+              statLabel: <EditableText settingKey="about.story.card.0.statLabel" label="Card 1 Stat Label" en="Year Founded" hi="स्थापना वर्ष" />,
             },
             {
               id: "milestone-2",
               number: "02",
-              title: t("Growth & Expansion", "विकास और विस्तार"),
-              description: t(
-                "Expanded services to include tree plantation, poverty relief, healthcare camps, and educational support. Registered as a recognized welfare organization with transparent operations.",
-                "सेवाओं का विस्तार वृक्षारोपण, गरीबी राहत, स्वास्थ्य शिविर और शैक्षिक सहायता शामिल करने के लिए किया गया। पारदर्शी संचालन के साथ मान्यता प्राप्त कल्याण संगठन के रूप में पंजीकृत।"
-              ),
+              title: <EditableText settingKey="about.story.card.1.title" label="Card 2 Title" en="Growth & Expansion" hi="विकास और विस्तार" />,
+              description: <EditableText settingKey="about.story.card.1.desc" label="Card 2 Text" multiline
+                en="Expanded services to include tree plantation, poverty relief, healthcare camps, and educational support. Registered as a recognized welfare organization with transparent operations."
+                hi="सेवाओं का विस्तार वृक्षारोपण, गरीबी राहत, स्वास्थ्य शिविर और शैक्षिक सहायता शामिल करने के लिए किया गया। पारदर्शी संचालन के साथ मान्यता प्राप्त कल्याण संगठन के रूप में पंजीकृत।" />,
               image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80&auto=format&fit=crop",
               stat: "100+",
-              statLabel: t("Villages Reached", "गांव पहुंचे"),
+              statLabel: <EditableText settingKey="about.story.card.1.statLabel" label="Card 2 Stat Label" en="Villages Reached" hi="गांव पहुंचे" />,
             },
             {
               id: "milestone-3",
               number: "03",
-              title: t("Today & Tomorrow", "आज और कल"),
-              description: t(
-                "Serving thousands of families annually with 200+ trained volunteers and a network of dedicated partners. Our commitment to seva continues to grow stronger with each passing year.",
-                "200+ प्रशिक्षित स्वयंसेवकों और समर्पित साझेदारों के नेटवर्क के साथ सालाना हजारों परिवारों की सेवा। सेवा के प्रति हमारी प्रतिबद्धता हर गुजरते साल के साथ मजबूत होती जा रही है।"
-              ),
+              title: <EditableText settingKey="about.story.card.2.title" label="Card 3 Title" en="Today & Tomorrow" hi="आज और कल" />,
+              description: <EditableText settingKey="about.story.card.2.desc" label="Card 3 Text" multiline
+                en="Serving thousands of families annually with 200+ trained volunteers and a network of dedicated partners. Our commitment to seva continues to grow stronger with each passing year."
+                hi="200+ प्रशिक्षित स्वयंसेवकों और समर्पित साझेदारों के नेटवर्क के साथ सालाना हजारों परिवारों की सेवा। सेवा के प्रति हमारी प्रतिबद्धता हर गुजरते साल के साथ मजबूत होती जा रही है।" />,
               image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80&auto=format&fit=crop",
               stat: "5K+",
-              statLabel: t("Annual Beneficiaries", "वार्षिक लाभार्थी"),
+              statLabel: <EditableText settingKey="about.story.card.2.statLabel" label="Card 3 Stat Label" en="Annual Beneficiaries" hi="वार्षिक लाभार्थी" />,
             },
           ]}
-          ctaText={t("View Our Programs", "हमारे कार्यक्रम देखें")}
+          ctaText={<EditableText settingKey="about.story.cta" label="Story CTA" en="View Our Programs" hi="हमारे कार्यक्रम देखें" />}
           ctaLink="/programs"
           theme="light"
         />
@@ -274,10 +272,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                हमारी टीम
+                <EditableText as="span" settingKey="about.team.h2" label="Team Heading" en="Our Team" hi="हमारी टीम" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                The hands and hearts behind every act of seva.
+                <EditableText as="span" settingKey="about.team.lead" label="Team Subtitle" en="The hands and hearts behind every act of seva." hi="हर सेवा के पीछे के हाथ और दिल।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
               <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>
@@ -337,10 +335,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                कानूनी दस्तावेज़
+                <EditableText as="span" settingKey="about.legal.h2" label="Legal Docs Heading" en="Legal Documents" hi="कानूनी दस्तावेज़" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                Every rupee accounted for, every registration on record.
+                <EditableText as="span" settingKey="about.legal.lead" label="Legal Docs Subtitle" en="Every rupee accounted for, every registration on record." hi="हर रुपया लिखा, हर पंजीकरण दर्ज।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
               <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>

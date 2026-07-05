@@ -17,16 +17,18 @@ export default function TransparencyContent({
   expenseBreakdown,
   documents,
   header,
+  settings = {},
 }: {
   reports: ReportData[];
   expenseBreakdown: ExpenseData[];
   documents: ReportDocData[];
   header: Header & { img: string | null };
+  settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t } = useLang();
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
       <main>
         {/* Hero */}
         <PremiumHero

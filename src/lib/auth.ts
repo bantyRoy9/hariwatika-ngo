@@ -61,6 +61,10 @@ export async function logout(): Promise<void> {
 }
 
 export async function isAuthenticated(): Promise<boolean> {
+  // Dev bypass: in development, every request is treated as an admin so the
+  // inline content editor (and admin dashboard) work without logging in.
+  // Production still requires the signed `hw_admin` cookie.
+  if (process.env.NODE_ENV !== "production") return true;
   const store = await cookies();
   return verify(store.get(COOKIE)?.value);
 }

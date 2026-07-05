@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/db";
-import { getHeader } from "@/lib/content";
+import { getHeader, getSettings } from "@/lib/content";
 import AboutContent, { TimelineData, LegalDocData, TeamMemberData } from "./AboutContent";
 
 export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   try {
-    const [timelineRows, legalRows, teamRows, header] = await Promise.all([
+    const [timelineRows, legalRows, teamRows, header, settings] = await Promise.all([
       prisma.timelineItem.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.legalDoc.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.teamMember.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }),
       getHeader("about"),
+      getSettings(["about"]),
     ]);
 
     const timeline: TimelineData[] = timelineRows.map((r) => ({
@@ -38,7 +39,7 @@ export default async function AboutPage() {
       phone: r.phone,
     }));
 
-    return <AboutContent timeline={timeline} legalDocs={legalDocs} members={members} header={header} />;
+    return <AboutContent timeline={timeline} legalDocs={legalDocs} members={members} header={header} settings={settings} />;
   } catch (error) {
     console.error("Failed to load about page data:", error);
 
@@ -55,6 +56,7 @@ export default async function AboutPage() {
       legalDocs={[]}
       members={[]}
       header={defaultHeader}
+      settings={{}}
     />;
   }
 }
