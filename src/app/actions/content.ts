@@ -79,9 +79,10 @@ export async function saveSettings(rows: KV[]) {
   await assertAdmin();
   await prisma.$transaction(
     rows.map((r) =>
-      prisma.siteSetting.update({
+      prisma.siteSetting.upsert({
         where: { key: r.key },
-        data: { en: r.en ?? "", hi: r.hi ?? "", ...(r.img !== undefined ? { img: r.img } : {}) },
+        update: { en: r.en ?? "", hi: r.hi ?? "", ...(r.img !== undefined ? { img: r.img } : {}) },
+        create: { key: r.key, en: r.en ?? "", hi: r.hi ?? "", img: r.img ?? null, group: "home" },
       }),
     ),
   );

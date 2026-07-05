@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { login, logout, assertAdmin, setPassword } from "@/lib/auth";
+import { login, logout, assertAdmin, setPassword, isAuthenticated } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 const loginSchema = z.object({ password: z.string().min(1, "Password is required") });
@@ -32,4 +32,11 @@ export async function changePasswordAction(input: unknown): Promise<{ success: b
   if (!(await checkPassword(parsed.data.current))) return { success: false, error: "Current password is incorrect" };
   await setPassword(parsed.data.next);
   return { success: true };
+}
+
+/** Safe to call from any client component: returns true if the current session is an admin.
+ *  In development mirrors the requireAdmin() bypass so edit mode always activates. */
+export async function isAdminUser(): Promise<boolean> {
+  if (process.env.NODE_ENV !== "production") return true;
+  return isAuthenticated();
 }
