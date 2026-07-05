@@ -3,6 +3,8 @@
 import { useState } from "react";
 import DonationModal from "@/components/DonationModal";
 import PremiumHero from "@/components/PremiumHero";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { useLang } from "@/context/LanguageContext";
 import {
   BookOpen, Users, Stethoscope, TreePine, Droplets, Wheat,
@@ -180,7 +182,7 @@ export default function ProgramsPage() {
   const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
 
   return (
-    <>
+    <AdminEditProvider>
       <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
 
       {/* Hero Section */}
@@ -382,21 +384,15 @@ export default function ProgramsPage() {
       <section className="py-16 md:py-20" style={{ background: LENITY.bg }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-4"
-              style={{ fontFamily: SERIF, color: LENITY.ink }}
-            >
-              {t("Our Approach", "हमारा दृष्टिकोण")}
-            </h2>
-            <p
-              className="text-lg italic max-w-2xl mx-auto"
-              style={{ fontFamily: SERIF, color: LENITY.muted }}
-            >
-              {t(
-                "How we ensure sustainable impact in every program",
-                "हम हर कार्यक्रम में स्थायी प्रभाव कैसे सुनिश्चित करते हैं"
-              )}
-            </p>
+            <EditableText as="h2" settingKey="programs.approach.h2" label="Approach Heading"
+              en="Our Approach" hi="हमारा दृष्टिकोण"
+              className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+            />
+            <EditableText as="p" settingKey="programs.approach.sub" label="Approach Subtext" multiline
+              en="How we ensure sustainable impact in every program"
+              hi="हम हर कार्यक्रम में स्थायी प्रभाव कैसे सुनिश्चित करते हैं"
+              className="text-lg italic max-w-2xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }}
+            />
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
@@ -467,21 +463,15 @@ export default function ProgramsPage() {
         <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20" style={{ background: LENITY.accent, filter: "blur(80px)" }} />
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
-            style={{ fontFamily: SERIF, color: LENITY.ink }}
-          >
-            {t("Join Us in Making a Difference", "बदलाव लाने में हमसे जुड़ें")}
-          </h2>
-          <p
-            className="text-lg md:text-xl mb-8"
-            style={{ color: LENITY.ink, opacity: 0.9 }}
-          >
-            {t(
-              "Your support can transform lives. Choose to donate, volunteer, or partner with us.",
-              "आपका समर्थन जीवन बदल सकता है। दान करें, स्वयंसेवक बनें, या हमारे साथ साझेदार बनें।"
-            )}
-          </p>
+          <EditableText as="h2" settingKey="programs.cta.h2" label="CTA Heading"
+            en="Join Us in Making a Difference" hi="बदलाव लाने में हमसे जुड़ें"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+          />
+          <EditableText as="p" settingKey="programs.cta.desc" label="CTA Description" multiline
+            en="Your support can transform lives. Choose to donate, volunteer, or partner with us."
+            hi="आपका समर्थन जीवन बदल सकता है। दान करें, स्वयंसेवक बनें, या हमारे साथ साझेदार बनें।"
+            className="text-lg md:text-xl mb-8" style={{ color: LENITY.ink, opacity: 0.9 }}
+          />
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
@@ -514,6 +504,6 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-    </>
+    </AdminEditProvider>
   );
 }
