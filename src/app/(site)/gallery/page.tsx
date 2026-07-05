@@ -2,6 +2,8 @@
 
 import HexagonalGallery from "@/components/HexagonalGallery";
 import PremiumHero from "@/components/PremiumHero";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { useLang } from "@/context/LanguageContext";
 import { LENITY, SERIF } from "@/theme/lenity";
 
@@ -49,8 +51,7 @@ export default function GalleryPage() {
   const { t } = useLang();
 
   return (
-    <>
-      
+    <AdminEditProvider>
       {/* Hero Section */}
       <PremiumHero
         title={t("Gallery of Change", "परिवर्तन की गैलरी")}
@@ -86,15 +87,15 @@ export default function GalleryPage() {
       {/* CTA Section */}
       <section className="py-16 md:py-20" style={{ background: LENITY.yellow }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}>
-            {t("Be Part of Our Story", "हमारी कहानी का हिस्सा बनें")}
-          </h2>
-          <p className="text-lg mb-8" style={{ color: LENITY.ink, opacity: 0.9 }}>
-            {t(
-              "Join us in creating more moments of joy, hope, and transformation in communities across West Champaran.",
-              "पश्चिम चम्पारण के समुदायों में खुशी, आशा और परिवर्तन के और पलों को बनाने में हमारे साथ जुड़ें।"
-            )}
-          </p>
+          <EditableText as="h2" settingKey="gallery.cta.h2" label="Gallery CTA Heading"
+            en="Be Part of Our Story" hi="हमारी कहानी का हिस्सा बनें"
+            className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: SERIF, color: LENITY.ink }}
+          />
+          <EditableText as="p" settingKey="gallery.cta.desc" label="Gallery CTA Description" multiline
+            en="Join us in creating more moments of joy, hope, and transformation in communities across West Champaran."
+            hi="पश्चिम चम्पारण के समुदायों में खुशी, आशा और परिवर्तन के और पलों को बनाने में हमारे साथ जुड़ें।"
+            className="text-lg mb-8" style={{ color: LENITY.ink, opacity: 0.9 }}
+          />
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/donate"
@@ -114,6 +115,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-    </>
+    </AdminEditProvider>
   );
 }

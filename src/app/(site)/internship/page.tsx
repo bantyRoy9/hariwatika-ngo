@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
+import AdminEditProvider from "@/components/AdminEditProvider";
+import EditableText from "@/components/EditableText";
 import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { submitInternship } from "@/app/actions/submissions";
@@ -155,7 +157,7 @@ export default function InternshipPage() {
   };
 
   return (
-    <>
+    <AdminEditProvider>
       <main>
         {/* Hero */}
         <PremiumHero
@@ -183,14 +185,12 @@ export default function InternshipPage() {
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: LENITY.ink }}>
                 <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-                Opportunities
+                <EditableText settingKey="internship.opportunities.eyebrow" label="Opportunities Eyebrow" en="Opportunities" hi="अवसर" />
               </span>
-              <h2
-                className="text-2xl sm:text-3xl font-bold"
-                style={{ fontFamily: SERIF, color: LENITY.ink }}
-              >
-                Current Openings
-              </h2>
+              <EditableText as="h2" settingKey="internship.opportunities.h2" label="Opportunities Heading"
+                en="Current Openings" hi="वर्तमान अवसर"
+                className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}
+              />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {internships.map((intern) => (
@@ -279,12 +279,10 @@ export default function InternshipPage() {
                 </div>
               ) : (
                 <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
-                  <h3
-                    className="text-xl font-bold mb-6"
-                    style={{ fontFamily: SERIF, color: LENITY.ink }}
-                  >
-                    Apply for Internship
-                  </h3>
+                  <EditableText as="h3" settingKey="internship.form.h3" label="Form Heading"
+                    en="Apply for Internship" hi="इंटर्नशिप के लिए आवेदन करें"
+                    className="text-xl font-bold mb-6" style={{ fontFamily: SERIF, color: LENITY.ink }}
+                  />
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       {[
@@ -390,6 +388,6 @@ export default function InternshipPage() {
           </div>
         </section>
       </main>
-    </>
+    </AdminEditProvider>
   );
 }
