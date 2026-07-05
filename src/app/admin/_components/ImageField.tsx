@@ -68,7 +68,7 @@ export default function ImageField({
 
       {picker && (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-56 overflow-y-auto p-2 border rounded-lg" style={{ borderColor: LENITY.line }}>
-          {media.length === 0 && <p className="text-xs col-span-full" style={{ color: LENITY.muted }}>Library empty.</p>}
+          {media.length === 0 && <p className="text-xs col-span-full" style={{ color: LENITY.adminMuted }}>Library empty.</p>}
           {media.map((m) => (
             // eslint-disable-next-line @next/next/no-img-element
             <button key={m.id} type="button" onClick={() => { onChange(m.url); setPicker(false); }} className="block">

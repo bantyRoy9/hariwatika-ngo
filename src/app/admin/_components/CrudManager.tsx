@@ -127,13 +127,13 @@ export default function CrudManager({ model, fields, rows, titleField, media, si
         <Btn onClick={startCreate}>+ Add {singularName}</Btn>
       </div>
       {error && <p className="text-sm" style={{ color: LENITY.red }}>{error}</p>}
-      {list.length === 0 && <p className="text-sm" style={{ color: LENITY.muted }}>No items yet.</p>}
+      {list.length === 0 && <p className="text-sm" style={{ color: LENITY.adminMuted }}>No items yet.</p>}
       {list
         .slice()
         .sort((a, b) => (Number(a.sortOrder ?? 0) - Number(b.sortOrder ?? 0)))
         .map((row) => (
           <Card key={row.id} className="flex items-center justify-between gap-3">
-            <span className="text-sm font-medium truncate" style={{ color: LENITY.ink }}>
+            <span className="text-sm font-medium truncate" style={{ color: LENITY.adminInk }}>
               {String(row[titleField] ?? `#${row.id}`)}
             </span>
             <div className="flex gap-2 shrink-0">
@@ -188,7 +188,7 @@ function FieldEditor({
       );
     case "checkbox":
       return (
-        <label className="flex items-center gap-2 text-sm" style={{ color: LENITY.ink }}>
+        <label className="flex items-center gap-2 text-sm" style={{ color: LENITY.adminInk }}>
           <input type="checkbox" checked={Boolean(draft[field.name])} onChange={(e) => set(field.name, e.target.checked)} />
           {field.label}
         </label>
@@ -201,7 +201,7 @@ function FieldEditor({
             value={v(field.name)}
             onChange={(e) => set(field.name, e.target.value)}
             className="w-full border rounded-lg px-3 py-2 text-sm"
-            style={{ borderColor: LENITY.line, color: LENITY.ink, background: "#111630" }}
+            style={{ borderColor: LENITY.line, color: LENITY.adminInk, background: "#111630" }}
           >
             <option value="">—</option>
             {field.options?.map((o) => (

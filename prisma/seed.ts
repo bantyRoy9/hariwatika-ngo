@@ -52,6 +52,9 @@ async function main() {
     prisma.socialLink.deleteMany(),
     prisma.volunteerBenefit.deleteMany(),
     prisma.optionItem.deleteMany(),
+    prisma.notificationDelivery.deleteMany(),
+    prisma.notificationCampaign.deleteMany(),
+    prisma.notificationTemplate.deleteMany(),
     prisma.siteSetting.deleteMany(),
     prisma.translation.deleteMany(),
     prisma.mediaAsset.deleteMany(),
@@ -63,6 +66,25 @@ async function main() {
   // ════════════════════════════════════════════════
   await prisma.adminUser.create({
     data: { username: "admin", passwordHash: bcrypt.hashSync("hariwatika123", 10) },
+  });
+
+  await prisma.notificationTemplate.createMany({
+    data: [
+      {
+        key: "volunteer_hi_event_invite",
+        displayName: "Volunteer Event Invite (Hindi)",
+        language: "hi",
+        providerContentSid: "HX_HARIWATIKA_VOLUNTEER_HI",
+        variables: JSON.stringify(["programName", "eventDate", "contactName"]),
+      },
+      {
+        key: "volunteer_en_event_invite",
+        displayName: "Volunteer Event Invite (English)",
+        language: "en",
+        providerContentSid: "HX_HARIWATIKA_VOLUNTEER_EN",
+        variables: JSON.stringify(["programName", "eventDate", "contactName"]),
+      },
+    ],
   });
 
   // ════════════════════════════════════════════════
@@ -502,6 +524,7 @@ async function main() {
       { platform: "Instagram", url: "https://instagram.com", sortOrder: 1 },
       { platform: "YouTube", url: "https://youtube.com", sortOrder: 2 },
       { platform: "WhatsApp", url: "https://wa.me/919473331919", sortOrder: 3 },
+      { platform: "LinkedIn", url: "https://linkedin.com", sortOrder: 4 },
     ],
   });
 

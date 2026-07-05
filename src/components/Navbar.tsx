@@ -7,33 +7,21 @@ import { Menu, X, Heart, Globe, MapPin, Phone, Clock } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { LENITY, CONTACT } from "@/theme/lenity";
 
-const navLinksEn = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/volunteer", label: "Get Involved" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
+export type NavLinkData = { href: string; labelEn: string; labelHi: string };
+export type SocialLinkData = { platform: string; url: string };
 
-const navLinksHi = [
-  { href: "/", label: "होम" },
-  { href: "/about", label: "हमारे बारे में" },
-  { href: "/projects", label: "परियोजनाएं" },
-  { href: "/gallery", label: "गैलरी" },
-  { href: "/volunteer", label: "जुड़ें" },
-  { href: "/blog", label: "समाचार" },
-  { href: "/contact", label: "संपर्क" },
-];
+interface NavbarProps {
+  navLinks: NavLinkData[];
+  socialLinks: SocialLinkData[];
+}
 
-export default function Navbar() {
+export default function Navbar({ navLinks, socialLinks }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { lang, toggle, t } = useLang();
 
-  const navLinks = lang === "hi" ? navLinksHi : navLinksEn;
+  const links = navLinks.map((l) => ({ href: l.href, label: lang === "hi" ? l.labelHi : l.labelEn }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -77,9 +65,11 @@ export default function Navbar() {
               <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" style={{ color: LENITY.accent }} />{CONTACT.hours}</span>
             </div>
             <div className="flex items-center gap-4 font-semibold">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">Facebook</a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">Instagram</a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">YouTube</a>
+              {socialLinks.map((sl) => (
+                <a key={sl.platform} href={sl.url} target="_blank" rel="noopener noreferrer" className="hover:text-[#F2C200] transition-colors">
+                  {sl.platform}
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -107,7 +97,7 @@ export default function Navbar() {
 
             {/* ── Desktop Nav ── */}
             <nav className="hidden lg:flex items-center gap-0.5">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -161,7 +151,7 @@ export default function Navbar() {
           }`}
         >
           <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

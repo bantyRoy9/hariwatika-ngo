@@ -27,26 +27,26 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: LENITY.soft }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: LENITY.adminBg }}>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-2xl border p-8 bg-[#0d1229]"
-        style={{ borderColor: LENITY.line }}
+        className="w-full max-w-sm rounded-2xl border p-8"
+        style={{ background: LENITY.adminSoft, borderColor: LENITY.adminLine }}
       >
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
           style={{ background: LENITY.accentSoft }}
         >
-          <Lock className="w-5 h-5" style={{ color: LENITY.ink }} />
+          <Lock className="w-5 h-5" style={{ color: LENITY.accent }} />
         </div>
-        <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: SERIF, color: LENITY.ink }}>
+        <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: SERIF, color: LENITY.adminInk }}>
           Admin Login
         </h1>
-        <p className="text-sm mb-6" style={{ color: LENITY.muted }}>
+        <p className="text-sm mb-6" style={{ color: LENITY.adminMuted }}>
           Hariwatika CRM — sign in to manage content.
         </p>
 
-        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>
+        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.adminInk }}>
           Password
         </label>
         <input
@@ -55,7 +55,7 @@ export default function AdminLoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none mb-4"
-          style={{ borderColor: LENITY.line, color: LENITY.ink }}
+          style={{ background: LENITY.adminBg, borderColor: LENITY.adminLine, color: LENITY.adminInk }}
         />
 
         {error && <p className="text-sm font-medium mb-4" style={{ color: LENITY.red }}>{error}</p>}
@@ -64,10 +64,10 @@ export default function AdminLoginPage() {
           type="submit"
           disabled={loading}
           className="w-full rounded-full py-3 font-bold transition-all hover:scale-[1.02] disabled:opacity-50 flex items-center justify-center"
-          style={{ background: LENITY.accent, color: LENITY.ink }}
+          style={{ background: LENITY.accent, color: "#ffffff" }}
         >
           {loading ? (
-            <span className="animate-spin border-2 border-t-transparent rounded-full w-5 h-5" style={{ borderColor: LENITY.ink, borderTopColor: "transparent" }} />
+            <span className="animate-spin border-2 border-t-transparent rounded-full w-5 h-5" style={{ borderColor: "#ffffff", borderTopColor: "transparent" }} />
           ) : (
             "Sign In"
           )}
