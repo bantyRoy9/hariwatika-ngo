@@ -48,6 +48,7 @@ export default function AboutContent({
   journeyCards,
   heroStats,
   header,
+  settings = {},
 }: {
   timeline: TimelineData[];
   legalDocs: LegalDocData[];
@@ -55,6 +56,7 @@ export default function AboutContent({
   journeyCards: JourneyCardData[];
   heroStats: HeroStatData[];
   header: Header & { img: string | null };
+  settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t } = useLang();
 
@@ -117,7 +119,7 @@ export default function AboutContent({
   };
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
       <main>
         {/* Hero Section - Original Design with Editable Stats */}
         <EditableHeroStats
@@ -251,10 +253,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                हमारा उद्देश्य
+                <EditableText as="span" settingKey="about.mv.h2" label="Mission & Vision Heading" en="Our Purpose" hi="हमारा उद्देश्य" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                The purpose that guides every step we take.
+                <EditableText as="span" settingKey="about.mv.lead" label="Mission & Vision Subtitle" en="The purpose that guides every step we take." hi="हर कदम का मार्गदर्शन करने वाला उद्देश्य।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
             </Reveal>
@@ -352,10 +354,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                हमारी टीम
+                <EditableText as="span" settingKey="about.team.h2" label="Team Heading" en="Our Team" hi="हमारी टीम" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                The hands and hearts behind every act of seva.
+                <EditableText as="span" settingKey="about.team.lead" label="Team Subtitle" en="The hands and hearts behind every act of seva." hi="हर सेवा के पीछे के हाथ और दिल।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
               <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>
@@ -428,10 +430,10 @@ export default function AboutContent({
                 className="font-bold"
                 style={{ fontFamily: SERIF, fontSize: "2.25rem", color: LENITY.ink, letterSpacing: "-0.01em", marginBottom: "0.5rem" }}
               >
-                कानूनी दस्तावेज़
+                <EditableText as="span" settingKey="about.legal.h2" label="Legal Docs Heading" en="Legal Documents" hi="कानूनी दस्तावेज़" />
               </h2>
               <p className="italic mb-3" style={{ fontFamily: SERIF, color: LENITY.muted, fontSize: "1.125rem" }}>
-                Every rupee accounted for, every registration on record.
+                <EditableText as="span" settingKey="about.legal.lead" label="Legal Docs Subtitle" en="Every rupee accounted for, every registration on record." hi="हर रुपया लिखा, हर पंजीकरण दर्ज।" />
               </p>
               <div className="mx-auto rounded-full" style={{ width: "3.5rem", height: "0.25rem", background: LENITY.accent }} />
               <p className="mt-3" style={{ color: LENITY.muted, fontSize: "0.875rem" }}>

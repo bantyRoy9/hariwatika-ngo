@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
-import { getHeader } from "@/lib/content";
+import { getHeader, getSettings } from "@/lib/content";
 import TransparencyContent, { ReportData, ExpenseData, ReportDocData } from "./TransparencyContent";
 
 export const dynamic = "force-dynamic";
@@ -12,11 +12,12 @@ export const metadata: Metadata = {
 
 export default async function TransparencyPage() {
   try {
-    const [reportRows, expenseRows, docRows, header] = await Promise.all([
+    const [reportRows, expenseRows, docRows, header, settings] = await Promise.all([
       prisma.financialReport.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.expenseCategory.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.reportDocument.findMany({ orderBy: { sortOrder: "asc" } }),
       getHeader("transparency"),
+      getSettings(["transparency"]),
     ]);
 
     const reports: ReportData[] = reportRows.map((r) => ({
@@ -45,7 +46,7 @@ export default async function TransparencyPage() {
       fileUrl: d.fileUrl,
     }));
 
-    return <TransparencyContent reports={reports} expenseBreakdown={expenseBreakdown} documents={documents} header={header} />;
+    return <TransparencyContent reports={reports} expenseBreakdown={expenseBreakdown} documents={documents} header={header} settings={settings} />;
   } catch (error) {
     console.error("Failed to load transparency page data:", error);
     
@@ -56,6 +57,6 @@ export default async function TransparencyPage() {
       img: null
     };
     
-    return <TransparencyContent reports={[]} expenseBreakdown={[]} documents={[]} header={defaultHeader} />;
+    return <TransparencyContent reports={[]} expenseBreakdown={[]} documents={[]} header={defaultHeader} settings={{}} />;
   }
 }

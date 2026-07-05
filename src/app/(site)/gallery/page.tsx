@@ -1,4 +1,5 @@
-"use client";
+import { getSettings } from "@/lib/content";
+import GalleryContent from "./GalleryContent";
 
 import HexagonalGallery from "@/components/HexagonalGallery";
 import PremiumHero from "@/components/PremiumHero";
@@ -7,45 +8,13 @@ import EditableText from "@/components/EditableText";
 import { useLang } from "@/context/LanguageContext";
 import { LENITY, SERIF } from "@/theme/lenity";
 
-// Sample gallery images - replace with your actual images
-const galleryImages = [
-  { src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80", alt: "Community gathering for education program" },
-  { src: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80", alt: "Tree plantation drive" },
-  { src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80", alt: "Healthcare camp in rural area" },
-  { src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80", alt: "Children receiving educational materials" },
-  { src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400&q=80", alt: "Food distribution program" },
-  { src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=80", alt: "Women empowerment workshop" },
-  { src: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&q=80", alt: "Disaster relief operation" },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&q=80", alt: "Marriage assistance ceremony" },
-  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=80", alt: "Community health checkup" },
-  { src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80", alt: "Scholarship distribution event" },
-  { src: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80", alt: "Environmental awareness program" },
-  { src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80", alt: "Volunteers planting trees" },
-  { src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80", alt: "Children in classroom" },
-  { src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400&q=80", alt: "Community kitchen service" },
-  { src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=80", alt: "Women skill training program" },
-  { src: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&q=80", alt: "Medical camp setup" },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&q=80", alt: "Flood relief distribution" },
-  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=80", alt: "Eye checkup camp" },
-  { src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80", alt: "Students with books" },
-  { src: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80", alt: "Sapling distribution" },
-  { src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80", alt: "Community meeting" },
-  { src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80", alt: "Children playing" },
-  { src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400&q=80", alt: "Food packet distribution" },
-  { src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=80", alt: "Womens group discussion" },
-  { src: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&q=80", alt: "Doctor examining patient" },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&q=80", alt: "Relief camp" },
-  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=80", alt: "Vaccination drive" },
-  { src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80", alt: "Award ceremony" },
-  { src: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80", alt: "Tree plantation team" },
-  { src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80", alt: "Village outreach program" },
-  { src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80", alt: "Happy children" },
-  { src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400&q=80", alt: "Food serving" },
-  { src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=80", alt: "Skill development class" },
-  { src: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&q=80", alt: "Health awareness session" },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&q=80", alt: "Emergency response team" },
-  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=80", alt: "Blood donation camp" },
-];
+export default async function GalleryPage() {
+  let settings: Record<string, { en: string; hi: string }> = {};
+  try {
+    settings = await getSettings(["gallery"]);
+  } catch {
+    // DB not ready — fall through to hardcoded defaults in the client
+  }
 
 export default function GalleryPage() {
   const { t } = useLang();

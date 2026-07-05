@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/db";
-import { getHeader, getOptions } from "@/lib/content";
+import { getHeader, getOptions, getSettings } from "@/lib/content";
 import ProjectsContent, { ProjectData, FuturePlanData } from "./ProjectsContent";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
   try {
-    const [projectRows, planRows, header, cats] = await Promise.all([
+    const [projectRows, planRows, header, cats, settings] = await Promise.all([
       prisma.project.findMany({ orderBy: { sortOrder: "asc" } }),
       prisma.futurePlan.findMany({ orderBy: { sortOrder: "asc" } }),
       getHeader("projects"),
       getOptions("project_category"),
+      getSettings(["projects"]),
     ]);
 
     const projects: ProjectData[] = projectRows.map((p) => ({
@@ -40,7 +41,7 @@ export default async function ProjectsPage() {
 
     const categories = cats.map((c) => c.value || c.labelEn).filter((c) => c !== "All");
 
-    return <ProjectsContent projects={projects} futurePlans={futurePlans} categories={categories} header={header} />;
+    return <ProjectsContent projects={projects} futurePlans={futurePlans} categories={categories} header={header} settings={settings} />;
   } catch (error) {
     console.error("Failed to load projects page data:", error);
     
@@ -57,6 +58,7 @@ export default async function ProjectsPage() {
       futurePlans={[]} 
       categories={[]} 
       header={defaultHeader} 
+      settings={{}} 
     />;
   }
 }

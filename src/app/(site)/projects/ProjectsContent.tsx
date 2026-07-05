@@ -39,11 +39,13 @@ export default function ProjectsContent({
   futurePlans,
   categories,
   header,
+  settings = {},
 }: {
   projects: ProjectData[];
   futurePlans: FuturePlanData[];
   categories: string[];
   header: Header & { img: string | null };
+  settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t, lang } = useLang();
   const [activeCategory, setActiveCategory] = useState("All");
@@ -53,7 +55,7 @@ export default function ProjectsContent({
     activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
       <main>
         <PremiumHero
           title={t(header.title.en, header.title.hi)}

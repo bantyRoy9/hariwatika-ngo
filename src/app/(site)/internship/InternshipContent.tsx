@@ -1,25 +1,60 @@
-import { getSettings, getHeader } from "@/lib/content";
-import InternshipContent from "./InternshipContent";
+"use client";
 
 import { useState } from "react";
 import PremiumHero from "@/components/PremiumHero";
 import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
+import { useLang } from "@/context/LanguageContext";
 import { BookOpen, Award, Clock, CheckCircle, Briefcase } from "lucide-react";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
 import { submitInternship } from "@/app/actions/submissions";
 
-export default async function InternshipPage() {
-  let settings: Record<string, { en: string; hi: string }> = {};
-  let header: { tag: { en: string; hi: string }; title: { en: string; hi: string }; subtitle: { en: string; hi: string }; img: string | null } | undefined;
-  try {
-    [settings, header] = await Promise.all([
-      getSettings(["internship"]),
-      getHeader("internship"),
-    ]);
-  } catch {
-    // DB not ready — fall through to hardcoded defaults in the client
-  }
+const internships = [
+  {
+    id: 1,
+    title: "Social Work Intern",
+    department: "Community Outreach",
+    duration: "3 months",
+    stipend: "Voluntary (Certificate + LOR)",
+    seats: 5,
+    skills: ["Communication", "Empathy", "Field Work"],
+    description:
+      "Work directly with families in need, assist in marriage ceremonies, conduct household surveys, and support relief distribution drives.",
+  },
+  {
+    id: 2,
+    title: "Digital Media Intern",
+    department: "Communications",
+    duration: "2 months",
+    stipend: "Voluntary (Certificate + LOR)",
+    seats: 2,
+    skills: ["Photography", "Social Media", "Content Writing"],
+    description:
+      "Document events, manage social media profiles, create content about our programs, and help with digital outreach campaigns.",
+  },
+  {
+    id: 3,
+    title: "Events Management Intern",
+    department: "Events & Logistics",
+    duration: "1–3 months",
+    stipend: "Voluntary (Certificate + LOR)",
+    seats: 3,
+    skills: ["Planning", "Coordination", "Teamwork"],
+    description:
+      "Assist in planning and executing mass marriage ceremonies, health camps, tree plantation drives, and annual functions.",
+  },
+  {
+    id: 4,
+    title: "Finance & Accounts Intern",
+    department: "Administration",
+    duration: "3 months",
+    stipend: "Voluntary (Certificate + LOR)",
+    seats: 1,
+    skills: ["Tally / Excel", "Bookkeeping", "Audit Support"],
+    description:
+      "Assist the Auditor and Treasurer with accounts, donor records, expense tracking, and preparation of financial statements.",
+  },
+];
 
 interface AppForm {
   name: string;
@@ -34,7 +69,7 @@ interface AppForm {
   motivation: string;
 }
 
-export default function InternshipPage() {
+export default function InternshipContent({ settings = {}, header }: { settings?: Record<string, { en: string; hi: string }>; header?: { tag: { en: string; hi: string }; title: { en: string; hi: string }; subtitle: { en: string; hi: string }; img: string | null } }) {
   const [form, setForm] = useState<AppForm>({
     name: "", age: "", qualification: "", institute: "",
     mobile: "", email: "", role: "", startDate: "", duration: "", motivation: "",
@@ -43,6 +78,7 @@ export default function InternshipPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [certId, setCertId] = useState("");
+  const { t } = useLang();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,14 +159,15 @@ export default function InternshipPage() {
   };
 
   return (
-    <AdminEditProvider>
+    <AdminEditProvider initialValues={settings}>
+    <>
       <main>
         {/* Hero */}
         <PremiumHero
-          title="Internship Program"
-          subtitle="Join Our Team"
-          description="Gain hands-on experience in social work, community development, and NGO operations. Learn while making a real difference."
-          image="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80"
+          title={header?.title?.en ? t(header.title.en, header.title.hi) : "Internship Program"}
+          subtitle={header?.tag?.en ? t(header.tag.en, header.tag.hi) : "Join Our Team"}
+          description={header?.subtitle?.en ? t(header.subtitle.en, header.subtitle.hi) : "Gain hands-on experience in social work, community development, and NGO operations. Learn while making a real difference."}
+          image={header?.img ?? "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80"}
           stats={[
             { value: "4", label: "Roles Available" },
             { value: "3mo", label: "Duration" },
@@ -151,12 +188,16 @@ export default function InternshipPage() {
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: LENITY.ink }}>
                 <span className="inline-block w-8 h-0.5" style={{ background: LENITY.yellow }} />
-                <EditableText settingKey="internship.opportunities.eyebrow" label="Opportunities Eyebrow" en="Opportunities" hi="अवसर" />
+                <EditableText as="span" settingKey="internship.openings.eyebrow" label="Openings Eyebrow"
+                  en="Opportunities" hi="अवसर" />
               </span>
-              <EditableText as="h2" settingKey="internship.opportunities.h2" label="Opportunities Heading"
-                en="Current Openings" hi="वर्तमान अवसर"
-                className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: SERIF, color: LENITY.ink }}
-              />
+              <h2
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ fontFamily: SERIF, color: LENITY.ink }}
+              >
+                <EditableText as="span" settingKey="internship.openings.h2" label="Openings Heading"
+                  en="Current Openings" hi="वर्तमान रिक्तियां" />
+              </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {internships.map((intern) => (
@@ -245,10 +286,13 @@ export default function InternshipPage() {
                 </div>
               ) : (
                 <div className="bg-white rounded-3xl border p-6 sm:p-8" style={{ borderColor: LENITY.line }}>
-                  <EditableText as="h3" settingKey="internship.form.h3" label="Form Heading"
-                    en="Apply for Internship" hi="इंटर्नशिप के लिए आवेदन करें"
-                    className="text-xl font-bold mb-6" style={{ fontFamily: SERIF, color: LENITY.ink }}
-                  />
+                  <h3
+                    className="text-xl font-bold mb-6"
+                    style={{ fontFamily: SERIF, color: LENITY.ink }}
+                  >
+                    <EditableText as="span" settingKey="internship.apply.h3" label="Apply Heading"
+                      en="Apply for Internship" hi="इंटर्नशिप के लिए आवेदन करें" />
+                  </h3>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       {[
@@ -354,6 +398,7 @@ export default function InternshipPage() {
           </div>
         </section>
       </main>
+    </>
     </AdminEditProvider>
   );
 }
