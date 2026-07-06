@@ -4,13 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "test": "node --import tsx --test",
     "db:seed": "tsx prisma/seed.ts",
-    "db:seed-home": "tsx prisma/seed-home-settings.ts",
-    "test": "node --import tsx --test"
+    "db:seed-home": "tsx prisma/seed-home-settings.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
