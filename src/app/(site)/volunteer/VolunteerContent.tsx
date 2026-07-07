@@ -3,6 +3,8 @@
 import { submitVolunteer } from "@/app/actions/submissions";
 import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
+import { useLang } from "@/context/LanguageContext";
+import { translateError } from "@/lib/errorMessages";
 import { IMG, LENITY, SERIF } from "@/theme/lenity";
 import { Award, CheckCircle, Clock, Heart, MapPin, Printer, Users } from "lucide-react";
 import { useState } from "react";
@@ -19,16 +21,27 @@ interface VolunteerForm {
   motivation: string;
 }
 
-const skillOptions = [
-  "Event Management", "Social Work", "Medical / Health",
-  "Teaching / Tutoring", "Photography", "Driving",
-  "Cooking", "Legal / Documentation", "IT / Tech",
-  "Construction / Labour", "Music / Arts", "Other",
+// [value/English, Hindi label] — value is the stable identifier stored on submit.
+const skillOptions: [string, string][] = [
+  ["Event Management", "कार्यक्रम प्रबंधन"], ["Social Work", "समाज सेवा"], ["Medical / Health", "चिकित्सा / स्वास्थ्य"],
+  ["Teaching / Tutoring", "शिक्षण / ट्यूशन"], ["Photography", "फोटोग्राफी"], ["Driving", "ड्राइविंग"],
+  ["Cooking", "खाना बनाना"], ["Legal / Documentation", "कानूनी / दस्तावेज़ीकरण"], ["IT / Tech", "आईटी / तकनीक"],
+  ["Construction / Labour", "निर्माण / श्रम"], ["Music / Arts", "संगीत / कला"], ["Other", "अन्य"],
 ];
+const availabilityOptions: [string, string][] = [
+  ["Weekends only", "केवल सप्ताहांत"], ["Weekdays only", "केवल सप्ताह के दिन"], ["Full time", "पूर्णकालिक"],
+  ["Event basis only", "केवल कार्यक्रम आधार पर"], ["As needed", "आवश्यकतानुसार"],
+];
+const genderOptions: [string, string][] = [["Male", "पुरुष"], ["Female", "महिला"], ["Other", "अन्य"]];
 
 const WHATSAPP_NUMBER = "919473331919";
 
 export default function VolunteerContent({ settings = {} }: { settings?: Record<string, { en: string; hi: string }> }) {
+  const { t } = useLang();
+  const availabilityLabel = (value: string) => {
+    const match = availabilityOptions.find(([en]) => en === value);
+    return match ? t(match[0], match[1]) : value;
+  };
   const whatsappGroupLink = settings["whatsapp.groupLink"]?.en?.trim();
   const whatsappHref = whatsappGroupLink
     ? whatsappGroupLink
@@ -146,9 +159,9 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                   <div className="p-6 text-center" style={{ background: LENITY.accent, color: LENITY.ink }}>
                     <CheckCircle className="w-14 h-14 mx-auto mb-2" />
                     <h2 className="text-xl font-bold" style={{ fontFamily: SERIF }}>
-                      Welcome to the Team!
+                      {t("Welcome to the Team!", "टीम में आपका स्वागत है!")}
                     </h2>
-                    <p className="text-sm mt-1" style={{ color: LENITY.muted }}>Your volunteer registration is confirmed.</p>
+                    <p className="text-sm mt-1" style={{ color: LENITY.muted }}>{t("Your volunteer registration is confirmed.", "आपका स्वयंसेवक पंजीकरण पुष्ट हो गया है।")}</p>
                   </div>
 
                   <div className="p-6">
@@ -156,7 +169,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       className="font-semibold mb-4 text-center"
                       style={{ color: LENITY.ink, fontFamily: SERIF }}
                     >
-                      Your Volunteer ID Card
+                      {t("Your Volunteer ID Card", "आपका स्वयंसेवक पहचान पत्र")}
                     </h3>
 
                     {/* ID Card */}
@@ -174,7 +187,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                           </div>
                           <div className="text-[8px] opacity-70">Vivah Sewa Samiti · Bettiah, Bihar</div>
                         </div>
-                        <span className="ml-auto text-[9px] rounded px-1.5 py-0.5 font-bold" style={{ background: "rgba(29,29,27,0.12)" }}>VOLUNTEER</span>
+                        <span className="ml-auto text-[9px] rounded px-1.5 py-0.5 font-bold" style={{ background: "rgba(29,29,27,0.12)" }}>{t("VOLUNTEER", "स्वयंसेवक")}</span>
                       </div>
 
                       {/* Body */}
@@ -194,12 +207,12 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                             {form.name}
                           </div>
                           <div className="text-[10px] font-semibold mt-0.5" style={{ color: LENITY.muted }}>
-                            Community Volunteer
+                            {t("Community Volunteer", "सामुदायिक स्वयंसेवक")}
                           </div>
                           <div className="mt-1 space-y-0.5">
                             <div className="flex items-center gap-1 text-[9px]" style={{ color: LENITY.muted }}>
                               <Clock className="w-2.5 h-2.5" style={{ color: LENITY.accent }} />
-                              Availability: {form.availability}
+                              {t("Availability", "उपलब्धता")}: {availabilityLabel(form.availability)}
                             </div>
                             <div className="flex items-center gap-1 text-[9px]" style={{ color: LENITY.muted }}>
                               <MapPin className="w-2.5 h-2.5" style={{ color: LENITY.accent }} />
@@ -216,7 +229,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       >
                         <span className="font-mono text-xs font-bold" style={{ color: LENITY.ink }}>{volunteerId}</span>
                         <span className="text-[9px]" style={{ color: LENITY.muted }}>
-                          Valid: {joinYear}–{joinYear + 1}
+                          {t("Valid", "वैध")}: {joinYear}–{joinYear + 1}
                         </span>
                       </div>
                     </div>
@@ -228,7 +241,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                         style={{ background: LENITY.accent, color: LENITY.ink }}
                       >
                         <Printer className="w-4 h-4" />
-                        Print ID Card
+                        {t("Print ID Card", "पहचान पत्र प्रिंट करें")}
                       </button>
                       <a
                         href={
@@ -240,7 +253,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 bg-[#25D366] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#1da851] transition-colors"
                       >
-                        {whatsappGroupLink ? "Join Volunteer WhatsApp Group" : "WhatsApp Confirm"}
+                        {whatsappGroupLink ? t("Join Volunteer WhatsApp Group", "स्वयंसेवक व्हाट्सएप समूह से जुड़ें") : t("WhatsApp Confirm", "व्हाट्सएप पुष्टि")}
                       </a>
                     </div>
                   </div>
@@ -254,16 +267,16 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                     className="text-xl font-bold"
                     style={{ fontFamily: SERIF, color: LENITY.ink }}
                   >
-                    Why Volunteer?
+                    {t("Why Volunteer?", "स्वयंसेवक क्यों बनें?")}
                   </h2>
                   {[
-                    { icon: Award, title: "Certificate of Service", desc: "Get official recognition for your volunteer work" },
-                    { icon: Users, title: "Community Impact", desc: "Directly help hundreds of families in need" },
-                    { icon: Heart, title: "Volunteer ID Card", desc: "Receive a printed ID card upon registration" },
-                    { icon: Clock, title: "Flexible Timing", desc: "Volunteer on weekends or whenever you're free" },
+                    { icon: Award, titleEn: "Certificate of Service", titleHi: "सेवा प्रमाणपत्र", descEn: "Get official recognition for your volunteer work", descHi: "अपने स्वयंसेवी कार्य के लिए आधिकारिक मान्यता प्राप्त करें" },
+                    { icon: Users, titleEn: "Community Impact", titleHi: "सामुदायिक प्रभाव", descEn: "Directly help hundreds of families in need", descHi: "जरूरतमंद सैकड़ों परिवारों की सीधे मदद करें" },
+                    { icon: Heart, titleEn: "Volunteer ID Card", titleHi: "स्वयंसेवक पहचान पत्र", descEn: "Receive a printed ID card upon registration", descHi: "पंजीकरण पर एक मुद्रित पहचान पत्र प्राप्त करें" },
+                    { icon: Clock, titleEn: "Flexible Timing", titleHi: "लचीला समय", descEn: "Volunteer on weekends or whenever you're free", descHi: "सप्ताहांत पर या जब भी आप खाली हों तब स्वयंसेवा करें" },
                   ].map((b) => (
                     <div
-                      key={b.title}
+                      key={b.titleEn}
                       className="bg-white rounded-3xl border p-4 flex gap-3 transition-all hover:shadow-xl hover:-translate-y-1"
                       style={{ borderColor: LENITY.line }}
                     >
@@ -274,8 +287,8 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                         <b.icon className="w-5 h-5" style={{ color: LENITY.ink }} />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-sm" style={{ color: LENITY.ink }}>{b.title}</h4>
-                        <p className="text-xs mt-0.5" style={{ color: LENITY.muted }}>{b.desc}</p>
+                        <h4 className="font-semibold text-sm" style={{ color: LENITY.ink }}>{t(b.titleEn, b.titleHi)}</h4>
+                        <p className="text-xs mt-0.5" style={{ color: LENITY.muted }}>{t(b.descEn, b.descHi)}</p>
                       </div>
                     </div>
                   ))}
@@ -288,18 +301,18 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       className="text-xl font-bold mb-6"
                       style={{ fontFamily: SERIF, color: LENITY.ink }}
                     >
-                      Volunteer Registration
+                      {t("Volunteer Registration", "स्वयंसेवक पंजीकरण")}
                     </h2>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Full Name *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Full Name *", "पूरा नाम *")}</label>
                           <input
                             required
                             value={form.name}
                             onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            placeholder="Your full name"
+                            placeholder={t("Your full name", "अपना पूरा नाम")}
                             className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
                             style={{ borderColor: LENITY.line }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
@@ -307,7 +320,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Age *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Age *", "आयु *")}</label>
                           <input
                             required
                             type="number"
@@ -315,7 +328,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                             max="80"
                             value={form.age}
                             onChange={(e) => setForm({ ...form, age: e.target.value })}
-                            placeholder="Your age"
+                            placeholder={t("Your age", "अपनी आयु")}
                             className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
                             style={{ borderColor: LENITY.line }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
@@ -326,7 +339,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
 
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Gender *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Gender *", "लिंग *")}</label>
                           <select
                             required
                             value={form.gender}
@@ -336,21 +349,21 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                             onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                           >
-                            <option value="">Select Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
+                            <option value="">{t("Select Gender", "लिंग चुनें")}</option>
+                            {genderOptions.map(([en, hi]) => (
+                              <option key={en} value={en}>{t(en, hi)}</option>
+                            ))}
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Mobile *</label>
+                          <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Mobile *", "मोबाइल *")}</label>
                           <input
                             required
                             type="tel"
                             pattern="[0-9]{10}"
                             value={form.mobile}
                             onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                            placeholder="10-digit mobile"
+                            placeholder={t("10-digit mobile", "10 अंकों का मोबाइल नंबर")}
                             className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
                             style={{ borderColor: LENITY.line }}
                             onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
@@ -360,12 +373,12 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Email</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Email", "ईमेल")}</label>
                         <input
                           type="email"
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
-                          placeholder="Optional"
+                          placeholder={t("Optional", "वैकल्पिक")}
                           className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
                           style={{ borderColor: LENITY.line }}
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
@@ -374,12 +387,12 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Address *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Address *", "पता *")}</label>
                         <textarea
                           required
                           value={form.address}
                           onChange={(e) => setForm({ ...form, address: e.target.value })}
-                          placeholder="Village/Town, Block, District"
+                          placeholder={t("Village/Town, Block, District", "गांव/शहर, ब्लॉक, जिला")}
                           rows={2}
                           className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none transition-colors"
                           style={{ borderColor: LENITY.line }}
@@ -390,15 +403,15 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
 
                       {/* Skills */}
                       <div>
-                        <label className="block text-sm font-medium mb-2" style={{ color: LENITY.ink }}>Skills *</label>
+                        <label className="block text-sm font-medium mb-2" style={{ color: LENITY.ink }}>{t("Skills *", "कौशल *")}</label>
                         <div className="flex flex-wrap gap-2">
-                          {skillOptions.map((skill) => {
-                            const active = form.skills.includes(skill);
+                          {skillOptions.map(([en, hi]) => {
+                            const active = form.skills.includes(en);
                             return (
                               <button
-                                key={skill}
+                                key={en}
                                 type="button"
-                                onClick={() => toggleSkill(skill)}
+                                onClick={() => toggleSkill(en)}
                                 className="px-3 py-1.5 rounded-full text-xs font-medium border transition-all hover:scale-105"
                                 style={
                                   active
@@ -406,7 +419,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                                     : { background: "transparent", color: LENITY.muted, borderColor: LENITY.line }
                                 }
                               >
-                                {skill}
+                                {t(en, hi)}
                               </button>
                             );
                           })}
@@ -414,7 +427,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Availability *</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Availability *", "उपलब्धता *")}</label>
                         <select
                           required
                           value={form.availability}
@@ -424,21 +437,19 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                           onFocus={(e) => (e.currentTarget.style.borderColor = LENITY.accent)}
                           onBlur={(e) => (e.currentTarget.style.borderColor = LENITY.line)}
                         >
-                          <option value="">Select availability</option>
-                          <option>Weekends only</option>
-                          <option>Weekdays only</option>
-                          <option>Full time</option>
-                          <option>Event basis only</option>
-                          <option>As needed</option>
+                          <option value="">{t("Select availability", "उपलब्धता चुनें")}</option>
+                          {availabilityOptions.map(([en, hi]) => (
+                            <option key={en} value={en}>{t(en, hi)}</option>
+                          ))}
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>Motivation</label>
+                        <label className="block text-sm font-medium mb-1" style={{ color: LENITY.ink }}>{t("Motivation", "प्रेरणा")}</label>
                         <textarea
                           value={form.motivation}
                           onChange={(e) => setForm({ ...form, motivation: e.target.value })}
-                          placeholder="Why do you want to volunteer with us?"
+                          placeholder={t("Why do you want to volunteer with us?", "आप हमारे साथ स्वयंसेवा क्यों करना चाहते हैं?")}
                           rows={3}
                           className="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none resize-none transition-colors"
                           style={{ borderColor: LENITY.line }}
@@ -448,7 +459,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                       </div>
 
                       {error && (
-                        <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
+                        <p className="text-sm font-medium" style={{ color: LENITY.red }}>{translateError(error, t)}</p>
                       )}
                       <button
                         type="submit"
@@ -461,7 +472,7 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                         ) : (
                           <>
                             <Users className="w-4 h-4" />
-                            Register as Volunteer
+                            {t("Register as Volunteer", "स्वयंसेवक के रूप में पंजीकरण करें")}
                           </>
                         )}
                       </button>

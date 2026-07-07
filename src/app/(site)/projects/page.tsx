@@ -40,7 +40,9 @@ export default async function ProjectsPage() {
       descHi: p.descHi,
     }));
 
-    const categories = cats.map((c) => c.value || c.labelEn).filter((c) => c !== "All");
+    const categories = cats
+      .filter((c) => c.value !== "All")
+      .map((c) => ({ value: c.value || c.labelEn, labelEn: c.labelEn, labelHi: c.labelHi }));
 
     return <ProjectsContent projects={projects} futurePlans={futurePlans} categories={categories} header={header} settings={settings} />;
   } catch (error) {

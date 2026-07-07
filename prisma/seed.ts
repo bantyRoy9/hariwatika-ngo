@@ -463,30 +463,54 @@ async function main() {
   // ════════════════════════════════════════════════
   // OPTION ITEMS — all dropdown / filter lists
   // ════════════════════════════════════════════════
-  type Opt = { group: string; labels: string[] };
+  // Each label is an [en, hi] pair. `value` (used for filtering/storage) stays the English string.
+  type Opt = { group: string; labels: [string, string][] };
   const optionGroups: Opt[] = [
     // blog/page.tsx categories
-    { group: "blog_category", labels: ["All", "Events", "Environment", "Relief Work", "Health", "Education", "Announcement"] },
+    { group: "blog_category", labels: [
+      ["All", "सभी"], ["Events", "कार्यक्रम"], ["Environment", "पर्यावरण"], ["Relief Work", "राहत कार्य"],
+      ["Health", "स्वास्थ्य"], ["Education", "शिक्षा"], ["Announcement", "घोषणा"],
+    ] },
     // projects/page.tsx categories
-    { group: "project_category", labels: ["All", "Vivah Seva", "Vrikshaaropan", "Garib Sahayata", "Swasthya Seva", "Education"] },
+    { group: "project_category", labels: [
+      ["All", "सभी"], ["Vivah Seva", "विवाह सेवा"], ["Vrikshaaropan", "वृक्षारोपण"],
+      ["Garib Sahayata", "गरीब सहायता"], ["Swasthya Seva", "स्वास्थ्य सेवा"], ["Education", "शिक्षा"],
+    ] },
     // volunteer skills (12)
-    { group: "volunteer_skill", labels: ["Event Management", "Social Work", "Medical / Health", "Teaching / Tutoring", "Photography", "Driving", "Cooking", "Legal / Documentation", "IT / Tech", "Construction / Labour", "Music / Arts", "Other"] },
+    { group: "volunteer_skill", labels: [
+      ["Event Management", "कार्यक्रम प्रबंधन"], ["Social Work", "समाज सेवा"], ["Medical / Health", "चिकित्सा / स्वास्थ्य"],
+      ["Teaching / Tutoring", "शिक्षण / ट्यूशन"], ["Photography", "फोटोग्राफी"], ["Driving", "ड्राइविंग"],
+      ["Cooking", "खाना बनाना"], ["Legal / Documentation", "कानूनी / दस्तावेज़ीकरण"], ["IT / Tech", "आईटी / तकनीक"],
+      ["Construction / Labour", "निर्माण / श्रम"], ["Music / Arts", "संगीत / कला"], ["Other", "अन्य"],
+    ] },
     // volunteer availability
-    { group: "availability", labels: ["Weekends only", "Weekdays only", "Full time", "Event basis only", "As needed"] },
+    { group: "availability", labels: [
+      ["Weekends only", "केवल सप्ताहांत"], ["Weekdays only", "केवल सप्ताह के दिन"], ["Full time", "पूर्णकालिक"],
+      ["Event basis only", "केवल कार्यक्रम आधार पर"], ["As needed", "आवश्यकतानुसार"],
+    ] },
     // donate purposes
-    { group: "donation_purpose", labels: ["Vivah Seva", "Vrikshaaropan", "Garib Sahayata", "Swasthya Seva", "Education Support", "General Fund"] },
+    { group: "donation_purpose", labels: [
+      ["Vivah Seva", "विवाह सेवा"], ["Vrikshaaropan", "वृक्षारोपण"], ["Garib Sahayata", "गरीब सहायता"],
+      ["Swasthya Seva", "स्वास्थ्य सेवा"], ["Education Support", "शिक्षा सहायता"], ["General Fund", "सामान्य कोष"],
+    ] },
     // contact subjects
-    { group: "contact_subject", labels: ["Vivah Seva Inquiry", "Donation Query", "Volunteer Registration", "Tree Plantation", "Health Camp", "Media / Press Inquiry", "General Inquiry"] },
+    { group: "contact_subject", labels: [
+      ["Vivah Seva Inquiry", "विवाह सेवा पूछताछ"], ["Donation Query", "दान संबंधी प्रश्न"], ["Volunteer Registration", "स्वयंसेवक पंजीकरण"],
+      ["Tree Plantation", "वृक्षारोपण"], ["Health Camp", "स्वास्थ्य शिविर"], ["Media / Press Inquiry", "मीडिया / प्रेस पूछताछ"],
+      ["General Inquiry", "सामान्य पूछताछ"],
+    ] },
     // internship duration
-    { group: "internship_duration", labels: ["1 month", "2 months", "3 months", "6 months"] },
+    { group: "internship_duration", labels: [
+      ["1 month", "1 महीना"], ["2 months", "2 महीने"], ["3 months", "3 महीने"], ["6 months", "6 महीने"],
+    ] },
     // gender (volunteer)
-    { group: "gender", labels: ["Male", "Female", "Other"] },
+    { group: "gender", labels: [["Male", "पुरुष"], ["Female", "महिला"], ["Other", "अन्य"]] },
     // marriage registration religion default
-    { group: "religion", labels: ["Hindu"] },
+    { group: "religion", labels: [["Hindu", "हिंदू"]] },
   ];
   for (const g of optionGroups) {
     await prisma.optionItem.createMany({
-      data: g.labels.map((label, i) => ({ group: g.group, labelEn: label, labelHi: label, value: label, sortOrder: i })),
+      data: g.labels.map(([en, hi], i) => ({ group: g.group, labelEn: en, labelHi: hi, value: en, sortOrder: i })),
     });
   }
 

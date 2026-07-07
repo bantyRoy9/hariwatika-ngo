@@ -6,6 +6,10 @@ export const ERROR_MESSAGES: Record<string, { en: string; hi: string }> = {
   address_required: { en: "Address is required", hi: "पता आवश्यक है" },
   amount_invalid: { en: "Amount must be positive", hi: "राशि सकारात्मक होनी चाहिए" },
   purpose_required: { en: "Purpose is required", hi: "उद्देश्य आवश्यक है" },
+  age_required: { en: "Age is required", hi: "आयु आवश्यक है" },
+  gender_required: { en: "Gender is required", hi: "लिंग आवश्यक है" },
+  skills_required: { en: "Select at least one skill", hi: "कम से कम एक कौशल चुनें" },
+  availability_required: { en: "Availability is required", hi: "उपलब्धता आवश्यक है" },
 };
 
 /** Resolve a validation error code to the current language, falling back to the raw string. */

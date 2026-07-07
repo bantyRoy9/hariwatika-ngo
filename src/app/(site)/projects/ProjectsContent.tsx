@@ -34,6 +34,7 @@ export type ProjectData = {
 };
 
 export type FuturePlanData = { id: number; titleEn: string; titleHi: string; year: string; descEn: string; descHi: string };
+export type CategoryOption = { value: string; labelEn: string; labelHi: string };
 
 export default function ProjectsContent({
   projects,
@@ -44,14 +45,18 @@ export default function ProjectsContent({
 }: {
   projects: ProjectData[];
   futurePlans: FuturePlanData[];
-  categories: string[];
+  categories: CategoryOption[];
   header: Header & { img: string | null };
   settings?: Record<string, { en: string; hi: string }>;
 }) {
   const { t, lang } = useLang();
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const allCats = ["All", ...categories];
+  const allCats: CategoryOption[] = [{ value: "All", labelEn: "All", labelHi: "सभी" }, ...categories];
+  const categoryLabel = (value: string) => {
+    const match = allCats.find((c) => c.value === value);
+    return match ? t(match.labelEn, match.labelHi) : value;
+  };
   const filtered =
     activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
@@ -85,11 +90,11 @@ export default function ProjectsContent({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap gap-2">
               {allCats.map((cat) => {
-                const active = activeCategory === cat;
+                const active = activeCategory === cat.value;
                 return (
                   <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
+                    key={cat.value}
+                    onClick={() => setActiveCategory(cat.value)}
                     className="px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105"
                     style={
                       active
@@ -97,7 +102,7 @@ export default function ProjectsContent({
                         : { background: "#fff8f5", color: LENITY.ink, border: `1px solid ${LENITY.line}` }
                     }
                   >
-                    {cat}
+                    {t(cat.labelEn, cat.labelHi)}
                   </button>
                 );
               })}
@@ -134,14 +139,14 @@ export default function ProjectsContent({
                                 : { background: LENITY.accent, color: LENITY.bg }
                             }
                           >
-                            {done ? "✓ Completed" : "● Ongoing"}
+                            {done ? `✓ ${t("Completed", "पूर्ण")}` : `● ${t("Ongoing", "जारी")}`}
                           </span>
                         </div>
                         <span
                           className="absolute bottom-3 left-3 text-[10px] font-semibold rounded-full px-2.5 py-0.5 backdrop-blur-sm"
                           style={{ background: "rgba(13,18,41,0.8)", color: LENITY.ink, border: `1px solid ${LENITY.line}` }}
                         >
-                          {project.category}
+                          {categoryLabel(project.category)}
                         </span>
                       </div>
                       <div className="p-5 flex flex-col flex-1">
@@ -156,13 +161,13 @@ export default function ProjectsContent({
                         </div>
                         <div>
                           <div className="flex justify-between text-xs mb-1">
-                            <span style={{ color: LENITY.muted }}>₹{project.raised.toLocaleString("en-IN")} raised</span>
+                            <span style={{ color: LENITY.muted }}>₹{project.raised.toLocaleString("en-IN")} {t("raised", "एकत्रित")}</span>
                             <span className="font-bold" style={{ color: LENITY.ink }}>{pct}%</span>
                           </div>
                           <div className="h-2 rounded-full overflow-hidden mb-1" style={{ background: LENITY.line }}>
                             <div className="h-full rounded-full" style={{ width: `${pct}%`, background: LENITY.accent, transition: "width 1.2s ease" }} />
                           </div>
-                          <div className="text-xs" style={{ color: LENITY.muted }}>Goal: ₹{project.goal.toLocaleString("en-IN")}</div>
+                          <div className="text-xs" style={{ color: LENITY.muted }}>{t("Goal", "लक्ष्य")}: ₹{project.goal.toLocaleString("en-IN")}</div>
                         </div>
                       </div>
                     </Card3D>
