@@ -32,17 +32,17 @@ const ICONS: Record<string, LucideIcon> = { Heart, TreePine, Users, Stethoscope,
 const iconFor = (name: string): LucideIcon => ICONS[name] ?? Heart;
 
 const IMG = {
-  hero:     "/images/helpers1.jpg",
-  slide2:   "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&q=80&auto=format&fit=crop",
-  slide3:   "/images/helpers2.jpg",
-  slide4:   "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=1600&q=80&auto=format&fit=crop",
-  portrait1:"/images/donors1.jpg",
-  quote:    "/images/donors2.jpg",
+  hero:     "/images/marriage/marriage1.jpeg",
+  slide2:   "/images/marriage/marriage2.jpeg",
+  slide3:   "/images/marriage/marriage3.jpeg",
+  slide4:   "/images/marriage/marriage4.jpeg",
+  portrait1:"/images/marriage/marriage5.jpeg",
+  quote:    "/images/marriage/marriage7.jpeg",
   avatar:   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80&auto=format&fit=crop",
   svc: [
-    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80&auto=format&fit=crop",
+    "/images/marriage/marriage2.jpeg",
+    "/images/marriage/marriage4.jpeg",
+    "/images/marriage/marriage7.jpeg",
   ],
 };
 
