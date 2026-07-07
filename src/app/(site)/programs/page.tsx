@@ -13,7 +13,32 @@ import { LENITY, SERIF } from "@/theme/lenity";
 import Link from "next/link";
 
 // Temporary programs data - TODO: Replace with database data
-const programs = [
+interface ProgramStats {
+  beneficiaries: string;
+  years: string;
+  villages?: string;
+  schools?: string;
+}
+
+interface ProgramData {
+  id: string;
+  icon: any;
+  titleEn: string;
+  titleHi: string;
+  descEn: string;
+  descHi: string;
+  shortDescEn: string;
+  shortDescHi: string;
+  descriptionEn: string;
+  descriptionHi: string;
+  beneficiaries: string;
+  features: string[];
+  image: string;
+  stats: ProgramStats;
+  objectives: Array<{ en: string; hi: string }>;
+}
+
+const programs: ProgramData[] = [
   { 
     id: "marriage", 
     icon: Heart, 
@@ -196,7 +221,7 @@ export default function ProgramsPage() {
                             className="text-2xl font-bold"
                             style={{ fontFamily: SERIF, color: LENITY.accent }}
                           >
-                            {"villages" in program.stats ? program.stats.villages : "schools" in program.stats ? program.stats.schools : ""}
+                            {(program.stats as any).villages || (program.stats as any).schools || "N/A"}
                           </div>
                           <div className="text-xs" style={{ color: LENITY.muted }}>
                             {program.id === "marriage" ? t("Villages", "गांव") : t("Schools", "स्कूल")}

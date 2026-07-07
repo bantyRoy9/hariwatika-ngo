@@ -34,7 +34,7 @@ const programs: Program[] = [
       "Our main campus serves as the heart of our operations, providing education and community services to thousands of families across West Champaran.",
     descriptionHi:
       "हमारा मुख्य परिसर हमारे संचालन का केंद्र है, जो पश्चिम चम्पारण में हजारों परिवारों को शिक्षा और सामुदायिक सेवाएं प्रदान करता है।",
-    image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800&q=80&auto=format&fit=crop",
+    image: "/images/marriage/marriage6.jpeg",
     link: "/about",
   },
   {
@@ -46,7 +46,7 @@ const programs: Program[] = [
       "Education allows us to live a meaningful life and make a positive contribution to society. We provide scholarships and learning materials to underprivileged children.",
     descriptionHi:
       "शिक्षा हमें सार्थक जीवन जीने और समाज में सकारात्मक योगदान देने की अनुमति देती है। हम जरूरतमंद बच्चों को छात्रवृत्ति और शिक्षण सामग्री प्रदान करते हैं।",
-    image: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=80&auto=format&fit=crop",
+    image: "/images/marriage/marriage1.jpeg",
     link: "/programs",
   },
   {
@@ -58,7 +58,7 @@ const programs: Program[] = [
       "Dedicated to serving the underprivileged through healthcare camps, food distribution, disaster relief, and women & child welfare programs.",
     descriptionHi:
       "स्वास्थ्य शिविर, खाद्य वितरण, आपदा राहत और महिला एवं बाल कल्याण कार्यक्रमों के माध्यम से वंचितों की सेवा के लिए समर्पित।",
-    image: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&q=80&auto=format&fit=crop",
+    image: "/images/marriage/marriage3.jpeg",
     link: "/services",
   },
   {
@@ -70,7 +70,7 @@ const programs: Program[] = [
       "Large-scale tree plantation drives to green the region. We've planted over 10,000+ trees across West Champaran, creating a sustainable future.",
     descriptionHi:
       "क्षेत्र को हरा-भरा बनाने के लिए बड़े पैमाने पर वृक्षारोपण अभियान। हमने पश्चिम चम्पारण में 10,000+ से अधिक पेड़ लगाए हैं, एक स्थायी भविष्य बनाते हुए।",
-    image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80&auto=format&fit=crop",
+    image: "/images/marriage/marriage5.jpeg",
     link: "/programs",
   },
 ];

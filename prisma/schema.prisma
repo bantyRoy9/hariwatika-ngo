@@ -1,4 +1,4 @@
-// Hariwatika NGO CRM — SQLite + Prisma
+// Hariwatika NGO CRM — PostgreSQL + Prisma (SQLite for local dev)
 // Every user-facing string is bilingual (paired *En/*Hi columns or en/hi rows).
 // Images stored as path/URL strings, managed via MediaAsset (Media Library).
 
@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
 }
 
 // ─────────────────────────────────────────────────────────
@@ -129,6 +130,7 @@ model Project {
   id            Int     @id @default(autoincrement())
   category      String
   iconName      String  @default("Heart")
+  img           String?
   status        String  @default("ongoing") // ongoing | completed
   titleEn       String
   titleHi       String
@@ -301,6 +303,20 @@ model SocialLink {
   platform  String
   url       String
   sortOrder Int    @default(0)
+}
+
+// Registration fees / eligibility per scheme (marriage, plantation, education, medical, volunteer).
+model ServiceTier {
+  id            Int    @id @default(autoincrement())
+  iconName      String @default("Heart")
+  titleEn       String
+  titleHi       String
+  eligibilityEn String @default("")
+  eligibilityHi String @default("")
+  amount        String @default("") // e.g. "₹3,000" or "As required"
+  descEn        String @default("")
+  descHi        String @default("")
+  sortOrder     Int    @default(0)
 }
 
 model VolunteerBenefit {

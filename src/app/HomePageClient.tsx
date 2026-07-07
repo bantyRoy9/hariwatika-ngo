@@ -25,22 +25,24 @@ import { LENITY, SERIF } from "@/theme/lenity";
 export type HomeSettings = Record<string, { en: string; hi: string }>;
 export type HomeServiceData = { id: number; iconName: string; titleEn: string; titleHi: string; descEn: string; descHi: string };
 export type HomeCampaignData = { id: number; titleEn: string; titleHi: string; raised: number; goal: number; backers: number };
+export type HomeBlogPostData = { id: number; category: string; date: string; titleEn: string; titleHi: string; excerptEn: string; excerptHi: string; img: string | null };
+export type HomeFuturePlanData = { id: number; titleEn: string; titleHi: string; year: string; descEn: string; descHi: string };
 
 const ICONS: Record<string, LucideIcon> = { Heart, TreePine, Users, Stethoscope, BookOpen, Droplets, Wheat };
 const iconFor = (name: string): LucideIcon => ICONS[name] ?? Heart;
 
 const IMG = {
-  hero:     "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80&auto=format&fit=crop",
-  slide2:   "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&q=80&auto=format&fit=crop",
-  slide3:   "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1600&q=80&auto=format&fit=crop",
-  slide4:   "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=1600&q=80&auto=format&fit=crop",
-  portrait1:"https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&q=80&auto=format&fit=crop",
-  quote:    "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&q=80&auto=format&fit=crop",
+  hero:     "/images/marriage/marriage1.jpeg",
+  slide2:   "/images/marriage/marriage2.jpeg",
+  slide3:   "/images/marriage/marriage3.jpeg",
+  slide4:   "/images/marriage/marriage4.jpeg",
+  portrait1:"/images/marriage/marriage5.jpeg",
+  quote:    "/images/marriage/marriage7.jpeg",
   avatar:   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80&auto=format&fit=crop",
   svc: [
-    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&q=80&auto=format&fit=crop",
+    "/images/marriage/marriage2.jpeg",
+    "/images/marriage/marriage4.jpeg",
+    "/images/marriage/marriage7.jpeg",
   ],
 };
 
@@ -148,16 +150,21 @@ export default function HomePageClient({
   settings,
   services: dbServices,
   campaigns: dbCampaigns,
+  blogPosts: dbBlogPosts = [],
+  futurePlans = [],
 }: {
   settings: HomeSettings;
   services: HomeServiceData[];
   campaigns: HomeCampaignData[];
+  blogPosts?: HomeBlogPostData[];
+  futurePlans?: HomeFuturePlanData[];
 }) {
   const [donateOpen, setDonateOpen] = useState(false);
   const { t } = useLang();
   const openDonate = () => setDonateOpen(true);
 
   const services = dbServices.length ? dbServices : DEFAULT_SERVICES;
+  const whatsappGroupLink = settings["whatsapp.groupLink"]?.en;
 
   // Resolve all content from DB settings with hardcoded fallbacks
   const c = {
@@ -210,11 +217,13 @@ export default function HomePageClient({
 
   const campaigns = dbCampaigns.length ? dbCampaigns : DEFAULT_CAMPAIGNS;
 
-  const blogPosts = [
-    { date: "15 Dec 2024", catEn: "Education",   catHi: "शिक्षा",    img: IMG.svc[0], titleEn: "150 Children Receive School Scholarships This Year", titleHi: "इस वर्ष 150 बच्चों को स्कूल छात्रवृत्ति मिली", excerptEn: "Hariwatika's education drive reached 150 underprivileged children with scholarships.", excerptHi: "हरिवाटिका के शिक्षा अभियान ने 150 जरूरतमंद बच्चों को छात्रवृत्ति दी।" },
-    { date: "05 Nov 2024", catEn: "Environment", catHi: "पर्यावरण", img: IMG.svc[1], titleEn: "Van Mahotsav: 2000 Saplings Planted in West Champaran", titleHi: "वन महोत्सव: पश्चिम चम्पारण में 2000 पौधे लगाए", excerptEn: "Volunteers planted 2000 saplings across Bettiah and surrounding villages.", excerptHi: "स्वयंसेवकों ने बेतिया और आसपास के गांवों में 2000 पौधे लगाए।" },
-    { date: "20 Oct 2024", catEn: "Relief",      catHi: "राहत",      img: IMG.svc[2], titleEn: "Winter Blanket Distribution Reaches 500 Families", titleHi: "शीतकालीन कंबल वितरण 500 परिवारों तक पहुँचा", excerptEn: "Our team distributed warm blankets to 500 underprivileged families.", excerptHi: "ठंड में हमारी टीम ने 500 जरूरतमंद परिवारों को गर्म कंबल बाँटे।" },
+  // Fallback used only if the DB has no published blog posts yet.
+  const DEFAULT_BLOG: HomeBlogPostData[] = [
+    { id: -1, date: "15 Dec 2024", category: "Education",   img: IMG.svc[0], titleEn: "150 Children Receive School Scholarships This Year", titleHi: "इस वर्ष 150 बच्चों को स्कूल छात्रवृत्ति मिली", excerptEn: "Hariwatika's education drive reached 150 underprivileged children with scholarships.", excerptHi: "हरिवाटिका के शिक्षा अभियान ने 150 जरूरतमंद बच्चों को छात्रवृत्ति दी।" },
+    { id: -2, date: "05 Nov 2024", category: "Environment", img: IMG.svc[1], titleEn: "Van Mahotsav: 2000 Saplings Planted in West Champaran", titleHi: "वन महोत्सव: पश्चिम चम्पारण में 2000 पौधे लगाए", excerptEn: "Volunteers planted 2000 saplings across Bettiah and surrounding villages.", excerptHi: "स्वयंसेवकों ने बेतिया और आसपास के गांवों में 2000 पौधे लगाए।" },
+    { id: -3, date: "20 Oct 2024", category: "Relief",      img: IMG.svc[2], titleEn: "Winter Blanket Distribution Reaches 500 Families", titleHi: "शीतकालीन कंबल वितरण 500 परिवारों तक पहुँचा", excerptEn: "Our team distributed warm blankets to 500 underprivileged families.", excerptHi: "ठंड में हमारी टीम ने 500 जरूरतमंद परिवारों को गर्म कंबल बाँटे।" },
   ];
+  const blogPosts = dbBlogPosts.length ? dbBlogPosts : DEFAULT_BLOG;
 
   // ── Hero slide overrides — each field is an EditableText/EditableImage node ──
   const heroOverrides: Record<number, SlideOverride> = {
@@ -262,7 +271,7 @@ export default function HomePageClient({
 
   return (
     <AdminEditProvider initialValues={settings}>
-      <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} />
+      <DonationModal isOpen={donateOpen} onClose={() => setDonateOpen(false)} whatsappGroupLink={whatsappGroupLink} />
       <StickyQRDonate />
 
       {/* HERO SLIDER */}
@@ -517,6 +526,42 @@ export default function HomePageClient({
         </div>
       </NumberedSection>
 
+      {/* COMING SOON — future plans teaser */}
+      {futurePlans.length > 0 && (
+        <section className="py-16 md:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Fade className="text-center mb-12">
+              <Eyebrow>
+                <EditableText settingKey="home.comingsoon.eyebrow" label="Coming Soon Eyebrow" en="Coming Soon" hi="जल्द आ रहा है" />
+              </Eyebrow>
+              <EditableText as="h2" settingKey="home.comingsoon.h2" label="Coming Soon Heading"
+                en="What We Are Building Next" hi="भविष्य की योजनाएं"
+                className="text-3xl md:text-4xl font-bold mt-4 mb-3" style={{ fontFamily: SERIF, color: LENITY.ink }} />
+              <EditableText as="p" settingKey="home.comingsoon.lead" label="Coming Soon Lead"
+                en="A campus, expanded education programs, and new community initiatives — launching soon."
+                hi="एक परिसर, विस्तारित शिक्षा कार्यक्रम, और नई सामुदायिक पहल — जल्द शुरू होंगी।"
+                className="text-lg italic max-w-2xl mx-auto" style={{ fontFamily: SERIF, color: LENITY.muted }} />
+            </Fade>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {futurePlans.map((plan) => (
+                <Fade key={plan.id}>
+                  <div className="rounded-3xl border p-6 h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ background: LENITY.soft, borderColor: LENITY.line }}>
+                    <span className="inline-block text-xs font-bold rounded-full px-3 py-1 mb-3" style={{ background: LENITY.yellow, color: LENITY.ink }}>{plan.year}</span>
+                    <h3 className="font-bold mb-2" style={{ color: LENITY.ink, fontFamily: SERIF }}>{t(plan.titleEn, plan.titleHi)}</h3>
+                    <p className="text-sm" style={{ color: LENITY.muted }}>{t(plan.descEn, plan.descHi)}</p>
+                  </div>
+                </Fade>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-bold" style={{ color: LENITY.ink }}>
+                <EditableText settingKey="home.comingsoon.more" label="Coming Soon Read More" en="See All Future Plans" hi="सभी भविष्य की योजनाएं देखें" /> <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* HOW YOU CAN HELP */}
       <section className="py-16 md:py-20" style={{ background: LENITY.yellow }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -634,17 +679,17 @@ export default function HomePageClient({
         </Fade>
         <div className="grid md:grid-cols-3 gap-7">
           {blogPosts.map((post) => (
-            <Fade key={post.titleEn}>
+            <Fade key={post.id}>
               <div className="bg-white rounded-2xl border overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
                 <div className="h-48 relative overflow-hidden">
                   <EditableImage
-                    settingKey={`home.img.blog.${post.titleEn.substring(0,20).replace(/\s+/g,"-").toLowerCase()}`}
-                    src={post.img}
+                    settingKey={`home.img.blog.${post.id}`}
+                    src={post.img || IMG.svc[0]}
                     alt={t(post.titleEn, post.titleHi)}
                     aspectRatio="16/9"
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1" style={{ background: LENITY.yellow, color: LENITY.ink }}>{t(post.catEn, post.catHi)}</span>
+                  <span className="absolute top-3 right-3 text-[10px] font-bold rounded-full px-2.5 py-1" style={{ background: LENITY.yellow, color: LENITY.ink }}>{post.category}</span>
                 </div>
                 <div className="p-6">
                   <span className="text-[11px]" style={{ color: LENITY.muted }}>{post.date}</span>

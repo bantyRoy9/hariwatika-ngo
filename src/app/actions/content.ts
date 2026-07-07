@@ -27,6 +27,7 @@ const REVALIDATE: Record<string, string[]> = {
   navLink: ["/", "/about", "/blog", "/projects", "/contact"],
   socialLink: ["/"],
   volunteerBenefit: ["/volunteer"],
+  serviceTier: ["/donate"],
   optionItem: ["/donate", "/contact", "/volunteer", "/blog", "/projects"],
   mediaAsset: [],
 };

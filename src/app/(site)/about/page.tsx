@@ -133,6 +133,7 @@ export default async function AboutPage() {
       journeyCards={[]}
       heroStats={[]}
       header={defaultHeader}
+      settings={{}}
     />;
   }
 }

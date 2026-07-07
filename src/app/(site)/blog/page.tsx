@@ -25,7 +25,9 @@ export default async function BlogPage() {
       img: p.img,
     }));
 
-    const categories = cats.map((c) => c.value || c.labelEn).filter((c) => c !== "All");
+    const categories = cats
+      .filter((c) => c.value !== "All")
+      .map((c) => ({ value: c.value || c.labelEn, labelEn: c.labelEn, labelHi: c.labelHi }));
 
     return <BlogContent posts={posts} categories={categories} header={header} settings={settings} />;
   } catch (error) {
