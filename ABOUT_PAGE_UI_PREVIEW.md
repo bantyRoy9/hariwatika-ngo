@@ -1,0 +1,374 @@
+# About Page - Admin Edit Mode UI Preview
+
+## 🎨 Visual Guide: What Admins Will See
+
+This document shows exactly what the admin will see when editing the About page.
+
+---
+
+## 🔐 Edit Mode Access
+
+**URL:** `/admin/page-editor/about?editMode=true`  
+**Login Required:** Yes (username: `admin`, password: `hariwatika123`)
+
+---
+
+## 📱 UI Elements in Edit Mode
+
+### 1. Timeline Section
+
+```
+┌─────────────────────────────────────────────┐
+│  OUR HISTORY                                │
+│  ─ Our Journey                              │
+│                                             │
+│  [➕ Add Timeline Event]  ← Yellow button  │
+│                                             │
+│  ┌──────────────────────────────┐          │
+│  │  ✏️ 🗑️  ← Appears on hover   │          │
+│  │  ┌────┐                       │          │
+│  │  │ 00 │  2000                 │          │
+│  │  └────┘  Organization founded │          │
+│  │          at Shiv Mandir       │          │
+│  └──────────────────────────────┘          │
+│  │                                          │
+│  ┌──────────────────────────────┐          │
+│  │  ✏️ 🗑️  ← Appears on hover   │          │
+│  │  ┌────┐                       │          │
+│  │  │ 05 │  2005                 │          │
+│  │  └────┘  First major campaign │          │
+│  └──────────────────────────────┘          │
+│  │                                          │
+│  ... (more timeline items)                 │
+└─────────────────────────────────────────────┘
+```
+
+**What admin sees:**
+- ✅ Yellow "Add Timeline Event" button at top
+- ✅ Edit icon (pencil) on hover - top right of each timeline item
+- ✅ Delete icon (trash) on hover - next to edit icon
+
+**On public `/about` page:**
+- ❌ NO add button
+- ❌ NO edit/delete icons
+- ✅ Just the timeline items
+
+---
+
+### 2. Team Members Section
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  हमारी टीम                                              │
+│  ─ Our Team                                             │
+│                                                         │
+│  [➕ Add Team Member]  ← Yellow button                  │
+│                                                         │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  │
+│  │ ✏️ 🗑️   │  │ ✏️ 🗑️   │  │ ✏️ 🗑️   │  │ ✏️ 🗑️   │  │
+│  │  ┌───┐  │  │  ┌───┐  │  │  ┌───┐  │  │  ┌───┐  │  │
+│  │  │ RK│  │  │  │ SK│  │  │  │ AV│  │  │  │ MP│  │  │
+│  │  └───┘  │  │  └───┘  │  │  └───┘  │  │  └───┘  │  │
+│  │ Raj     │  │ Sita    │  │ Anil    │  │ Meena   │  │
+│  │ Kumar   │  │ Kumari  │  │ Verma   │  │ Patel   │  │
+│  │         │  │         │  │         │  │         │  │
+│  │[Director]│ │[Secretary]│ │[Treasurer]│ │[Member] │  │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘  │
+│                                                         │
+│  ... (more team members in 6-column grid)              │
+└─────────────────────────────────────────────────────────┘
+```
+
+**What admin sees:**
+- ✅ Yellow "Add Team Member" button at top
+- ✅ Edit icon (pencil) on hover - top right of each member card
+- ✅ Delete icon (trash) on hover - next to edit icon
+
+**On public `/about` page:**
+- ❌ NO add button
+- ❌ NO edit/delete icons
+- ✅ Just the team member cards
+
+---
+
+### 3. Legal Documents Section
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  कानूनी दस्तावेज़                                         │
+│  ─ Transparency                                          │
+│                                                          │
+│  [➕ Add Legal Document]  ← Yellow button                │
+│                                                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+│  │ ✏️ 🗑️       │  │ ✏️ 🗑️       │  │ ✏️ 🗑️       │    │
+│  │  ┌───┐      │  │  ┌───┐      │  │  ┌───┐      │    │
+│  │  │📄│      │  │  │🛡️│      │  │  │🏆│      │    │
+│  │  └───┘      │  │  └───┘      │  │  └───┘      │    │
+│  │             │  │             │  │             │    │
+│  │ Trust       │  │ 80G Tax     │  │ FCRA        │    │
+│  │ Registration│  │ Exemption   │  │ Registration│    │
+│  │             │  │             │  │             │    │
+│  │ Reg. No.    │  │ Cert. No.   │  │ Reg. No.    │    │
+│  │ XXXXX/2000  │  │ YYYYY       │  │ ZZZZZ       │    │
+│  │             │  │             │  │             │    │
+│  │ Registered  │  │ Income tax  │  │ Foreign     │    │
+│  │ under...    │  │ exemption   │  │ contribution│    │
+│  │             │  │             │  │ accepted    │    │
+│  │             │  │             │  │             │    │
+│  │ [Download]  │  │ [Download]  │  │ [Download]  │    │
+│  └─────────────┘  └─────────────┘  └─────────────┘    │
+└──────────────────────────────────────────────────────────┘
+```
+
+**What admin sees:**
+- ✅ Yellow "Add Legal Document" button at top
+- ✅ Edit icon (pencil) on hover - top right of each doc card
+- ✅ Delete icon (trash) on hover - next to edit icon
+
+**On public `/about` page:**
+- ❌ NO add button
+- ❌ NO edit/delete icons
+- ✅ Just the legal document cards
+
+---
+
+## 📝 Form Modals
+
+### Timeline Event Form
+
+```
+┌────────────────────────────────────────────┐
+│  Add Timeline Event                     ✖️ │
+├────────────────────────────────────────────┤
+│                                            │
+│  Year *                                    │
+│  ┌──────────────────────────────────────┐ │
+│  │ e.g., 2020                           │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Event (English) *                         │
+│  ┌──────────────────────────────────────┐ │
+│  │ Describe the event in English        │ │
+│  │                                      │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Event (Hindi) *                           │
+│  ┌──────────────────────────────────────┐ │
+│  │ घटना का हिंदी में वर्णन करें         │ │
+│  │                                      │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  ┌──────────────┐  ┌──────────────┐      │
+│  │  Add Event   │  │    Cancel    │      │
+│  └──────────────┘  └──────────────┘      │
+└────────────────────────────────────────────┘
+```
+
+### Team Member Form
+
+```
+┌────────────────────────────────────────────┐
+│  Add Team Member                        ✖️ │
+├────────────────────────────────────────────┤
+│                                            │
+│  Name *                                    │
+│  ┌──────────────────────────────────────┐ │
+│  │ Full name                            │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Designation / Role *                      │
+│  ┌──────────────────────────────────────┐ │
+│  │ e.g., Director, Secretary, Member    │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Phone (Optional)                          │
+│  ┌──────────────────────────────────────┐ │
+│  │ 10-digit mobile number               │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  ┌──────────────┐  ┌──────────────┐      │
+│  │  Add Member  │  │    Cancel    │      │
+│  └──────────────┘  └──────────────┘      │
+└────────────────────────────────────────────┘
+```
+
+### Legal Document Form
+
+```
+┌────────────────────────────────────────────┐
+│  Add Legal Document                     ✖️ │
+├────────────────────────────────────────────┤
+│                                            │
+│  Icon                                      │
+│  ┌──────────────────────────────────────┐ │
+│  │ Document (FileText)            ▼    │ │
+│  │ • Shield Check (ShieldCheck)        │ │
+│  │ • Award (Award)                      │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Title (English) *     Title (Hindi) *     │
+│  ┌───────────────┐    ┌─────────────────┐ │
+│  │Trust          │    │ट्रस्ट          │ │
+│  │Registration   │    │पंजीकरण         │ │
+│  └───────────────┘    └─────────────────┘ │
+│                                            │
+│  Document Number *                         │
+│  ┌──────────────────────────────────────┐ │
+│  │ e.g., Reg. No. XXXXX/2000            │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Description (English) *                   │
+│  ┌──────────────────────────────────────┐ │
+│  │ Brief description in English         │ │
+│  │                                      │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  Description (Hindi) *                     │
+│  ┌──────────────────────────────────────┐ │
+│  │ हिंदी में संक्षिप्त विवरण            │ │
+│  │                                      │ │
+│  └──────────────────────────────────────┘ │
+│                                            │
+│  ┌──────────────┐  ┌──────────────┐      │
+│  │ Add Document │  │    Cancel    │      │
+│  └──────────────┘  └──────────────┘      │
+└────────────────────────────────────────────┘
+```
+
+---
+
+## 🎬 User Flow Examples
+
+### Adding a Timeline Event
+
+1. Admin logs in → Goes to `/admin/page-editor/about`
+2. Sees yellow **"Add Timeline Event"** button
+3. Clicks button → Form modal opens
+4. Fills in:
+   - Year: `2024`
+   - Event (EN): `Launched new health initiative`
+   - Event (HI): `नई स्वास्थ्य पहल शुरू की`
+5. Clicks **"Add Event"**
+6. Page reloads → New event appears in timeline
+
+### Editing a Team Member
+
+1. Admin hovers over member card
+2. Sees ✏️ (yellow pencil) and 🗑️ (red trash) icons appear
+3. Clicks ✏️ edit icon → Form modal opens with current data
+4. Updates:
+   - Name: `Rajesh Kumar Singh` (was `Rajesh Kumar`)
+   - Designation: `Vice President` (was `Director`)
+5. Clicks **"Update Member"**
+6. Page reloads → Member card shows new info + new initials (RKS)
+
+### Deleting a Legal Document
+
+1. Admin hovers over document card
+2. Sees ✏️ and 🗑️ icons appear
+3. Clicks 🗑️ delete icon
+4. Browser shows confirmation: **"Are you sure you want to delete this item?"**
+5. Admin clicks **OK**
+6. Page reloads → Document card is gone
+
+---
+
+## 🎨 Button Styles
+
+### Add Button (Yellow)
+```css
+background: #FFB800 (LENITY.yellow)
+color: #0F1419 (LENITY.ink)
+border: 2px dashed #0F1419
+border-radius: 9999px (fully rounded)
+padding: 0.5rem 1rem
+font-weight: 600
+icon: ➕ (Plus)
+hover: scale(1.05)
+```
+
+### Edit Button (Yellow)
+```css
+background: #FFB800 (LENITY.yellow)
+color: #0F1419 (LENITY.ink)
+padding: 0.375rem
+border-radius: 8px
+icon: ✏️ (Pencil)
+position: top-right of card
+visibility: on hover only
+```
+
+### Delete Button (Red)
+```css
+background: #EF4444 (red)
+color: #FFFFFF (white)
+padding: 0.375rem
+border-radius: 8px
+icon: 🗑️ (Trash)
+position: top-right of card (next to edit)
+visibility: on hover only
+confirmation: required
+```
+
+---
+
+## 🔐 Security Behavior
+
+### When Admin is Logged In
+
+**On `/about` (public page):**
+- ❌ NO add buttons
+- ❌ NO edit/delete icons
+- ✅ Content displays normally
+
+**On `/admin/page-editor/about?editMode=true`:**
+- ✅ Add buttons appear
+- ✅ Edit/delete icons appear on hover
+- ✅ All forms work
+- ✅ CRUD operations allowed
+
+### When User is NOT Logged In
+
+**On any page:**
+- ❌ NO add buttons
+- ❌ NO edit/delete icons
+- ❌ Server actions return 401 Unauthorized
+- ✅ Content displays normally
+
+---
+
+## 📱 Responsive Design
+
+### Desktop (>1024px)
+- Timeline: 2 columns (text left, timeline right)
+- Team: 6 columns grid
+- Legal Docs: 4 columns grid
+
+### Tablet (768px - 1024px)
+- Timeline: 2 columns
+- Team: 4 columns grid
+- Legal Docs: 2 columns grid
+
+### Mobile (<768px)
+- Timeline: 1 column (stacked)
+- Team: 2 columns grid
+- Legal Docs: 1 column
+
+**Edit buttons work on all screen sizes!**
+
+---
+
+## ✅ Summary
+
+The About page editing interface is **intuitive, visual, and requires zero code knowledge**:
+
+- 🎯 Clear "Add" buttons for each section
+- ✏️ Edit icons appear on hover
+- 🗑️ Delete with confirmation
+- 📝 Simple forms with validation
+- 🌐 Bilingual support built-in
+- 🔒 Secure admin-only access
+- 📱 Works on all devices
+
+The client will find this **extremely easy to use**! 🎉

@@ -1,4 +1,4 @@
-// Hariwatika NGO CRM — SQLite + Prisma
+// Hariwatika NGO CRM — PostgreSQL + Prisma (SQLite for local dev)
 // Every user-facing string is bilingual (paired *En/*Hi columns or en/hi rows).
 // Images stored as path/URL strings, managed via MediaAsset (Media Library).
 
@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
 }
 
 // ─────────────────────────────────────────────────────────
@@ -179,6 +180,29 @@ model LegalDoc {
   number    String
   descEn    String
   descHi    String
+  sortOrder Int    @default(0)
+}
+
+model JourneyCard {
+  id          Int    @id @default(autoincrement())
+  number      String
+  titleEn     String
+  titleHi     String
+  descEn      String
+  descHi      String
+  image       String
+  stat        String
+  statLabelEn String
+  statLabelHi String
+  sortOrder   Int    @default(0)
+}
+
+model HeroStat {
+  id        Int    @id @default(autoincrement())
+  value     String
+  labelEn   String
+  labelHi   String
+  page      String @default("about") // about | home | etc
   sortOrder Int    @default(0)
 }
 
