@@ -33,13 +33,14 @@ export async function submitContact(input: unknown): Promise<Result> {
 }
 
 // ── Donation ──
+// Field messages are short codes translated client-side via lib/errorMessages.ts (bilingual).
 const donationSchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
-  mobile: z.string().trim().min(7, "Valid mobile is required"),
-  email: z.string().trim().email().optional().or(z.literal("")),
-  address: z.string().trim().min(1, "Address is required"),
-  amount: z.number().int().positive("Amount must be positive"),
-  purpose: z.string().trim().min(1, "Purpose is required"),
+  name: z.string().trim().min(1, "name_required"),
+  mobile: z.string().trim().min(7, "mobile_invalid"),
+  email: z.string().trim().email("email_invalid").optional().or(z.literal("")),
+  address: z.string().trim().min(1, "address_required"),
+  amount: z.number().int().positive("amount_invalid"),
+  purpose: z.string().trim().min(1, "purpose_required"),
 });
 
 export async function submitDonation(input: unknown): Promise<Result<{ ref: string }>> {

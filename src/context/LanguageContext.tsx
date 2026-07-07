@@ -28,7 +28,7 @@ export function LanguageProvider({
   children: ReactNode;
   translations?: TranslationMap;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("hi");
 
   const toggle = useCallback(() => {
     setLang((l) => (l === "hi" ? "en" : "hi"));

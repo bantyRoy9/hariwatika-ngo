@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { X, Heart, CheckCircle, ChevronDown, MessageCircle } from "lucide-react";
 import { submitDonation } from "@/app/actions/submissions";
+import { useLang } from "@/context/LanguageContext";
+import { translateError } from "@/lib/errorMessages";
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -14,6 +16,7 @@ const PRESET_AMOUNTS = [100, 500, 1000, 2000, 5000];
 const WHATSAPP_NUMBER = "919473331919";
 
 export default function DonationModal({ isOpen, onClose, whatsappGroupLink }: DonationModalProps) {
+  const { t } = useLang();
   const [selectedAmount, setSelectedAmount] = useState<number | null>(1000);
   const [customAmount, setCustomAmount] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -223,7 +226,7 @@ export default function DonationModal({ isOpen, onClose, whatsappGroupLink }: Do
               )}
             </div>
 
-            {error && <p className="text-sm font-medium text-red-400">{error}</p>}
+            {error && <p className="text-sm font-medium text-red-400">{translateError(error, t)}</p>}
 
             <button
               type="submit"
