@@ -26,7 +26,13 @@ const skillOptions = [
   "Construction / Labour", "Music / Arts", "Other",
 ];
 
+const WHATSAPP_NUMBER = "919473331919";
+
 export default function VolunteerContent({ settings = {} }: { settings?: Record<string, { en: string; hi: string }> }) {
+  const whatsappGroupLink = settings["whatsapp.groupLink"]?.en?.trim();
+  const whatsappHref = whatsappGroupLink
+    ? whatsappGroupLink
+    : `https://wa.me/${WHATSAPP_NUMBER}`;
   const [form, setForm] = useState<VolunteerForm>({
     name: "", age: "", gender: "", mobile: "",
     email: "", address: "", skills: [], availability: "", motivation: "",
@@ -225,12 +231,16 @@ export default function VolunteerContent({ settings = {} }: { settings?: Record<
                         Print ID Card
                       </button>
                       <a
-                        href={`https://wa.me/919473331919?text=नमस्ते%2C%20मेरा%20नाम%20${encodeURIComponent(form.name)}%20है।%20मैंने%20स्वयंसेवक%20के%20रूप%20में%20पंजीकरण%20किया%20है।%20ID:%20${volunteerId}`}
+                        href={
+                          whatsappGroupLink
+                            ? whatsappHref
+                            : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`नमस्ते, मेरा नाम ${form.name} है। मैंने स्वयंसेवक के रूप में पंजीकरण किया है। ID: ${volunteerId}`)}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 bg-[#25D366] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#1da851] transition-colors"
                       >
-                        WhatsApp Confirm
+                        {whatsappGroupLink ? "Join Volunteer WhatsApp Group" : "WhatsApp Confirm"}
                       </a>
                     </div>
                   </div>

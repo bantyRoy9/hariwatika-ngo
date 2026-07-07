@@ -90,7 +90,7 @@ export default function Navbar({ navLinks, socialLinks }: NavbarProps) {
                   Hariwatika
                 </span>
                 <span className="text-[10px] font-medium hidden sm:block text-gray-500">
-                  Shiv Mandir Sewa Samiti
+                  Shiv Mandir Vivah Sewa Samiti
                 </span>
               </div>
             </Link>
