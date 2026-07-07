@@ -2,10 +2,23 @@ import Link from "next/link";
 import { Heart, Phone, Mail, MapPin, MessageCircle, AtSign, Radio, Link as LinkIcon } from "lucide-react";
 import type { NavLinkData, SocialLinkData } from "./Navbar";
 
+type SettingsMap = Record<string, { en: string; hi: string; img?: string | null }>;
+
 interface FooterProps {
   quickLinks: NavLinkData[];
   legalLinks: NavLinkData[];
   socialLinks: SocialLinkData[];
+  settings?: SettingsMap;
+}
+
+const WHATSAPP_NUMBER = "919473331919";
+
+/** Prefer an admin-set WhatsApp group invite link; fall back to the personal number. */
+function whatsappHref(settings: SettingsMap, prefilledText?: string) {
+  const groupLink = settings["whatsapp.groupLink"]?.en?.trim();
+  if (groupLink) return groupLink;
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+  return prefilledText ? `${base}?text=${encodeURIComponent(prefilledText)}` : base;
 }
 
 function SocialIcon({ platform }: { platform: string }) {
@@ -18,7 +31,9 @@ function SocialIcon({ platform }: { platform: string }) {
   }
 }
 
-export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterProps) {
+export default function Footer({ quickLinks, legalLinks, socialLinks, settings = {} }: FooterProps) {
+  const bank = (key: string, fallback: string) => settings[`bank.${key}`]?.en || fallback;
+
   return (
     <footer className="bg-[#1b1c19] text-white">
       {/* Main Footer */}
@@ -62,7 +77,7 @@ export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterPr
                 </a>
               ))}
               <a
-                href="https://wa.me/919473331919?text=नमस्ते%20हरिवाटिका%20सेवा%20समिति"
+                href={whatsappHref(settings, "नमस्ते हरिवाटिका सेवा समिति")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#25D366] flex items-center justify-center transition-colors"
@@ -180,23 +195,23 @@ export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterPr
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Account Name:</span>
-                  <span className="text-white font-semibold text-right">Hariwatika Sewa Samiti</span>
+                  <span className="text-white font-semibold text-right">{bank("accountName", "Hariwatika Shiv Mandir Vivah Sewa Samiti")}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Account Number:</span>
-                  <span className="text-white font-mono font-semibold">1234567890</span>
+                  <span className="text-white font-mono font-semibold">{bank("accountNo", "XXXX XXXX XXXX 1234")}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Bank Name:</span>
-                  <span className="text-white font-semibold text-right">State Bank of India</span>
+                  <span className="text-white font-semibold text-right">{bank("name", "State Bank of India")}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Branch:</span>
-                  <span className="text-white text-right">Bettiah, West Champaran</span>
+                  <span className="text-white text-right">{bank("branch", "Bettiah, West Champaran")}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">IFSC Code:</span>
-                  <span className="text-white font-mono font-semibold">SBIN0001234</span>
+                  <span className="text-white font-mono font-semibold">{bank("ifsc", "SBIN0XXXXXX")}</span>
                 </div>
               </div>
             </div>
@@ -213,7 +228,7 @@ export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterPr
                 <div>
                   <span className="text-gray-300 text-sm block mb-2">UPI ID:</span>
                   <div className="flex items-center gap-2 bg-white/20 rounded-lg px-3 py-2 border border-white/10">
-                    <span className="text-white font-mono text-sm flex-1">hariwatika@paytm</span>
+                    <span className="text-white font-mono text-sm flex-1">{bank("upi", "hariwatikaseva@upi")}</span>
                     <button className="text-[#E84523] hover:text-[#c93b1d] transition-colors flex-shrink-0" title="Copy UPI ID">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -244,6 +259,11 @@ export default function Footer({ quickLinks, legalLinks, socialLinks }: FooterPr
               </p>
               <p className="text-xs text-gray-300 mt-1">सभी दान 80G कर कटौती के लिए पात्र हैं। ₹500 से ऊपर के दान के लिए प्रमाणपत्र जारी किया जाएगा।</p>
             </div>
+            {(settings["bank.documentsRequired"]?.hi || settings["bank.documentsRequired"]?.en) && (
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center mt-3">
+                <p className="text-sm text-gray-200">{settings["bank.documentsRequired"]?.hi || settings["bank.documentsRequired"]?.en}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

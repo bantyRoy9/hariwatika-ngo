@@ -9,6 +9,7 @@ const projectFields: FieldDef[] = [
   { name: "descEn", nameHi: "descHi", label: "Description", type: "bilingual-area" },
   { name: "category", label: "Category", type: "text" },
   { name: "iconName", label: "Icon name (Lucide)", type: "text" },
+  { name: "img", label: "Photo", type: "image" },
   { name: "status", label: "Status", type: "text" },
   { name: "raised", label: "Raised", type: "number" },
   { name: "goal", label: "Goal", type: "number" },

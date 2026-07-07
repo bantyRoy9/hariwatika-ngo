@@ -8,9 +8,22 @@ import Reveal from "@/components/Reveal";
 import AdminEditProvider from "@/components/AdminEditProvider";
 import EditableText from "@/components/EditableText";
 import { LENITY, SERIF, IMG } from "@/theme/lenity";
-import { Heart, CheckCircle, Printer, Copy, Building2, Smartphone } from "lucide-react";
+import { Heart, CheckCircle, Printer, Copy, Building2, Smartphone, ChevronDown, MessageCircle, IndianRupee } from "lucide-react";
 
-const PRESET_AMOUNTS = [500, 1000, 2000, 5000, 10000];
+const PRESET_AMOUNTS = [100, 500, 1000, 2000, 5000, 10000];
+const WHATSAPP_NUMBER = "919473331919";
+
+export type ServiceTierData = {
+  id: number;
+  iconName: string;
+  titleEn: string;
+  titleHi: string;
+  eligibilityEn: string;
+  eligibilityHi: string;
+  amount: string;
+  descEn: string;
+  descHi: string;
+};
 
 interface FormData {
   name: string;
@@ -20,10 +33,29 @@ interface FormData {
   amount: string;
   purpose: string;
   customAmount: string;
+  about: string;
 }
 
-export default function DonateContent({ settings = {} }: { settings?: Record<string, { en: string; hi: string }> }) {
+/** Prefer an admin-set WhatsApp group invite link; fall back to a prefilled personal-number chat. */
+function whatsappHref(settings: Record<string, { en: string; hi: string }>, prefilledText?: string) {
+  const groupLink = settings["whatsapp.groupLink"]?.en?.trim();
+  if (groupLink) return groupLink;
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+  return prefilledText ? `${base}?text=${encodeURIComponent(prefilledText)}` : base;
+}
+
+export default function DonateContent({
+  settings = {},
+  tiers = [],
+}: {
+  settings?: Record<string, { en: string; hi: string }>;
+  tiers?: ServiceTierData[];
+}) {
+  const bank = (key: string, fallback: string) => settings[`bank.${key}`]?.en || fallback;
+  const hasWhatsappGroup = Boolean(settings["whatsapp.groupLink"]?.en?.trim());
+
   const [selectedAmount, setSelectedAmount] = useState<number>(1000);
+  const [showAbout, setShowAbout] = useState(false);
   const [form, setForm] = useState<FormData>({
     name: "",
     mobile: "",
@@ -32,6 +64,7 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
     amount: "1000",
     purpose: "Vivah Seva",
     customAmount: "",
+    about: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -129,11 +162,24 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                 </div>
               </div>
 
+              <p className="text-sm text-center mb-1" style={{ color: LENITY.ink, fontWeight: 600 }}>
+                🙏 आपके योगदान से एक ज़रूरतमंद परिवार को नई उम्मीद मिलेगी।
+              </p>
               <p className="text-sm text-center mb-4" style={{ color: LENITY.muted }}>
                 SMS notification will be sent to <strong style={{ color: LENITY.ink }}>{form.mobile}</strong>
               </p>
 
               <div className="flex flex-col gap-2">
+                {hasWhatsappGroup && (
+                  <a
+                    href={whatsappHref(settings)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 bg-[#25D366] text-white rounded-full py-2.5 text-sm font-semibold hover:bg-[#1da851] transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4" /> Join Our WhatsApp Community
+                  </a>
+                )}
                 <button
                   onClick={handlePrint}
                   className="flex items-center justify-center gap-2 border-2 rounded-full py-2.5 text-sm font-semibold transition-all hover:scale-105"
@@ -142,10 +188,14 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                   <Printer className="w-4 h-4" /> Print Receipt
                 </button>
                 <a
-                  href={`https://wa.me/919473331919?text=नमस्ते%20हरिवाटिका%20समिति%2C%20मेरा%20नाम%20${encodeURIComponent(form.name)}%20है।%20Reference%20No.%20${donorRef}%20के%20साथ%20₹${finalAmount}%20का%20दान%20पंजीकृत%20किया।`}
+                  href={whatsappHref(
+                    settings,
+                    `नमस्ते हरिवाटिका समिति, मेरा नाम ${form.name} है। Reference No. ${donorRef} के साथ ₹${finalAmount} का दान पंजीकृत किया।${form.about ? ` ${form.about}` : ""}`,
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-[#25D366] text-white rounded-full py-2.5 text-sm font-semibold hover:bg-[#1da851] transition-colors"
+                  className={`flex items-center justify-center gap-2 rounded-full py-2.5 text-sm font-semibold transition-colors ${hasWhatsappGroup ? "border-2" : "bg-[#25D366] text-white hover:bg-[#1da851]"}`}
+                  style={hasWhatsappGroup ? { borderColor: "#25D366", color: "#1da851" } : undefined}
                 >
                   Share on WhatsApp
                 </a>
@@ -205,7 +255,7 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                       <label className="block text-sm font-medium mb-2" style={{ color: LENITY.ink }}>
                         Select Amount *
                       </label>
-                      <div className="grid grid-cols-5 gap-2 mb-3">
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-3">
                         {PRESET_AMOUNTS.map((amt) => {
                           const active = selectedAmount === amt && !form.customAmount;
                           return (
@@ -322,6 +372,33 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                       </select>
                     </div>
 
+                    {/* Optional "About You" step */}
+                    <div className="rounded-xl border" style={{ borderColor: LENITY.line }}>
+                      <button
+                        type="button"
+                        onClick={() => setShowAbout((v) => !v)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium"
+                        style={{ color: LENITY.ink }}
+                      >
+                        अपने बारे में बताएं (वैकल्पिक) — Tell us about yourself (optional)
+                        <ChevronDown className={`w-4 h-4 transition-transform ${showAbout ? "rotate-180" : ""}`} />
+                      </button>
+                      {showAbout && (
+                        <div className="px-4 pb-4">
+                          <textarea
+                            value={form.about}
+                            onChange={(e) => setForm({ ...form, about: e.target.value })}
+                            placeholder="इस दान का कारण या आपके बारे में कुछ भी (वैकल्पिक) — Anything about you or this donation (optional)"
+                            rows={2}
+                            className={`${inputClass} resize-none`}
+                            style={inputStyle}
+                            onFocus={onInputFocus}
+                            onBlur={onInputBlur}
+                          />
+                        </div>
+                      )}
+                    </div>
+
                     {error && (
                       <p className="text-sm font-medium" style={{ color: LENITY.red }}>{error}</p>
                     )}
@@ -367,9 +444,9 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                     <p className="text-[9px] mt-2" style={{ color: LENITY.muted }}>Scan QR Code</p>
                   </div>
                   <div className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ background: `${LENITY.accent}14` }}>
-                    <span className="text-xs flex-1 font-mono" style={{ color: LENITY.ink }}>hariwatikaseva@upi</span>
+                    <span className="text-xs flex-1 font-mono" style={{ color: LENITY.ink }}>{bank("upi", "hariwatikaseva@upi")}</span>
                     <button
-                      onClick={() => handleCopy("hariwatikaseva@upi")}
+                      onClick={() => handleCopy(bank("upi", "hariwatikaseva@upi"))}
                       className="transition-colors hover:scale-110"
                       style={{ color: LENITY.ink }}
                     >
@@ -387,11 +464,11 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                   </div>
                   <div className="space-y-2 text-xs">
                     {[
-                      ["Account Name", "Hariwatika Shiv Mandir Vivah Sewa Samiti"],
-                      ["Account No.", "XXXX XXXX XXXX 1234"],
-                      ["IFSC Code", "SBIN0XXXXXX"],
-                      ["Bank", "State Bank of India"],
-                      ["Branch", "Bettiah, Bihar"],
+                      ["Account Name", bank("accountName", "Hariwatika Shiv Mandir Vivah Sewa Samiti")],
+                      ["Account No.", bank("accountNo", "XXXX XXXX XXXX 1234")],
+                      ["IFSC Code", bank("ifsc", "SBIN0XXXXXX")],
+                      ["Bank", bank("name", "State Bank of India")],
+                      ["Branch", bank("branch", "Bettiah, Bihar")],
                     ].map(([label, val]) => (
                       <div key={label} className="flex justify-between gap-2">
                         <span style={{ color: LENITY.muted }}>{label}</span>
@@ -407,9 +484,45 @@ export default function DonateContent({ settings = {} }: { settings?: Record<str
                   <p className="text-xs" style={{ color: LENITY.muted }}>
                     Donations are eligible for 50% tax deduction under Section 80G of the Income Tax Act.
                   </p>
+                  {(settings["bank.documentsRequired"]?.hi || settings["bank.documentsRequired"]?.en) && (
+                    <p className="text-xs mt-2 pt-2 border-t" style={{ color: LENITY.muted, borderColor: `${LENITY.accent}33` }}>
+                      {settings["bank.documentsRequired"]?.hi || settings["bank.documentsRequired"]?.en}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
+
+            {/* Registration Fees & Eligibility */}
+            {tiers.length > 0 && (
+              <div className="mt-16">
+                <div className="text-center mb-10">
+                  <EditableText as="h2" settingKey="donate.tiers.h2" label="Pricing Section Heading"
+                    en="Registration Fees & Eligibility" hi="पंजीकरण शुल्क एवं पात्रता"
+                    className="text-2xl md:text-3xl font-bold mb-2" style={{ color: LENITY.ink, fontFamily: SERIF }}
+                  />
+                  <EditableText as="p" settingKey="donate.tiers.lead" label="Pricing Section Lead"
+                    en="Scheme-wise contribution and eligibility." hi="योजना अनुसार योगदान एवं पात्रता।"
+                    className="text-sm" style={{ color: LENITY.muted }}
+                  />
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {tiers.map((tier) => (
+                    <div key={tier.id} className="bg-white rounded-2xl border p-5 transition-all hover:shadow-lg hover:-translate-y-1" style={{ borderColor: LENITY.line }}>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: LENITY.accentSoft }}>
+                          <IndianRupee className="w-5 h-5" style={{ color: LENITY.accent }} />
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: LENITY.ink }}>{tier.amount}</span>
+                      </div>
+                      <h3 className="font-bold text-sm mb-1" style={{ color: LENITY.ink, fontFamily: SERIF }}>{tier.titleHi || tier.titleEn}</h3>
+                      <p className="text-xs mb-2" style={{ color: LENITY.muted }}>{tier.eligibilityHi || tier.eligibilityEn}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: LENITY.muted }}>{tier.descHi || tier.descEn}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>

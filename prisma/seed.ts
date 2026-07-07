@@ -37,6 +37,7 @@ async function main() {
     prisma.blogPost.deleteMany(),
     prisma.project.deleteMany(),
     prisma.futurePlan.deleteMany(),
+    prisma.serviceTier.deleteMany(),
     prisma.teamMember.deleteMany(),
     prisma.timelineItem.deleteMany(),
     prisma.legalDoc.deleteMany(),
@@ -221,8 +222,10 @@ async function main() {
     { key: "bank.ifsc", en: "SBIN0XXXXXX", hi: "SBIN0XXXXXX", group: "bank" },
     { key: "bank.name", en: "State Bank of India", hi: "State Bank of India", group: "bank" },
     { key: "bank.branch", en: "Bettiah, Bihar", hi: "Bettiah, Bihar", group: "bank" },
-    { key: "upi.id", en: "hariwatikaseva@upi", hi: "hariwatikaseva@upi", group: "bank" },
+    { key: "bank.upi", en: "hariwatikaseva@upi", hi: "hariwatikaseva@upi", group: "bank" },
+    { key: "bank.documentsRequired", en: "For an official 80G tax-deduction receipt, please share your PAN card details via WhatsApp or email after donating.", hi: "आधिकारिक 80G कर-छूट रसीद के लिए, कृपया दान करने के बाद अपना पैन कार्ड विवरण व्हाट्सएप या ईमेल पर भेजें।", group: "bank" },
     { key: "donate.taxBenefit", en: "Donations are eligible for 50% tax deduction under Section 80G of the Income Tax Act.", hi: "Donations are eligible for 50% tax deduction under Section 80G of the Income Tax Act.", group: "donate" },
+    { key: "whatsapp.groupLink", en: "", hi: "", group: "contact" },
 
     // Logo / brand
     { key: "logo.text", en: "Hariwatika", hi: "Hariwatika", group: "brand" },
@@ -343,6 +346,17 @@ async function main() {
   ];
   await prisma.futurePlan.createMany({
     data: futurePlans.map((p, i) => ({ titleEn: p.title, titleHi: p.title, year: p.year, descEn: p.desc, descHi: p.desc, sortOrder: i })),
+  });
+
+  // Registration fees / eligibility per scheme, shown on /donate.
+  await prisma.serviceTier.createMany({
+    data: [
+      { iconName: "Heart", titleEn: "Vivah Sahayata (Marriage Assistance)", titleHi: "विवाह सहायता", eligibilityEn: "Age 20 years and above", eligibilityHi: "20 वर्ष और उससे अधिक आयु", amount: "₹3,000", descEn: "Registration contribution for marriage assistance scheme.", descHi: "विवाह सहायता योजना हेतु पंजीकरण योगदान।", sortOrder: 0 },
+      { iconName: "TreePine", titleEn: "Vrikshaaropan (Plantation)", titleHi: "वृक्षारोपण", eligibilityEn: "7 years and above", eligibilityHi: "7 वर्ष और उससे अधिक", amount: "₹5,000", descEn: "Contribution towards long-term tree plantation and maintenance.", descHi: "दीर्घकालिक वृक्षारोपण एवं रखरखाव हेतु योगदान।", sortOrder: 1 },
+      { iconName: "BookOpen", titleEn: "Shiksha Seva (Education)", titleHi: "शिक्षा सेवा", eligibilityEn: "8-year program", eligibilityHi: "8 वर्षीय कार्यक्रम", amount: "As per program", descEn: "Supports the 8-year education support program for children.", descHi: "बच्चों के लिए 8 वर्षीय शिक्षा सहायता कार्यक्रम का समर्थन करता है।", sortOrder: 2 },
+      { iconName: "Stethoscope", titleEn: "Swasthya Seva (Medical)", titleHi: "स्वास्थ्य सेवा", eligibilityEn: "As required", eligibilityHi: "आवश्यकतानुसार", amount: "As required", descEn: "Medical assistance provided based on individual need.", descHi: "व्यक्तिगत आवश्यकता के आधार पर चिकित्सा सहायता प्रदान की जाती है।", sortOrder: 3 },
+      { iconName: "Users", titleEn: "Volunteer Registration", titleHi: "स्वयंसेवक पंजीकरण", eligibilityEn: "Age 16+", eligibilityHi: "16+ आयु", amount: "₹2,000", descEn: "One-time volunteer registration contribution.", descHi: "एकबारगी स्वयंसेवक पंजीकरण योगदान।", sortOrder: 4 },
+    ],
   });
 
   // ════════════════════════════════════════════════

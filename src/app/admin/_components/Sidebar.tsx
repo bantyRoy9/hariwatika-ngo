@@ -33,6 +33,7 @@ const NAV: Group[] = [
       { label: "Home Page", href: "/admin/content/home", icon: Home },
       { label: "About Us", href: "/admin/content/about", icon: Info },
       { label: "Our Projects", href: "/admin/content/projects", icon: FolderKanban },
+      { label: "Donate — Fees & Eligibility", href: "/admin/content/donate", icon: IndianRupee },
       { label: "Blog / News", href: "/admin/content/blog", icon: Newspaper },
       { label: "Volunteer Page", href: "/admin/content/volunteer", icon: HeartHandshake },
       { label: "Transparency Reports", href: "/admin/content/transparency", icon: PieChart },

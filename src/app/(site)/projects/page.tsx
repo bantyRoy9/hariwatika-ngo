@@ -18,6 +18,7 @@ export default async function ProjectsPage() {
       id: p.id,
       category: p.category,
       iconName: p.iconName,
+      img: p.img,
       status: p.status,
       titleEn: p.titleEn,
       titleHi: p.titleHi,

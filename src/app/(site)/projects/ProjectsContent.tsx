@@ -20,6 +20,7 @@ export type ProjectData = {
   id: number;
   category: string;
   iconName: string;
+  img?: string | null;
   status: string;
   titleEn: string;
   titleHi: string;
@@ -118,8 +119,12 @@ export default function ProjectsContent({
                       className="bg-white rounded-3xl border overflow-hidden flex flex-col h-full transition-all hover:shadow-xl hover:-translate-y-1"
                       style={{ borderColor: LENITY.line }}
                     >
-                      <div className="h-24 flex items-center justify-center relative" style={{ background: LENITY.accentSoft }}>
-                        <Icon className="w-12 h-12" style={{ color: LENITY.accent, opacity: 0.5 }} />
+                      <div className="h-32 flex items-center justify-center relative overflow-hidden" style={{ background: LENITY.accentSoft }}>
+                        {project.img ? (
+                          <img src={project.img} alt={t(project.titleEn, project.titleHi)} className="w-full h-full object-cover" />
+                        ) : (
+                          <Icon className="w-12 h-12" style={{ color: LENITY.accent, opacity: 0.5 }} />
+                        )}
                         <div className="absolute top-3 right-3 flex gap-2">
                           <span
                             className="text-[10px] font-bold rounded-full px-2.5 py-0.5"
